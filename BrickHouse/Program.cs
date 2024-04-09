@@ -20,6 +20,14 @@ namespace BrickHouse
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            // Configure HSTS
+            builder.Services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365); // Adjust according to your requirements
+            });
+
             //builder.Services.Configure<IdentityOptions>(options => { 
             //// Password settings.
             //    options.Password.RequireDigit = true;
