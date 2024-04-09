@@ -1,8 +1,22 @@
-﻿@{
+﻿@using BrickHouse.Models.ViewModels
+@{
     ViewData["Title"] = "Home Page";
 }
+@model ProductsListViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Water Product</h1>
+
+@foreach (Product p in Model.Products)
+{
+    <partial name="ProductSummary" model="p" />
+}
+
+<div page-model="@Model.PaginationInfo" page-action="Index" page-classes-enabled="true" page-class="btn"
+     page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+     page-url-ProductType="@Model.CurrentProductType" class="btn-grp pull-right m-1">
 </div>
+
+
+@* <a asp-controller="Home" asp-action="Index" asp-route-pageNum="1">1</a>
+<a asp-controller="Home" asp-action="Index" asp-route-pageNum="2">2</a>
+<a asp-controller="Home" asp-action="Index" asp-route-pageNum="3">3</a> *@
