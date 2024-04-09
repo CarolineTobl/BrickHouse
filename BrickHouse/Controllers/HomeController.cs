@@ -2,7 +2,6 @@ using BrickHouse.Models;
 using BrickHouse.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using static BrickHouse.Models.Product;
 
 namespace BrickHouse.Controllers
 {
@@ -15,10 +14,18 @@ namespace BrickHouse.Controllers
             _repo = temp;
         }
 
-        public IActionResult Index(int pageNum, string category)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult ProductPage(int pageNum, string category)
         {
 
             int pageSize = 5;
+
+            //Handles a pagenumber less than 0 and defaults it to 2 (so it can be subtracted by 1 below)
+            int adjustedPageNum = pageNum <= 0 ? 2 : pageNum;
 
             var blah = new ProductsListViewModel
             {
@@ -27,7 +34,7 @@ namespace BrickHouse.Controllers
                 Products = _repo.Products
                 .Where(x => x.PrimaryCategory == category || category == null)
                 .OrderBy(x => x.Name)
-                .Skip((pageNum - 1) * pageSize)
+                .Skip((adjustedPageNum - 1) * pageSize)
                 .Take(pageSize),
 
                 PaginationInfo = new PaginationInfo
