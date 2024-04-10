@@ -19,7 +19,7 @@ namespace BrickHouse.Controllers
             return View();
         }
 
-        public IActionResult ProductPage(int pageNum, string category)
+        public IActionResult ProductPage(int pageNum, string primaryCategory)
         {
 
             int pageSize = 5;
@@ -32,7 +32,7 @@ namespace BrickHouse.Controllers
 
 
                 Products = _repo.Products
-                .Where(x => x.PrimaryCategory == category || category == null)
+                .Where(x => x.PrimaryCategory == primaryCategory || primaryCategory == null)
                 .OrderBy(x => x.Name)
                 .Skip((adjustedPageNum - 1) * pageSize)
                 .Take(pageSize),
@@ -42,10 +42,10 @@ namespace BrickHouse.Controllers
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
                     // if Product type is null, get a count of all Products, if filtering then only get the count of the filtered Products
-                    TotalItems = category == null ? _repo.Products.Count() : _repo.Products.Where(x => x.PrimaryCategory == category).Count()
+                    TotalItems = primaryCategory == null ? _repo.Products.Count() : _repo.Products.Where(x => x.PrimaryCategory == primaryCategory).Count()
                 },
 
-                CurrentProductType = category
+                CurrentProductType = primaryCategory
             };
 
             /*            var ProductData = _repo.Products
