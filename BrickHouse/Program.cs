@@ -31,7 +31,8 @@ namespace BrickHouse
             // Import identity package and related services
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
             
             // Change default login path to use the codegenerator page
             builder.Services.ConfigureApplicationCookie(options =>
@@ -86,6 +87,13 @@ namespace BrickHouse
             // Add instance of session cart and necessary tools
             builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+            // Enable third-party auth through Google
+            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            });
 
             var app = builder.Build();
 

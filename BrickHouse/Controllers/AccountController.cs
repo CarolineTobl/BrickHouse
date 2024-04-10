@@ -1,4 +1,3 @@
-using Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -57,17 +56,17 @@ namespace BrickHouse.Controllers
                         return Redirect(login.ReturnUrl ?? "/");
 
                     // uncomment Two Factor Authentication https://www.yogihosting.com/aspnet-core-identity-two-factor-authentication/
-                    /*if (result.RequiresTwoFactor)
+                    if (result.RequiresTwoFactor)
                     {
                         return RedirectToAction("LoginTwoStep", new { appUser.Email, login.ReturnUrl });
-                    }*/
+                    }
 
                     // Uncomment Email confirmation https://www.yogihosting.com/aspnet-core-identity-email-confirmation/
-                    /*bool emailStatus = await userManager.IsEmailConfirmedAsync(appUser);
+                    bool emailStatus = await userManager.IsEmailConfirmedAsync(appUser);
                     if (emailStatus == false)
                     {
                         ModelState.AddModelError(nameof(login.Email), "Email is unconfirmed, please confirm it first");
-                    }*/
+                    }
 
                     // https://www.yogihosting.com/aspnet-core-identity-user-lockout/
                     /*if (result.IsLockedOut)
