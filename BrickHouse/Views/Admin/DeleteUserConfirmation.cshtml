@@ -1,0 +1,17 @@
+﻿@model BrickHouse.Models.Customer
+
+@{
+    ViewData["Title"] = "Delete User Confirmation";
+}
+
+<h2>Delete User Confirmation</h2>
+
+<p>Are you sure you want to delete user: <strong>@Model.FirstName @Model.LastName</strong>?</p>
+
+<!-- Form to submit the deletion -->
+<form asp-action="DeleteUser" method="post">
+    <input type="hidden" asp-for="CustomerId" />
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a asp-action="CRUDUsers" class="btn btn-secondary">Cancel</a>
+</form>
+
