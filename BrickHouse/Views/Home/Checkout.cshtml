@@ -1,5 +1,66 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // This sets the layout for this view
 }
+
+@model CheckoutViewModel
+
+<br /><br /><br />
+<div class="checkout-container">
+
+    <div class="checkout-cart-details">
+        <div class="checkout-payment-shipping">
+            <h2>PAYMENT & SHIPPING</h2>
+            <!-- Bank Dropdown -->
+            <select class="checkout-form-input" asp-for="SelectedBank" asp-items="@(new SelectList(Model.UniqueBanks))">
+                <option value="">Select Bank</option>
+            </select>
+
+            <!-- Type of Card Dropdown -->
+            <select class="checkout-form-input" asp-for="SelectedCardType" asp-items="@(new SelectList(Model.UniqueCardTypes))">
+                <option value="">Select Type of Card</option>
+            </select>
+
+            <!-- Country of Transaction Dropdown -->
+            <select class="checkout-form-input" asp-for="SelectedCountryOfTransaction" asp-items="@(new SelectList(Model.UniqueCountriesOfTransaction))">
+                <option value="">Country you are ordering from</option>
+            </select>
+
+            <!-- Shipping Address Dropdown -->
+            <select class="checkout-form-input" asp-for="SelectedShippingAddress" asp-items="@(new SelectList(Model.UniqueShippingAddresses))">
+                <option value="">Country you are shipping to</option>
+            </select>
+            <button class="checkout-btn">COMPLETE ORDER</button>
+        </div>
+
+        <div class="checkout-cart-summary">
+            <h2>Cart Details</h2>
+            <div class="checkout-cart-item">
+                <img src="/path/to/product-image.jpg" alt="Product">
+                <h4>Batman's Buggy: The Escape of Mr. Freeze</h4>
+                <div>
+                    <button>-</button>
+                    <span> 2 </span>
+                    <button>+</button>
+                </div>
+                <span>$190.00</span>
+            </div>
+            <div>
+                <input type="text" class="checkout-form-input" placeholder="Gift card or promo code" />
+                <button class="checkout-btn">Apply</button>
+            </div>
+            <div class="checkout-total-line">
+                <span>Subtotal</span>
+                <span>$190.00</span>
+            </div>
+            <div class="checkout-total-line">
+                <span>Shipping</span>
+                <span>$6.00</span>
+            </div>
+            <div class="checkout-total-line">
+                <span>Total</span>
+                <span>USD $196.00</span>
+            </div>
+        </div>
+    </div>
+</div>

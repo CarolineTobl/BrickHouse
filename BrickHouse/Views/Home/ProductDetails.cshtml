@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "About Us Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // This sets the layout for this view
 }
+@model Product
+
+<br />
+<br />
+<br />
+<br />
+
+<h1 class="about-title" style="text-align: center; font-weight: bold; font-family: 'Poppins', sans-serif;">@Model.Name</h1>
+<span class="title-underline"></span>
+<br /><br />
+<div class="product-details">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.ImgLink" alt="@Model.Name" class="img-fluid product-image" />
+        </div>
+        <div class="col-md-6">
+            <p class="product-description">@Model.Description</p>
+            <div class="price-and-add-to-cart">
+                <span class="product-price">$@Model.Price</span>
+                <span class="product-pieces">@Model.NumParts Pieces</span>
+                <a asp-controller="Home" asp-action="Checkout" class="btn btn-primary add-to-cart-button">Add to Cart</a>
+                <a asp-action="AddToCart" asp-route-productId="@Model.ProductId" class="btn btn-primary add-to-cart-button">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+</div>
