@@ -7,12 +7,19 @@ using System.Security.Claims;
 using BrickHouse.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
 
+// INTEX II
+// Group 2-2
+// Garrett Ashcroft, Jared Rosenlund, Vivian Solgere, and Caroline Tobler
+
 namespace BrickHouse.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        // Helps with URLs (duh, lol)
         private readonly IUrlHelperFactory _urlHelperFactory;
+        
+        // Helper tools from the Identity package
         private UserManager<IdentityUser> userManager;
         private SignInManager<IdentityUser> signInManager;
 
@@ -23,13 +30,14 @@ namespace BrickHouse.Controllers
             _urlHelperFactory = urlHelperFactory;
         }
 
+        // Login Page (not actually called, see Program.cs line 29 for default route changes)
         [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
             Login login = new Login();
             login.ReturnUrl = returnUrl;
             var urlHelper = _urlHelperFactory.GetUrlHelper(ControllerContext);
-            return Redirect(urlHelper.Page("/Identity/Account/Login"));
+            return View();
         }
 
         [HttpPost]
@@ -76,6 +84,7 @@ namespace BrickHouse.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        // Authenticated but not authorized
         public IActionResult AccessDenied()
         {
             return View();

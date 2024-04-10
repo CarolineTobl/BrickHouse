@@ -4,14 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 
+// INTEX II
+// Group 2-2
+// Garrett Ashcroft, Jared Rosenlund, Vivian Solgere, and Caroline Tobler
+
 namespace BrickHouse.Controllers
 {
     public class HomeController : Controller
     {
+        // Initialize private repository instance
         private IIntexRepository _repo;
 
         public HomeController(IIntexRepository temp)
         {
+            // Assign temporary public repo resource to private var
             _repo = temp;
         }
 
@@ -20,11 +26,14 @@ namespace BrickHouse.Controllers
             return View();
         }
 
+        // "Shop" page for all products
         public IActionResult ProductPage(int pageNum, string category)
         {
+            // Set default page size
             int pageSize = 5;
             int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
 
+            // Build correct view model
             var productsViewModel = new ProductsListViewModel
             {
                 Products = _repo.Products
@@ -46,17 +55,16 @@ namespace BrickHouse.Controllers
                 
             };
 
-            // Return the regular view along with the view model
+            // Return the view and view model
             return View("ProductPage", productsViewModel);
         }
 
-
-        [Authorize (Roles = "admin")]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        // Honestly idek what this attribute does
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -70,17 +78,22 @@ namespace BrickHouse.Controllers
 
         public IActionResult ProductDetails(int productId)
         {
+            // Find clicked product by productID
             var product = _repo.Products.FirstOrDefault(p => p.ProductId == productId);
+            
+            // Just in case product doesn't exist
             if (product == null)
             {
                 return NotFound();
             }
             return View(product);
         }
-
-/*        public IActionResult Checkout()
+        
+        // Must be logged in to see this page; unauthenticated users redirected to login
+        [Authorize]
+        public IActionResult Checkout()
         {
- 
+            // Build view model
             var viewModel = new CheckoutViewModel
             {
                 UniqueBanks = _repo.Orders.Select(o => o.Bank).Distinct().ToList(),
@@ -90,7 +103,7 @@ namespace BrickHouse.Controllers
             };
 
             return View(viewModel);
-        }*/
+        }
 
 
     }
