@@ -19,47 +19,50 @@ namespace BrickHouse.Controllers
             return View();
         }
 
-        public IActionResult ProductPage(int pageNum, string category)
+        /*public IActionResult ProductPage(int pageNum, string[] category, string color)
         {
 
             int pageSize = 5;
 
-            //Handles a pagenumber less than 0 and defaults it to 2 (so it can be subtracted by 1 below)
-            int adjustedPageNum = pageNum <= 0 ? 2 : pageNum;
+            var selectedCategories = category ?? new string[] { }; // Handle null case
 
-            var blah = new ProductsListViewModel
+            var productsViewModel = new ProductsListViewModel
             {
 
 
                 Products = _repo.Products
-                .Where(x => x.PrimaryCategory == category || category == null)
-                .OrderBy(x => x.Name)
-                .Skip((adjustedPageNum - 1) * pageSize)
-                .Take(pageSize),
-
+                    .Where(x => string.IsNullOrEmpty(category) ||
+                                x.PrimaryCategory == category ||
+                                x.SecondaryCategory == category ||
+                                x.TertiaryCategory == category)
+                    .OrderBy(x => x.Name)
+                    .Skip((adjustedPageNum - 1) * pageSize)
+                    .Take(pageSize),
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    // if Product type is null, get a count of all Products, if filtering then only get the count of the filtered Products
-                    TotalItems = category == null ? _repo.Products.Count() : _repo.Products.Where(x => x.PrimaryCategory == category).Count()
+                    CurrentProductType = category,
+                    TotalItems = string.IsNullOrEmpty(category) ? _repo.Products.Count() :
+                                 _repo.Products.Where(x => x.PrimaryCategory == category || x.SecondaryCategory == category).Count()
                 },
-
-                CurrentProductType = category
+                
             };
 
-            /*            var ProductData = _repo.Products
-                            .OrderBy(x => x.Name)
-                            .Skip(pageSize * (pageNum -1))
-                            .Take(pageSize);*/
-
-            return View(blah);
+            // Return the regular view along with the view model
+            return View("ProductPage", productsViewModel);
         }
 
         /*        public IActionResult Index()
                 {
                     return View();
                 }*/
+
+
+
+
+
+
 
         public IActionResult Privacy()
         {

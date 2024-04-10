@@ -46,6 +46,9 @@ namespace BrickHouse.Infrastructure
                 {
                     TagBuilder tag = new TagBuilder("a");
                     PageUrlValues["pageNum"] = i;
+                    // Include the Category parameter (ensure it's lowercase)
+                    PageUrlValues["category"] = PageModel.CurrentProductType;
+                    PageUrlValues["color"] = PageModel.CurrentColor;
 
                     tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
 

@@ -9,5 +9,9 @@
         public int CurrentPage { get; set; }
 
         public int TotalPages => (int) (Math.Ceiling((decimal) TotalItems / ItemsPerPage));
+
+        public string CurrentProductType { get; set; }
+
+        public string CurrentColor { get; set; }
     }
 }
