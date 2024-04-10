@@ -36,3 +36,61 @@ body {
     .btn-oval:hover {
         background-color: #006666; /* Darker teal color for hover effect */
     }
+
+/* Adding About Us Page CSS here */
+.about-section {
+    display: flex; /* Use flexbox layout */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
+    padding: 40px;
+    text-align: center; /* Center the text for all children */
+}
+
+.about-title {
+    font-size: 2em;
+    margin-bottom: 0.25em;
+}
+
+.title-underline {
+    height: 4px;
+    width: 60px;
+    display: block;
+    margin: auto;
+    background-color: #ec5a53;
+}
+
+.about-content {
+    margin: 20px auto;
+    line-height: 1.6;
+    font-size: 1em;
+    max-width: 600px;
+    color: #333;
+}
+
+.about-images {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+    .about-images img {
+        max-width: 100%;
+        height: auto;
+        border: 3px solid #ec5a53;
+        border-radius: 10px;
+    }
+
+.shop-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #ec5a53; /* Brand salmon color */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    .shop-button:hover {
+        background-color: #bf433b;
+    }

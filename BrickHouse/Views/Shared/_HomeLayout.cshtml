@@ -110,15 +110,36 @@
         }
 
         .trending .col-md-3 {
-            padding: 0.5rem; /* Adds space around each image */
+            padding: 1rem; /* Adds more space around each image */
         }
 
         .trending img {
-            width: 100%; /* Makes the image responsive to the column width */
-            height: auto; /* Maintains the aspect ratio */
+            height: 200px; /* Fixed height for all images */
+            border-radius: 15px; /* Rounded corners */
+            border: 5px solid #ec5a53; /* Red border */
             object-fit: contain; /* Ensures the image fits within the element without stretching */
-            margin-bottom: 0.5rem; /* Adds space below each image */
+            margin: 10px; /* Adds space around the images */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow to the images for depth */
+            display: block; /* Ensure that images are block elements to allow for margin */
+            width: calc(100% - 30px); /* Adjust width to account for the border and margin */
         }
+
+        .see-all-btn {
+            display: block; /* Make the button a block element to fill the column */
+            width: calc(100% - 30px); /* Full width of the column minus the padding */
+            height: 200px; /* Same height as images to align them */
+            margin-top: 10px; /* Match the top margin of the images */
+            margin-bottom: 10px; /* If you want to have a bottom margin as well */
+            border-radius: 15px; /* Match the border radius of the images if needed */
+            border: 5px solid #ec5a53; /* Match the border style of the images */
+            color: #ec5a53; /* Text color */
+            background-color: #fff; /* Background color for the button */
+            align-items: center; /* Center text vertically using flexbox */
+            justify-content: center; /* Center text horizontally using flexbox */
+            text-decoration: none; /* Remove underline from anchor if it's a link */
+            display: flex; /* Use flexbox to center content */
+        }
+
     </style>
 </head>
 <body>
@@ -132,12 +153,13 @@
                 </button>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Browse</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="AboutUs">About</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="ProductPage">Browse</a></li>
                     </ul>
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
                 </div>
+
             </div>
         </nav>
     </header>
