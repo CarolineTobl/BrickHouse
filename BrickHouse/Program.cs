@@ -110,7 +110,26 @@ namespace BrickHouse
 
             // Redirect from HTTP
             app.UseHttpsRedirection();
-            
+
+            // Add Content Security Policy
+            app.Use(async (context, next) =>
+            {
+                // Define your custom CSP 
+                var csp = "default-src 'self'; " +
+                          "script-src 'self' https://trusted.cdn.com; " + // Allows scripts from these domains
+                          "style-src 'self' https://trusted.cdn.com; " +   // Allows styles from these domains
+                          "img-src 'self' https://trusted.cdn.com; " +     // Allows images from these domains
+                          "font-src 'self'; " +                            // Allows fonts from your domain
+                                                                           // Add any other sources you need
+                          "";
+
+                // Add the Content-Security-Policy header
+                context.Response.Headers.Add("Content-Security-Policy", csp);
+
+                // Call the next delegate/middleware in the pipeline
+                await next();
+            });
+
             // Enables static files in wwwroot folder
             app.UseStaticFiles();
 
