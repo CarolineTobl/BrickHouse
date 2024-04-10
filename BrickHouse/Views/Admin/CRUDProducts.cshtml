@@ -1,0 +1,53 @@
+﻿@model BrickHouse.Models.ViewModels.AdminProductsViewModel
+
+@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<h1>Manage Products</h1>
+
+<a class="btn btn-primary" href="@Url.Action("AddProduct", "Admin")">Add New Product</a>
+
+<table class="table table-bordered table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Num Parts</th>
+            <th>Price</th>
+            <th>Primary Color</th>
+            <th>Categories</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Year</td>
+                <td>@product.NumParts</td>
+                <td>$@product.Price</td>
+                <td>@product.PrimaryColor</td>
+                <td>@product.PrimaryCategory @(product.SecondaryCategory != null ? ", " + product.SecondaryCategory : "")</td>
+                <td>
+                    <a class="btn btn-info" href="@Url.Action("EditProduct", "Admin", new { id = product.ProductId })">Edit</a>
+                    <a class="btn btn-danger" href="@Url.Action("DeleteProductConfirmation", "Admin", new { productId = product.ProductId })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<nav>
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Model.PaginationInfo.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.PaginationInfo.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("CRUDProducts", new { pageNum = i })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+
