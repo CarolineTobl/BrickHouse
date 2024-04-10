@@ -2,6 +2,7 @@ using BrickHouse.Models;
 using BrickHouse.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrickHouse.Controllers
 {
@@ -18,17 +19,19 @@ namespace BrickHouse.Controllers
         {
             return View();
         }
-        public IActionResult ProductPage(int pageNum, string primaryCategory, string secondaryCategory)
+
+        public IActionResult ProductPage(int pageNum, string category)
         {
             int pageSize = 5;
             int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
-            ViewBag.SelectedProductType = primaryCategory;
 
             var productsViewModel = new ProductsListViewModel
             {
                 Products = _repo.Products
-                    .Where(x => (string.IsNullOrEmpty(primaryCategory) || x.PrimaryCategory == primaryCategory) &&
-                                (string.IsNullOrEmpty(secondaryCategory) || x.SecondaryCategory == secondaryCategory))
+                    .Where(x => string.IsNullOrEmpty(category) ||
+                                x.PrimaryCategory == category ||
+                                x.SecondaryCategory == category ||
+                                x.TertiaryCategory == category)
                     .OrderBy(x => x.Name)
                     .Skip((adjustedPageNum - 1) * pageSize)
                     .Take(pageSize),
@@ -36,15 +39,19 @@ namespace BrickHouse.Controllers
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = primaryCategory == null ? _repo.Products.Count() : _repo.Products.Where(x => x.PrimaryCategory == primaryCategory).Count()
+                    CurrentProductType = category,
+                    TotalItems = string.IsNullOrEmpty(category) ? _repo.Products.Count() :
+                                 _repo.Products.Where(x => x.PrimaryCategory == category || x.SecondaryCategory == category).Count()
                 },
-                CurrentProductType = primaryCategory
+                
             };
 
             // Return the regular view along with the view model
             return View("ProductPage", productsViewModel);
         }
 
+
+        [Authorize (Roles = "admin")]
         public IActionResult Privacy()
         {
             return View();
@@ -71,7 +78,7 @@ namespace BrickHouse.Controllers
             return View(product);
         }
 
-        public IActionResult Checkout()
+/*        public IActionResult Checkout()
         {
  
             var viewModel = new CheckoutViewModel
@@ -83,7 +90,7 @@ namespace BrickHouse.Controllers
             };
 
             return View(viewModel);
-        }
+        }*/
 
 
     }

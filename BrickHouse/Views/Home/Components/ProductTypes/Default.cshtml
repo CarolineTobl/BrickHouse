@@ -4,7 +4,7 @@
 @{
 }
 
-@model IEnumerable<string>
+@* @model IEnumerable<string>
 
 @{
     string selectedCategory = ViewBag.SelectedProductType ?? "Select Category";
@@ -19,11 +19,31 @@
 
         @foreach (string pt in Model ?? Enumerable.Empty<string>())
         {
-            <a class="dropdown-item @(pt == ViewBag.SelectedProductType ? "active" : "")" asp-controller="Home" asp-action="ProductPage" asp-route-primaryCategory="@pt" asp-route-secondaryCategory="@ViewBag.SelectedSecondaryCategory" asp-route-pageNum="1">@pt</a>
+            <a class="dropdown-item @(pt == ViewBag.SelectedProductType ? "active" : "")" asp-controller="Home" asp-action="ProductPage" ( asp-route-primaryCategory="@pt" || asp-route-secondaryCategory="@pt" ) asp-route-pageNum="1">@pt</a>
+        }
+    </div>
+</div> *@
+
+@model IEnumerable<string>
+
+@{
+    string selectedCategory = ViewBag.SelectedProductType ?? "Select Category";
+}
+
+<div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @selectedCategory
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" asp-controller="Home" asp-action="ProductPage" asp-route-ProductPage="" asp-route-pageNum="">Clear Filter</a>
+
+        @foreach (string category in Model ?? Enumerable.Empty<string>())
+        {
+            <a class="dropdown-item @(category == ViewBag.SelectedProductType ? "active" : "")"
+               asp-controller="Home"
+               asp-action="ProductPage"
+               asp-route-Category="@category"
+               asp-route-PageNum="1">@category</a>
         }
     </div>
 </div>
-
-
-
-

@@ -15,7 +15,11 @@
 
     <img src="@Model.ImgLink" width="200px" />
     </a>
+    <br />
     <h6>$@Model.Price</h6>
+    <h6>@Model.PrimaryCategory</h6>
+    <h6>@Model.SecondaryCategory</h6>
+    <h6>@Model.TertiaryCategory</h6>
 
     <form id=@Model.ProductId method="post" asp-page="/Cart">
         <input type="hidden" asp-for="ProductId" />
@@ -24,4 +28,3 @@
     </form>
 
 </div>
-<a href="c:\users\carolinetobler\source\repos\brickhouse\brickhouse\models\product.cs">c:\users\carolinetobler\source\repos\brickhouse\brickhouse\models\product.cs</a>

@@ -1,0 +1,97 @@
+﻿@model BrickHouse.Models.ViewModels.AdminCustomersViewModel
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<h1>Users</h1>
+
+<a class="btn btn-primary" href="@Url.Action("AddUser", "Admin")">Add New User</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Birth Date</th>
+            <th>Country</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model.Customers)
+        {
+            <tr>
+                <td>@customer.FirstName @customer.LastName</td>
+                <td>@customer.BirthDate.ToString("MM/dd/yyyy")</td>
+                <td>@customer.CountryOfResidence</td>
+                <td>@customer.Gender</td>
+                <td>@customer.Age</td>
+                <td>
+                    <a class="btn btn-info" href="@Url.Action("EditUser", "Admin", new { customerId = customer.CustomerId })">Edit</a>
+                    <a asp-action="DeleteUserConfirmation" asp-route-customerId="@customer.CustomerId" class="btn btn-danger">Delete</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<nav aria-label="User Pagination">
+    <ul class="pagination">
+        @if (Model.PaginationInfo.TotalPages > 0)
+        {
+            // Link to the first page
+            <li class="page-item @(Model.PaginationInfo.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("CRUDUsers", new { pageNum = 1 })">First</a>
+            </li>
+
+            // Calculate the start and end range of the pagination
+            int currentPage = Model.PaginationInfo.CurrentPage;
+            int totalPages = Model.PaginationInfo.TotalPages;
+            int range = 3; // This will show three links before and after the current page
+            int startPage = currentPage - range;
+            int endPage = currentPage + range;
+
+            // Ensure we don't have a start page less than 1
+            if (startPage <= 0)
+            {
+                endPage -= (startPage - 1);
+                startPage = 1;
+            }
+
+            // Ensure we do not have an end page greater than the total pages
+            if (endPage > totalPages)
+            {
+                endPage = totalPages;
+                if (endPage > 2 * range)
+                {
+                    startPage = endPage - 2 * range;
+                }
+            }
+
+            // Create the links for the "range" of pages around the current page
+            for (int i = startPage; i <= endPage; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("CRUDUsers", new { pageNum = i })">@i</a>
+                </li>
+            }
+
+            // If there is a gap between the end range and the last page
+            if (endPage < totalPages - 1)
+            {
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            }
+
+            // Link to the last page
+            if (endPage < totalPages)
+            {
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("CRUDUsers", new { pageNum = totalPages })">Last</a>
+                </li>
+            }
+        }
+    </ul>
+</nav>

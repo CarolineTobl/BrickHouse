@@ -1,0 +1,79 @@
+﻿@model BrickHouse.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<h2>Edit Product</h2>
+
+            <form asp-action="EditProduct">
+                <input type="hidden" asp-for="ProductId" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Year" class="control-label"></label>
+                    <input asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumParts" class="control-label"></label>
+                    <input asp-for="NumParts" class="form-control" />
+                    <span asp-validation-for="NumParts" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImgLink" class="control-label"></label>
+                    <input asp-for="ImgLink" class="form-control" />
+                    <span asp-validation-for="ImgLink" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrimaryColor" class="control-label"></label>
+                    <input asp-for="PrimaryColor" class="form-control" />
+                    <span asp-validation-for="PrimaryColor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SecondaryColor" class="control-label"></label>
+                    <input asp-for="SecondaryColor" class="form-control" />
+                    <span asp-validation-for="SecondaryColor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrimaryCategory" class="control-label"></label>
+                    <input asp-for="PrimaryCategory" class="form-control" />
+                    <span asp-validation-for="PrimaryCategory" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SecondaryCategory" class="control-label"></label>
+                    <input asp-for="SecondaryCategory" class="form-control" />
+                    <span asp-validation-for="SecondaryCategory" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TertiaryCategory" class="control-label"></label>
+                    <input asp-for="TertiaryCategory" class="form-control" />
+                    <span asp-validation-for="TertiaryCategory" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

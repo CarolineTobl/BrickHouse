@@ -25,4 +25,8 @@
     <None Include="wwwroot\images\legoCastle2.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Account\Login.cshtml" />
+  </ItemGroup>
+
 </Project>
