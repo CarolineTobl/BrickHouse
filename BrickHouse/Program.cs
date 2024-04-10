@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
+// INTEX II
+// Group 2-2
+// Garrett Ashcroft, Jared Rosenlund, Vivian Solgere, and Caroline Tobler
+
 namespace BrickHouse
 {
     public class Program
@@ -12,20 +16,24 @@ namespace BrickHouse
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add services to the container
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            
+            // ASP.NET identity context
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
+            
+            // DbContext for business data (products, orders, etc.)
             builder.Services.AddDbContext<ScaffoldedDbContext>(options =>
-                options.UseSqlServer(connectionString)); // Use the same connection string or a different one if required
+                options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //     .AddEntityFrameworkStores<ApplicationDbContext>();
+            // Import identity package and related services
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             
+            // Change default login path to use the codegenerator page
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Identity/Account/Login"; // Set the login path to the desired URL
@@ -36,10 +44,10 @@ namespace BrickHouse
             {
                 options.Preload = true;
                 options.IncludeSubDomains = true;
-                options.MaxAge = TimeSpan.FromDays(365); // Adjust according to your requirements
+                options.MaxAge = TimeSpan.FromDays(365);
             });
 
-
+    
             //builder.Services.Configure<IdentityOptions>(options => { 
             //// Password settings.
             //    options.Password.RequireDigit = true;
@@ -66,20 +74,16 @@ namespace BrickHouse
             //    options.SlidingExpiration = true;
             //}) ;
 
-
+            // Services and stuff
             builder.Services.AddControllersWithViews();
-
-            //added
-            builder.Services.AddScoped<IIntexRepository, EFIntexRepository>();
-
-            //added
             builder.Services.AddRazorPages();
-
-            //added
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
+            
+            // Creates an instance of the repository pattern for the session
+            builder.Services.AddScoped<IIntexRepository, EFIntexRepository>();
 
-            //added
+            // Add instance of session cart and necessary tools
             builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -93,23 +97,25 @@ namespace BrickHouse
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
+            // Redirect from HTTP
             app.UseHttpsRedirection();
+            
+            // Enables static files in wwwroot folder
             app.UseStaticFiles();
 
-            //added
+            // Activate services
             app.UseSession();
-
             app.UseRouting();
 
+            // Activate identity services
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // Routing and mapping
             app.MapRazorPages();
-            
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"
@@ -120,7 +126,7 @@ namespace BrickHouse
             app.MapControllerRoute("category", "{primaryCategory}", new { Controller = "Home", action = "Index", pageNum = 1 });
             app.MapDefaultControllerRoute();
             
-
+            // Let's do this!!
             app.Run();
         }
     }
