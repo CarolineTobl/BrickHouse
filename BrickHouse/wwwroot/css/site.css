@@ -94,3 +94,172 @@ body {
     .shop-button:hover {
         background-color: #bf433b;
     }
+
+/* Product Details CSS */
+.product-details {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 400px; /* Adjust as necessary */
+    margin-bottom: 20px;
+}
+
+.product-title {
+    font-size: 1.75em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-description {
+    font-size: 1em;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.price-and-add-to-cart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjust as necessary */
+    margin-bottom: 20px; /* Provides spacing below this section */
+}
+
+.product-price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ec5a53; /* Or any other color you prefer */
+}
+
+.product-pieces {
+    font-size: 1em;
+}
+
+.add-to-cart-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #ec5a53; /* Brand color */
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    .add-to-cart-button:hover {
+        background-color: #bf433b; /* Darker shade for hover effect */
+    }
+
+/*Checkout Styles*/
+.checkout-container {
+    width: 80%;
+    margin: auto;
+}
+
+.checkout-header {
+    background-color: #f00;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.checkout-cart-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.checkout-payment-shipping, .checkout-cart-summary {
+    width: 48%;
+}
+
+.checkout-form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+.checkout-btn {
+    background-color: #f00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.checkout-cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+    .checkout-cart-item img {
+        max-width: 100px;
+    }
+
+    .checkout-cart-item h4 {
+        margin: 0;
+    }
+
+    .checkout-cart-item button {
+        background-color: #e0e0e0;
+        padding: 5px 10px;
+    }
+
+.checkout-total-line {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.account-details-container {
+    background-image: url('/path/to/your/banner-image.jpg'); /* Adjust path as needed */
+    background-size: cover;
+    padding: 50px 0;
+}
+
+.account-details-title,
+.account-details-subtitle {
+    color: #FFF; /* White text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Text shadow for better readability */
+}
+
+.account-details-container .form-control {
+    margin-bottom: 15px; /* Spacing between inputs */
+    border: 2px solid #FFF; /* White border for inputs */
+    border-radius: 20px; /* Rounded corners for inputs */
+    max-width: 300px; /* Max width for inputs */
+    width: 100%; /* Full width */
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    color: #333; /* Text color */
+}
+
+.account-details-container select.form-control {
+    -webkit-appearance: none; /* Removes default styling for <select> for Webkit */
+    -moz-appearance: none; /* Removes default styling for <select> for Mozilla */
+    appearance: none; /* Removes default styling for <select> */
+    background: url('/path/to/your/dropdown-icon.png') no-repeat 95% 50%; /* Replace with your dropdown icon */
+    background-size: 25px; /* Size of the dropdown icon */
+}
+
+.account-details-container .btn.account-details-btn {
+    border: none;
+    background-color: #ec5a53; /* Button background color */
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px; /* Rounded corners for button */
+    font-size: 1.25em; /* Larger font size */
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+    .account-details-container .btn.account-details-btn:hover {
+        background-color: #bf433b; /* Darker shade when hovered */
+    }

@@ -60,5 +60,30 @@ namespace BrickHouse.Controllers
         {
             return View();
         }
+
+        public IActionResult ProductDetails(int productId)
+        {
+            var product = _repo.Products.FirstOrDefault(p => p.ProductId == productId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        public IActionResult Checkout()
+        {
+            var viewModel = new CheckoutViewModel
+            {
+                UniqueBanks = _repo.Orders.Select(o => o.Bank).Distinct().ToList(),
+                UniqueCardTypes = _repo.Orders.Select(o => o.TypeOfCard).Distinct().ToList(),
+                UniqueCountriesOfTransaction = _repo.Orders.Select(o => o.CountryOfTransaction).Distinct().ToList(),
+                UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
+            };
+
+            return View(viewModel);
+        }
+
+
     }
 }
