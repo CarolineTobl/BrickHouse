@@ -16,6 +16,7 @@ namespace BrickHouse
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
             builder.Services.AddDbContext<ScaffoldedDbContext>(options =>
                 options.UseSqlServer(connectionString)); // Use the same connection string or a different one if required
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
