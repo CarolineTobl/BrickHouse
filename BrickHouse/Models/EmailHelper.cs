@@ -1,6 +1,6 @@
 using System.Net.Mail;
 
-namespace Identity.Models
+namespace BrickHouse.Models
 {
     public class EmailHelper
     {
