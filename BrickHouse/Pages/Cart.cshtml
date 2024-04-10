@@ -23,7 +23,7 @@
                 <td class="text-left">@l.Product.Name</td>
                 <td class="text-center">@l.Quantity</td>
                 <td class="text-right">$@l.Product.Price</td>
-                <td class="text-right">$@((l.Quantity * l.Product.Price).ToString("c"))</td>
+                <td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
                 <td class="text-center">
                     <form asp-page-handler="Remove" method="post">
                         <input type="hidden" name="ProjectId" value="@l.Product.ProductId" />

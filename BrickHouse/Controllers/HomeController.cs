@@ -18,48 +18,32 @@ namespace BrickHouse.Controllers
         {
             return View();
         }
-
-        public IActionResult ProductPage(int pageNum, string primaryCategory)
+        public IActionResult ProductPage(int pageNum, string primaryCategory, string secondaryCategory)
         {
-
             int pageSize = 5;
+            int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
+            ViewBag.SelectedProductType = primaryCategory;
 
-            //Handles a pagenumber less than 0 and defaults it to 2 (so it can be subtracted by 1 below)
-            int adjustedPageNum = pageNum <= 0 ? 2 : pageNum;
-
-            var blah = new ProductsListViewModel
+            var productsViewModel = new ProductsListViewModel
             {
-
-
                 Products = _repo.Products
-                .Where(x => x.PrimaryCategory == primaryCategory || primaryCategory == null)
-                .OrderBy(x => x.Name)
-                .Skip((adjustedPageNum - 1) * pageSize)
-                .Take(pageSize),
-
+                    .Where(x => (string.IsNullOrEmpty(primaryCategory) || x.PrimaryCategory == primaryCategory) &&
+                                (string.IsNullOrEmpty(secondaryCategory) || x.SecondaryCategory == secondaryCategory))
+                    .OrderBy(x => x.Name)
+                    .Skip((adjustedPageNum - 1) * pageSize)
+                    .Take(pageSize),
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    // if Product type is null, get a count of all Products, if filtering then only get the count of the filtered Products
                     TotalItems = primaryCategory == null ? _repo.Products.Count() : _repo.Products.Where(x => x.PrimaryCategory == primaryCategory).Count()
                 },
-
                 CurrentProductType = primaryCategory
             };
 
-            /*            var ProductData = _repo.Products
-                            .OrderBy(x => x.Name)
-                            .Skip(pageSize * (pageNum -1))
-                            .Take(pageSize);*/
-
-            return View(blah);
+            // Return the regular view along with the view model
+            return View("ProductPage", productsViewModel);
         }
-
-        /*        public IActionResult Index()
-                {
-                    return View();
-                }*/
 
         public IActionResult Privacy()
         {
