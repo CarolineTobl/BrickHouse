@@ -5,12 +5,17 @@
 
 @model CheckoutViewModel
 
-<br /><br /><br />
-<div class="checkout-container">
+<br />
+<br />
+<br />
+<div class="checkout-container text-center">
+    <!-- Add text-center here if you want the text aligned to center -->
 
     <div class="checkout-cart-details">
         <div class="checkout-payment-shipping">
-            <h2>PAYMENT & SHIPPING</h2>
+            <h2 style="color: #ec5a53; font-weight: bold; font-family: 'Poppins', sans-serif;">
+                PAYMENT & SHIPPING
+            </h2> <!-- Removed the misplaced style tag -->
             <!-- Bank Dropdown -->
             <select class="checkout-form-input" asp-for="SelectedBank" asp-items="@(new SelectList(Model.UniqueBanks))">
                 <option value="">Select Bank</option>
@@ -30,37 +35,13 @@
             <select class="checkout-form-input" asp-for="SelectedShippingAddress" asp-items="@(new SelectList(Model.UniqueShippingAddresses))">
                 <option value="">Country you are shipping to</option>
             </select>
-            <button class="checkout-btn">COMPLETE ORDER</button>
-        </div>
 
-        <div class="checkout-cart-summary">
-            <h2>Cart Details</h2>
-            <div class="checkout-cart-item">
-                <img src="/path/to/product-image.jpg" alt="Product">
-                <h4>Batman's Buggy: The Escape of Mr. Freeze</h4>
-                <div>
-                    <button>-</button>
-                    <span> 2 </span>
-                    <button>+</button>
-                </div>
-                <span>$190.00</span>
+            <!-- Confirm Checkout Button -->
+            <div class="text-center mt-3">
+                <!-- Add margin-top for spacing and text-center to align the button -->
+                <a class="btn btn-oval me-2" role="button" asp-controller="Home" asp-action="CheckoutConfirmed">Confirm Checkout</a>
             </div>
-            <div>
-                <input type="text" class="checkout-form-input" placeholder="Gift card or promo code" />
-                <button class="checkout-btn">Apply</button>
-            </div>
-            <div class="checkout-total-line">
-                <span>Subtotal</span>
-                <span>$190.00</span>
-            </div>
-            <div class="checkout-total-line">
-                <span>Shipping</span>
-                <span>$6.00</span>
-            </div>
-            <div class="checkout-total-line">
-                <span>Total</span>
-                <span>USD $196.00</span>
-            </div>
+
         </div>
     </div>
 </div>

@@ -78,6 +78,7 @@ namespace BrickHouse.Controllers
 
 /*        public IActionResult Checkout()
         {
+ 
             var viewModel = new CheckoutViewModel
             {
                 UniqueBanks = _repo.Orders.Select(o => o.Bank).Distinct().ToList(),
