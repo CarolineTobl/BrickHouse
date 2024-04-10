@@ -27,6 +27,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ProductPage">Products</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                     <div class="col-6 navbar-text text-end">
@@ -37,9 +40,6 @@
         </nav>
     </header>
     <div class="row m-1 p-1">
-        <div class="col-3">
-            <vc:Product-types />
-        </div>
         <div class="container col-9">
             <main role="main" class="pb-3">
                 @RenderBody()

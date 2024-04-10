@@ -31,7 +31,7 @@
 
         public virtual void Clear() => Lines.Clear();
 
-        public virtual decimal CalculateTotal() => Lines.Sum(x => 25 * x.Quantity);
+        public virtual decimal CalculateTotal() => Lines.Sum(x => x.Product.Price * x.Quantity);
 /*        {
             // The lambda function essentill does this
             var blah = Lines.Sum(x => 25 * x.Quantity);

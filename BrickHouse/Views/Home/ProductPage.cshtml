@@ -2,12 +2,22 @@
 
 @model ProductsListViewModel
 
-<h1>Water Product</h1>
+<h1>Our Products</h1>
 
-@foreach (Product p in Model.Products)
-{
-    <partial name="ProductSummary" model="p" />
-}
+<div class="row">
+    <div class="col-md-3">
+        <vc:Product-types />
+    </div>
+
+    <div class="col-md-9">
+        @foreach (Product p in Model.Products)
+        {
+            <partial name="ProductSummary" model="p" />
+        }
+    </div>
+</div>
+
+
 
 <div page-model="@Model.PaginationInfo" page-action="Index" page-classes-enabled="true" page-class="btn"
      page-class-normal="btn-outline-dark" page-class-selected="btn-primary"

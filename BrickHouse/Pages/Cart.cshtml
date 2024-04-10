@@ -8,7 +8,7 @@
 <table class=" table table-borderd table-striped">
     <thead>
         <tr>
-            <th>Project Name</th>
+            <th>Product Name</th>
             <th>Quantity</th>
             <th class="text-right">Amount</th>
             <th class="text-right">Subtotal</th>
@@ -21,15 +21,15 @@
         {
             <tr>
                 <td class="text-left">@l.Product.Name</td>
-                <td class="text-center">@l.Product.Year</td>
-                <td class="text-right">$25</td>
-                <td class="text-right">@((l.Product.NumParts * 25).ToString("c"))</td>
+                <td class="text-center">@l.Quantity</td>
+                <td class="text-right">$@l.Product.Price</td>
+                <td class="text-right">$@((l.Quantity * l.Product.Price).ToString("c"))</td>
                 <td class="text-center">
                     <form asp-page-handler="Remove" method="post">
                         <input type="hidden" name="ProjectId" value="@l.Product.ProductId" />
                         <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
                         <button class="btn btn-sm btn-danger">
-                            Remove
+                            Remove from Cart
                         </button>
                     </form>
                 </td>
@@ -46,5 +46,5 @@
 </table>
 
 <div class="text-center">
-    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Donating</a>
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Browsing</a>
 </div>
