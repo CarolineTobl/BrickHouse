@@ -20,3 +20,19 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.btn-oval {
+    background-color: #008080; /* This is a generic teal color; adjust the hex as needed */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px; /* Large border-radius to create an oval shape */
+    color: white; /* White text color */
+    text-transform: uppercase; /* UPPERCASE text */
+    font-weight: bold; /* Bold font weight */
+    font-family: 'Poppins', sans-serif; /* Poppins font */
+}
+
+    /* Hover styles for the button */
+    .btn-oval:hover {
+        background-color: #006666; /* Darker teal color for hover effect */
+    }

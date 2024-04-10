@@ -5,8 +5,8 @@
 
 <div class="banner">
     <div class="container">
-        <h1>Unlock creativity brick by brick</h1>
-        <p><a class="btn btn-primary" href="#" role="button">Start Building</a></p>
+        <h1 style="color: white; font-weight: bold; font-family: 'Poppins', sans-serif;">Unlock Creativity<br>Brick by Brick</h1>
+        <p><a class="btn btn-oval" href="#" role="button">Start Building</a></p>
     </div>
 </div>
 <div class="bottom-gradient"></div>
@@ -34,4 +34,21 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        // When the user scrolls the page, execute the function
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            // Get the navbar
+            var navbar = document.querySelector(".navbar");
+            // Specify the scroll position in pixels you want to trigger the color change
+            if (window.pageYOffset > 500) {
+                // When the user scrolls down 50px from the top of the document, add the "scrolled" class to the navbar
+                navbar.classList.add("scrolled");
+            } else {
+                // When the user is at the top of the document, remove the "scrolled" class
+                navbar.classList.remove("scrolled");
+            }
+        }
+    </script>
 }
