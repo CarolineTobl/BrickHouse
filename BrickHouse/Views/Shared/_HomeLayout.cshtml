@@ -32,6 +32,15 @@
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
         }
 
+        .banner-gradient {
+            position: relative; /* For absolute positioning of the gradient */
+            background: url('/images/castle-gradient.png') no-repeat top center;
+            background-size: 100% auto; /* This will fit the image to the width */
+            width: 100%; /* Ensure the banner spans the full width */
+            height: auto; /* This will make the height adjust to the image */
+            min-height: 700px; /* Optional: You can set a minimum height */
+        }
+
         body {
             font-family: 'Montserrat', sans-serif; /* Update the body font to Montserrat for consistency */
         }
@@ -100,6 +109,15 @@
         .bottom-gradient {
             height: 100px; /* Or the height of your gradient */
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+        }
+        .bottom-gradient-large {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            z-index: -1; /* Ensure the gradient is behind other content */
+            background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
         }
         /* Adjusted footer styles if needed */
         footer {
