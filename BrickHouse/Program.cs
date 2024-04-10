@@ -106,9 +106,9 @@ namespace BrickHouse
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"
             );
-            app.MapControllerRoute("pagenumandcategory", "{category}/{pageNum}", new { Controller = "Home", action = "Index" });
+            app.MapControllerRoute("pagenumandcategory", "{primaryCategory}/{pageNum}", new { Controller = "Home", action = "Index" });
             app.MapControllerRoute("pagination", "{pageNum}", new { Controller = "Home", action = "Index", pageNum = 1 });
-            app.MapControllerRoute("category", "{category}", new { Controller = "Home", action = "Index", pageNum = 1 });
+            app.MapControllerRoute("category", "{primaryCategory}", new { Controller = "Home", action = "Index", pageNum = 1 });
             app.MapDefaultControllerRoute();
             app.MapRazorPages();
 
