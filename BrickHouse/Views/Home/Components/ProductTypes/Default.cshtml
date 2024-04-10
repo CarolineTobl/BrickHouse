@@ -7,11 +7,11 @@
 
 @model IEnumerable<string>
 
-    <div class="d-grid gap-2">
-        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index" asp-route-ProductType="" asp-route-pageNum="">Home</a>
+<div class="d-grid gap-2">
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="ProductType" asp-route-ProductType="" asp-route-pageNum="">Home</a>
 
-        @foreach(string pt in Model ?? Enumerable.Empty<string>())
-            {
-                <a class="btn @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="ProductPage" asp-route-ProductType="@pt" asp-route-pageNum="1">@pt</a>
-            }
-    </div>
+    @foreach (string pt in Model ?? Enumerable.Empty<string>())
+    {
+        <a class="btn @(pt == ViewBag.SelectedProductType ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="ProductPage" asp-route-PrimaryCategory="@pt" asp-route-pageNum="1">@pt</a>
+    }
+</div>
