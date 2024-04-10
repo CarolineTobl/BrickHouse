@@ -2,6 +2,7 @@ using BrickHouse.Models;
 using BrickHouse.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrickHouse.Controllers
 {
@@ -50,6 +51,7 @@ namespace BrickHouse.Controllers
         }
 
 
+        [Authorize (Roles = "admin")]
         public IActionResult Privacy()
         {
             return View();
