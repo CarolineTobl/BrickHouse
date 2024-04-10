@@ -1,4 +1,5 @@
 using BrickHouse.Data;
+using BrickHouse.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -15,10 +16,13 @@ namespace BrickHouse
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<ScaffoldedDbContext>(options =>
+                options.UseSqlServer(connectionString)); // Use the same connection string or a different one if required
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             // Configure HSTS
             builder.Services.AddHsts(options =>
@@ -27,6 +31,7 @@ namespace BrickHouse
                 options.IncludeSubDomains = true;
                 options.MaxAge = TimeSpan.FromDays(365); // Adjust according to your requirements
             });
+
 
             //builder.Services.Configure<IdentityOptions>(options => { 
             //// Password settings.
@@ -57,6 +62,19 @@ namespace BrickHouse
 
             builder.Services.AddControllersWithViews();
 
+            //added
+            builder.Services.AddScoped<IIntexRepository, EFIntexRepository>();
+
+            //added
+            builder.Services.AddRazorPages();
+
+            //added
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
+
+            //added
+            builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var app = builder.Build();
 
@@ -75,6 +93,9 @@ namespace BrickHouse
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //added
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -83,7 +104,12 @@ namespace BrickHouse
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
+            app.MapControllerRoute("pagenumandcategory", "{category}/{pageNum}", new { Controller = "Home", action = "Index" });
+            app.MapControllerRoute("pagination", "{pageNum}", new { Controller = "Home", action = "Index", pageNum = 1 });
+            app.MapControllerRoute("category", "{category}", new { Controller = "Home", action = "Index", pageNum = 1 });
+            app.MapDefaultControllerRoute();
             app.MapRazorPages();
 
             app.Run();
