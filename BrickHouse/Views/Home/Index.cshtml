@@ -1,8 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml"; // This sets the layout for this view
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="banner">
+    <div class="container">
+        <h1>Unlock creativity brick by brick</h1>
+        <p><a class="btn btn-primary" href="#" role="button">Start Building</a></p>
+    </div>
 </div>
+<div class="bottom-gradient"></div>
+
+<div class="trending container">
+    <h2>Trending Now</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <img src="/images/zooLego.jpg" alt="Trending Product 1">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/batman.jpg" alt="Trending Product 2">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/spider.webp" alt="Trending Product 3">
+        </div>
+        <div class="col-md-3">
+            <img src="/images/peacock.webp" alt="Trending Product 4">
+        </div>
+    </div>
+    <p><a class="btn btn-outline-secondary" href="#" role="button">See all >></a></p>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+}

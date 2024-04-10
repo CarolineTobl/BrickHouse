@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BrickHouse</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+
+        .banner {
+            position: relative; /* For absolute positioning of the gradient */
+            background: url('/images/castle5.jpg') no-repeat top center;
+            background-size: 100% auto; /* This will fit the image to the width */
+            width: 100%; /* Ensure the banner spans the full width */
+            height: auto; /* This will make the height adjust to the image */
+            min-height: 700px; /* Optional: You can set a minimum height */
+        }
+
+        /* White gradient effect */
+        .banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10%; /* This height will determine how much of the bottom part is covered by the gradient */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif; /* Update the body font to Montserrat for consistency */
+        }
+
+        /* Styles for the transparent navbar */
+        .navbar {
+            background-color: transparent !important; /* Ensures the navbar is transparent */
+            border: none;
+            box-shadow: none;
+        }
+
+        /* Navbar brand text styles */
+        .navbar .navbar-brand {
+            color: white !important; /* White color text for the brand */
+            font-weight: 700; /* Montserrat bold for the brand */
+            font-size: 1.5em; /* Larger size for the brand */
+        }
+
+        /* Navbar link text styles */
+        .navbar .nav-link {
+            color: white !important; /* White color text for the links */
+            font-weight: 400; /* Montserrat regular for other nav items */
+            font-size: 1em; /* Standard size for nav items */
+        }
+
+        /* Hover effect for navbar links */
+        .navbar .nav-link:hover, .navbar .navbar-brand:hover {
+            color: #FFF !important; /* White color on hover */
+            background-color: transparent !important; /* Maintain transparent background on hover */
+        }
+
+        /* Adjusting the banner container padding if needed */
+        .banner .container {
+            padding-top: 100px; /* Padding to lower the text over the banner image */
+        }
+
+        /* Position the Login button to the right */
+        .navbar .btn-outline-success {
+            position: absolute;
+            right: 1rem; /* 1rem from the right edge of the navbar */
+            top: 50%;
+            transform: translateY(-50%); /* Center vertically in the navbar */
+        }
+
+        /* Ensuring the nav elements are not transparent when scrolled (optional) */
+        .navbar.scrolled {
+            background-color: #FFF !important; /* White background on scroll */
+}
+
+        .bottom-gradient {
+            height: 100px; /* Or the height of your gradient */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+        }
+        /* Adjusted footer styles if needed */
+        footer {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .trending .col-md-3 {
+            padding: 0.5rem; /* Adds space around each image */
+        }
+
+        .trending img {
+            width: 100%; /* Makes the image responsive to the column width */
+            height: auto; /* Maintains the aspect ratio */
+            object-fit: contain; /* Ensures the image fits within the element without stretching */
+            margin-bottom: 0.5rem; /* Adds space below each image */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BrickHouse</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Browse</a></li>
+                    </ul>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- The RenderBody method renders the content of the view that uses this layout -->
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - BrickHouse - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <!-- Scripts necessary for Bootstrap components to function -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- This section is for additional scripts to be rendered. -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
