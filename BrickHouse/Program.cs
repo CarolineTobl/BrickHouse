@@ -20,9 +20,16 @@ namespace BrickHouse
                 options.UseSqlServer(connectionString)); // Use the same connection string or a different one if required
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            // builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //     .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login"; // Set the login path to the desired URL
+            });
 
             // Configure HSTS
             builder.Services.AddHsts(options =>
@@ -98,19 +105,21 @@ namespace BrickHouse
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseAuthentication();
-
+            app.MapRazorPages();
+            
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"
             );
+            
             app.MapControllerRoute("pagenumandcategory", "{primaryCategory}/{pageNum}", new { Controller = "Home", action = "Index" });
             app.MapControllerRoute("pagination", "{pageNum}", new { Controller = "Home", action = "Index", pageNum = 1 });
             app.MapControllerRoute("category", "{primaryCategory}", new { Controller = "Home", action = "Index", pageNum = 1 });
             app.MapDefaultControllerRoute();
-            app.MapRazorPages();
+            
 
             app.Run();
         }
