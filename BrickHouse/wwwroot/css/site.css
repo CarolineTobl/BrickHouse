@@ -263,3 +263,19 @@ body {
     .account-details-container .btn.account-details-btn:hover {
         background-color: #bf433b; /* Darker shade when hovered */
     }
+
+.btn-oval-checkout {
+    background-color: #aedcae; /* This is a generic teal color; adjust the hex as needed */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px; /* Large border-radius to create an oval shape */
+    color: white; /* White text color */
+    text-transform: uppercase; /* UPPERCASE text */
+    font-weight: bold; /* Bold font weight */
+    font-family: 'Poppins', sans-serif; /* Poppins font */
+}
+
+/* Hover styles for the button */
+.btn-oval-checkout:hover {
+    background-color: #9fd4a3; /* Darker teal color for hover effect */
+}
