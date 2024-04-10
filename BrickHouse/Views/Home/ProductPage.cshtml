@@ -3,33 +3,45 @@
 
 @model ProductsListViewModel
 
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-3">
 
-
-
-<div>
-    <h1>Our Products</h1>
-</div>
-
-
-<div class="row">
-    <div class="col-md-3">
-        <vc:Product-types />
-        @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = "" })
-    </div>
+            @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = Model.CurrentProductType })
+        </div>
 
     <div class="col-md-9">
-        @foreach (Product p in Model.Products)
+        @if (Model.CurrentProductType == null)
         {
-            <partial name="ProductSummary" model="p" />
+            @foreach (Product p in Model.Products)
+            {
+                <partial name="ProductSummary" model="p" />
+            }
+        }
+        else
+        {
+            @foreach (Product p in Model.Products.Where(p => p.PrimaryCategory == Model.CurrentProductType || p.SecondaryCategory == Model.CurrentProductType))
+            {
+                <partial name="ProductSummary" model="p" />
+            }
         }
     </div>
-</div>
+
+    </div>
 
 
 
-<div page-model="@Model.PaginationInfo" page-action="ProductPage" page-classes-enabled="true" page-class="btn"
-     page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-     page-url-PrimaryCategory="@Model.CurrentProductType" class="btn-grp pull-right m-1">
+<div page-model="@Model.PaginationInfo"
+     page-action="ProductPage"
+     asp-route-Category="@Model.CurrentProductType"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary"
+     class="btn-grp pull-right m-1">
 </div>
 
 
