@@ -1,9 +1,12 @@
 ﻿@page
 @model BrickHouse.Pages.CartModel
 @{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // This sets the layout for this view
 }
 
-<h1>Your Cart</h1>
+<br /><br /> <br />
+<h3 style="color: #ec5a53; font-weight: bold; font-family: 'Poppins', sans-serif;">    YOUR CART</h3>
 
 <table class=" table table-borderd table-striped">
     <thead>
@@ -23,7 +26,7 @@
                 <td class="text-left">@l.Product.Name</td>
                 <td class="text-center">@l.Quantity</td>
                 <td class="text-right">$@l.Product.Price</td>
-                <td class="text-right">$@((l.Quantity * l.Product.Price).ToString("c"))</td>
+                <td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
                 <td class="text-center">
                     <form asp-page-handler="Remove" method="post">
                         <input type="hidden" name="ProjectId" value="@l.Product.ProductId" />
@@ -46,5 +49,8 @@
 </table>
 
 <div class="text-center">
-    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Browsing</a>
+    <a class="btn btn-oval me-2" role="button" asp-controller="Home" asp-action="ProductPage">Continue Browsing</a>
+    <a class="btn btn-oval-checkout" role="button" asp-controller="Home" asp-action="Checkout">Checkout</a>
+    @* <a class="btn btn-primary" asp-page="/CheckoutCart">Go to Cart</a> *@
+
 </div>

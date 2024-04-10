@@ -2,6 +2,7 @@ using BrickHouse.Models;
 using BrickHouse.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrickHouse.Controllers
 {
@@ -21,46 +22,36 @@ namespace BrickHouse.Controllers
 
         public IActionResult ProductPage(int pageNum, string category)
         {
-
             int pageSize = 5;
+            int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
 
-            //Handles a pagenumber less than 0 and defaults it to 2 (so it can be subtracted by 1 below)
-            int adjustedPageNum = pageNum <= 0 ? 2 : pageNum;
-
-            var blah = new ProductsListViewModel
+            var productsViewModel = new ProductsListViewModel
             {
-
-
                 Products = _repo.Products
-                .Where(x => x.PrimaryCategory == category || category == null)
-                .OrderBy(x => x.Name)
-                .Skip((adjustedPageNum - 1) * pageSize)
-                .Take(pageSize),
-
+                    .Where(x => string.IsNullOrEmpty(category) ||
+                                x.PrimaryCategory == category ||
+                                x.SecondaryCategory == category ||
+                                x.TertiaryCategory == category)
+                    .OrderBy(x => x.Name)
+                    .Skip((adjustedPageNum - 1) * pageSize)
+                    .Take(pageSize),
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    // if Product type is null, get a count of all Products, if filtering then only get the count of the filtered Products
-                    TotalItems = category == null ? _repo.Products.Count() : _repo.Products.Where(x => x.PrimaryCategory == category).Count()
+                    CurrentProductType = category,
+                    TotalItems = string.IsNullOrEmpty(category) ? _repo.Products.Count() :
+                                 _repo.Products.Where(x => x.PrimaryCategory == category || x.SecondaryCategory == category).Count()
                 },
-
-                CurrentProductType = category
+                
             };
 
-            /*            var ProductData = _repo.Products
-                            .OrderBy(x => x.Name)
-                            .Skip(pageSize * (pageNum -1))
-                            .Take(pageSize);*/
-
-            return View(blah);
+            // Return the regular view along with the view model
+            return View("ProductPage", productsViewModel);
         }
 
-        /*        public IActionResult Index()
-                {
-                    return View();
-                }*/
 
+        [Authorize (Roles = "admin")]
         public IActionResult Privacy()
         {
             return View();
@@ -71,5 +62,36 @@ namespace BrickHouse.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult ProductDetails(int productId)
+        {
+            var product = _repo.Products.FirstOrDefault(p => p.ProductId == productId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+/*        public IActionResult Checkout()
+        {
+ 
+            var viewModel = new CheckoutViewModel
+            {
+                UniqueBanks = _repo.Orders.Select(o => o.Bank).Distinct().ToList(),
+                UniqueCardTypes = _repo.Orders.Select(o => o.TypeOfCard).Distinct().ToList(),
+                UniqueCountriesOfTransaction = _repo.Orders.Select(o => o.CountryOfTransaction).Distinct().ToList(),
+                UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
+            };
+
+            return View(viewModel);
+        }*/
+
+
     }
 }

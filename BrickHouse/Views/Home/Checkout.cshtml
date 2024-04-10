@@ -1,5 +1,47 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // This sets the layout for this view
 }
+
+@model CheckoutViewModel
+
+<br />
+<br />
+<br />
+<div class="checkout-container text-center">
+    <!-- Add text-center here if you want the text aligned to center -->
+
+    <div class="checkout-cart-details">
+        <div class="checkout-payment-shipping">
+            <h2 style="color: #ec5a53; font-weight: bold; font-family: 'Poppins', sans-serif;">
+                PAYMENT & SHIPPING
+            </h2> <!-- Removed the misplaced style tag -->
+            <!-- Bank Dropdown -->
+            <select class="checkout-form-input" asp-for="SelectedBank" asp-items="@(new SelectList(Model.UniqueBanks))">
+                <option value="">Select Bank</option>
+            </select>
+
+            <!-- Type of Card Dropdown -->
+            <select class="checkout-form-input" asp-for="SelectedCardType" asp-items="@(new SelectList(Model.UniqueCardTypes))">
+                <option value="">Select Type of Card</option>
+            </select>
+
+            <!-- Country of Transaction Dropdown -->
+            <select class="checkout-form-input" asp-for="SelectedCountryOfTransaction" asp-items="@(new SelectList(Model.UniqueCountriesOfTransaction))">
+                <option value="">Country you are ordering from</option>
+            </select>
+
+            <!-- Shipping Address Dropdown -->
+            <select class="checkout-form-input" asp-for="SelectedShippingAddress" asp-items="@(new SelectList(Model.UniqueShippingAddresses))">
+                <option value="">Country you are shipping to</option>
+            </select>
+
+            <!-- Confirm Checkout Button -->
+            <div class="text-center mt-3">
+                <!-- Add margin-top for spacing and text-center to align the button -->
+                <a class="btn btn-oval me-2" role="button" asp-controller="Home" asp-action="CheckoutConfirmed">Confirm Checkout</a>
+            </div>
+
+        </div>
+    </div>
+</div>
