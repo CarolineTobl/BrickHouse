@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "About Us Page";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // This sets the layout for this view
 }
+<body>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="about-section">
+        <h1 class="about-title" style="text-align: center; font-weight: bold; font-family: 'Poppins', sans-serif;">ABOUT US</h1>
+
+        <span class="title-underline"></span>
+        <p class="about-content">
+            Aurora's passion for the whimsical world of Lego began in the sunlit corners of her childhood room, where towering structures sprang from her vivid imagination and nimble fingers. It was on TikTok where her enchanting creations first captivated a burgeoning community of brick enthusiasts, sharing not just designs but stories, each block a testament to boundless creativity. As her following burgeoned, so did her dreams. BrickHouse emerged from this digital tapestry, a beacon for those who believe in the joy of building. With a mission woven from nostalgia and innovation, BrickHouse is more than a brand—it's a homecoming of hearts around the hearth of imagination. Aurora's little corner on TikTok has expanded into a vast expanse, inviting builders of all ages to come, construct, and cherish their own masterpieces. As BrickHouse's vibrant community flourishes, it stands as a testament to Aurora's belief: that within every colorful brick lies the potential for a new world, awaiting its architect.
+        </p>
+        <div class="about-images row">
+            <div class="col-md-4">
+                <img src="~/images/BeachLegos.png" alt="Description of Image 1" class="img-fluid">
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/LegoDad.png" alt="Description of Image 2" class="img-fluid">
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/LightLego.png" alt="Description of Image 3" class="img-fluid">
+            </div>
+        </div>
+        <p><a class="btn btn-oval"  role="button" asp-controller="Home" asp-action="ProductPage">Shop Aurora's favorite Lego set</a></p>
+    </div>
+</body>

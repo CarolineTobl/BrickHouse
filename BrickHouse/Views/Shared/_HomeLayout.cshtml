@@ -1,7 +1,9 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,24 +47,30 @@
 
         /* Styles for the transparent navbar */
         .navbar {
-            background-color: transparent !important; /* Ensures the navbar is transparent */
+            background-color: transparent;
+            transition: background-color 0.5s; /* Smooth transition for the background color */
             border: none;
             box-shadow: none;
         }
 
-        /* Navbar brand text styles */
-        .navbar .navbar-brand {
-            color: white !important; /* White color text for the brand */
-            font-weight: 700; /* Montserrat bold for the brand */
-            font-size: 1.5em; /* Larger size for the brand */
-        }
+            .navbar.scrolled {
+                background-color: #ec5a53; /* Or any other color you prefer */
+            }
 
-        /* Navbar link text styles */
-        .navbar .nav-link {
-            color: white !important; /* White color text for the links */
-            font-weight: 400; /* Montserrat regular for other nav items */
-            font-size: 1em; /* Standard size for nav items */
-        }
+            .navbar .navbar-brand {
+                color: white !important;
+                font-weight: 900;
+                font-size: 1.5em;
+                font-family: 'Pridi', serif; /* Change the font family to Pridi */
+            }
+
+            /* Navbar link text styles */
+            .navbar .nav-link {
+                color: white !important;
+                font-weight: 400;
+                font-size: 1em;
+                font-family: 'Pridi', serif; /* Change the font family to Pridi */
+            }
 
         /* Hover effect for navbar links */
         .navbar .nav-link:hover, .navbar .navbar-brand:hover {
@@ -81,12 +89,22 @@
             right: 1rem; /* 1rem from the right edge of the navbar */
             top: 50%;
             transform: translateY(-50%); /* Center vertically in the navbar */
+            color: white; /* Set the text color to white */
+            border-color: white; /* Set the border color to white */
+            border-width: 2px; /* Slightly larger border */
+            font-family: 'Pridi', serif; /* Use the Pridi font */
+            font-size: 1em; /* Match the size of the other nav text */
+            background-color: transparent; /* Transparent background */
+            padding: 0.5rem 1rem; /* Adjust padding to match the size of nav text, modify as needed */
         }
 
-        /* Ensuring the nav elements are not transparent when scrolled (optional) */
-        .navbar.scrolled {
-            background-color: #FFF !important; /* White background on scroll */
-}
+            /* Change the color of the button text and border on hover and focus */
+            .navbar .btn-outline-success:hover,
+            .navbar .btn-outline-success:focus {
+                color: #FFF; /* Keep text white on hover/focus */
+                background-color: white; /* White background on hover/focus for visibility */
+                border-color: white; /* White border on hover/focus */
+            }
 
         .bottom-gradient {
             height: 100px; /* Or the height of your gradient */
@@ -110,15 +128,36 @@
         }
 
         .trending .col-md-3 {
-            padding: 0.5rem; /* Adds space around each image */
+            padding: 1rem; /* Adds more space around each image */
         }
 
         .trending img {
-            width: 100%; /* Makes the image responsive to the column width */
-            height: auto; /* Maintains the aspect ratio */
+            height: 200px; /* Fixed height for all images */
+            border-radius: 15px; /* Rounded corners */
+            border: 5px solid #ec5a53; /* Red border */
             object-fit: contain; /* Ensures the image fits within the element without stretching */
-            margin-bottom: 0.5rem; /* Adds space below each image */
+            margin: 10px; /* Adds space around the images */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow to the images for depth */
+            display: block; /* Ensure that images are block elements to allow for margin */
+            width: calc(100% - 30px); /* Adjust width to account for the border and margin */
         }
+
+        .see-all-btn {
+            display: block; /* Make the button a block element to fill the column */
+            width: calc(100% - 30px); /* Full width of the column minus the padding */
+            height: 200px; /* Same height as images to align them */
+            margin-top: 10px; /* Match the top margin of the images */
+            margin-bottom: 10px; /* If you want to have a bottom margin as well */
+            border-radius: 15px; /* Match the border radius of the images if needed */
+            border: 5px solid #ec5a53; /* Match the border style of the images */
+            color: #ec5a53; /* Text color */
+            background-color: #fff; /* Background color for the button */
+            align-items: center; /* Center text vertically using flexbox */
+            justify-content: center; /* Center text horizontally using flexbox */
+            text-decoration: none; /* Remove underline from anchor if it's a link */
+            display: flex; /* Use flexbox to center content */
+        }
+
     </style>
 </head>
 <body>
@@ -130,16 +169,20 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse">
+                <div class="collapse navbar-collapse justify-content-between">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ProductPage">Shop</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="AboutUs">About</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="ProductPage">Browse</a></li>
                     </ul>
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                    <partial  name="_LoginPartial" />
+                    <div class="col-6 navbar-text text-end">
+                        <vc:cart-summary />
+                    </div>
+                    
+                    @* <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button> *@
                 </div>
+
             </div>
         </nav>
     </header>
@@ -156,7 +199,7 @@
 
     <!-- Scripts necessary for Bootstrap components to function -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
     <!-- This section is for additional scripts to be rendered. -->
     @await RenderSectionAsync("Scripts", required: false)
 </body>

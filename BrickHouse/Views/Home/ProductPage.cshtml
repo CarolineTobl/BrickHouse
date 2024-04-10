@@ -1,34 +1,48 @@
 ﻿@using BrickHouse.Models.ViewModels
-@{Layout = "~/Views/Shared/_HomeLayout.cshtml";}
+@{Layout = "~/Views/Shared/_Layout.cshtml";}
 
 @model ProductsListViewModel
 
-<div>
-    <h1>Our Products</h1>
-</div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-3">
 
-
-<div class="row">
-    <div class="col-md-3">
-        <vc:Product-types />
-    </div>
+            @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = Model.CurrentProductType })
+        </div>
 
     <div class="col-md-9">
-        @foreach (Product p in Model.Products)
+        @if (Model.CurrentProductType == null)
         {
-            <partial name="ProductSummary" model="p" />
+            @foreach (Product p in Model.Products)
+            {
+                <partial name="ProductSummary" model="p" />
+            }
+        }
+        else
+        {
+            @foreach (Product p in Model.Products.Where(p => p.PrimaryCategory == Model.CurrentProductType || p.SecondaryCategory == Model.CurrentProductType))
+            {
+                <partial name="ProductSummary" model="p" />
+            }
         }
     </div>
+
+    </div>
+
+
+
+<div page-model="@Model.PaginationInfo"
+     page-action="ProductPage"
+     asp-route-Category="@Model.CurrentProductType"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary"
+     class="btn-grp pull-right m-1">
 </div>
 
 
 
-<div page-model="@Model.PaginationInfo" page-action="Index" page-classes-enabled="true" page-class="btn"
-     page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-     page-url-ProductType="@Model.CurrentProductType" class="btn-grp pull-right m-1">
-</div>
-
-
-@* <a asp-controller="Home" asp-action="Index" asp-route-pageNum="1">1</a>
-<a asp-controller="Home" asp-action="Index" asp-route-pageNum="2">2</a>
-<a asp-controller="Home" asp-action="Index" asp-route-pageNum="3">3</a> *@
