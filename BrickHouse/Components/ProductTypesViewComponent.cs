@@ -24,6 +24,5 @@ namespace BrickHouse.Components
 
             return View(productTypes);
         }
-
     }
 }

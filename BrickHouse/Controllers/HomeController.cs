@@ -26,14 +26,11 @@ namespace BrickHouse.Controllers
             return View();
         }
 
-        // "Shop" page for all products
-        public IActionResult ProductPage(int pageNum, string category)
-        {
-            // Set default page size
-            int pageSize = 5;
-            int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
 
-            // Build correct view model
+        /*public IActionResult ProductPage(int pageNum, string[] category, string color)
+
+
+            var selectedCategories = category ?? new string[] { }; // Handle null case
             var productsViewModel = new ProductsListViewModel
             {
                 Products = _repo.Products
@@ -55,9 +52,15 @@ namespace BrickHouse.Controllers
                 
             };
 
-            // Return the view and view model
+            // Return the regular view along with the view model
             return View("ProductPage", productsViewModel);
         }
+
+        /*        public IActionResult Index()
+                {
+                    return View();
+                }*/
+
 
         public IActionResult Privacy()
         {

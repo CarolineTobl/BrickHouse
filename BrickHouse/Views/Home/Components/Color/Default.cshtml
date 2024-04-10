@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty Products, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<string>
+
+
+@{
+    string selectedColor = ViewBag.SelectedColor ?? "Select Color";
+}
+
+
+<div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="colorDropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @selectedColor
+    </button>
+    <div class="dropdown-menu" aria-labelledby="colorDropdownMenuButton">
+        <a class="dropdown-item" asp-controller="Home" asp-action="ProductPage" asp-route-ProductPage="" asp-route-pageNum="">Clear Filter</a>
+
+        @foreach (string color in Model ?? Enumerable.Empty<string>())
+        {
+            <a class="dropdown-item @(color == ViewBag.SelectedColor ? "active" : "")"
+               asp-controller="Home"
+               asp-action="ProductPage"
+               asp-route-Color="@color"
+               asp-route-PageNum="1">@color
+            </a>
+        }
+
+    </div>
+</div>
+
+

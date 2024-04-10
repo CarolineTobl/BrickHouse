@@ -7,10 +7,75 @@
     <br />
     <br />
     <br />
+
     <div class="row">
         <div class="col-md-3">
 
             @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = Model.CurrentProductType })
+
+
+<div class="row float-right col-md-11">
+
+    <select id="itemsPerPageDropdown" class="form-control">
+        <option value="5">@Model.ItemsPerPage</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+    </select>
+
+    <script>
+        // Wait for the document to load
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the select element
+            var selectElement = document.getElementById('itemsPerPageDropdown');
+
+            // Set the selected option based on Model.ItemsPerPage
+            switch (@Model.ItemsPerPage) {
+                case 20:
+                    selectElement.value = '20';
+                    break;
+                case 10:
+                    selectElement.value = '10';
+                    break;
+                default:
+                    selectElement.value = '5';
+            }
+
+            // Add onchange event listener to navigate to the appropriate page
+            selectElement.addEventListener('change', function () {
+                var selectedValue = this.value;
+                window.location.href = '@Url.Action("ProductPage", new { pageNum = Model.PaginationInfo.CurrentPage, category = ViewBag.SelectedCategories, color = ViewBag.SelectedColors })&pageSize=' + selectedValue;
+            });
+        });
+    </script>
+
+
+
+</div>
+
+
+    <div class="row">
+        <div class="col-md-3">
+
+            @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = Model.CurrentProductType })
+@*             @await Component.InvokeAsync("Color") *@
+        </div>
+
+        <div class="col-md-9">
+            @if (Model.CurrentProductType == null)
+            {
+                @foreach (Product p in Model.Products)
+                {
+                    <partial name="ProductSummary" model="p" />
+                }
+            }
+            else
+            {
+                @foreach (Product p in Model.Products.Where(p => p.PrimaryCategory == Model.CurrentProductType || p.SecondaryCategory == Model.CurrentProductType))
+                {
+                    <partial name="ProductSummary" model="p" />
+                }
+            }
         </div>
 
     <div class="col-md-9">
