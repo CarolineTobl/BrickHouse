@@ -112,7 +112,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse">
+                <div class="collapse navbar-collapse justify-content-between">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">About</a></li>
@@ -120,7 +120,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ProductPage">Shop</a>
                         </li>
                     </ul>
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                    <partial  name="_LoginPartial" />
+                    <div class="col-6 navbar-text text-end">
+                        <vc:cart-summary />
+                    </div>
+                    
+                    @* <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button> *@
                 </div>
             </div>
         </nav>
