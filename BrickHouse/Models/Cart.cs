@@ -33,7 +33,7 @@
 
         public virtual decimal CalculateTotal() => Lines.Sum(x => x.Product.Price * x.Quantity);
 /*        {
-            // The lambda function essentill does this
+            // The lambda function essentially does this
             var blah = Lines.Sum(x => 25 * x.Quantity);
 
             return blah

@@ -1,0 +1,110 @@
+﻿@model BrickHouse.Models.ViewModels.AdminOrdersViewModel
+
+@{
+    ViewData["Title"] = "Manage Orders";
+}
+
+<h1>Manage Orders</h1>
+
+<div>
+    <a href="@Url.Action("ReviewFraudulentOrders", "Admin")" class="btn btn-info">Review Fraudulent Orders</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Transaction ID</th>
+            <th>Customer ID</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Country of Transaction</th>
+            <th>Shipping Address</th>
+            <th>Fraud?</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.TransactionId</td>
+                <td>@order.CustomerId</td>
+                <td>@order.Date</td>
+                <td>@String.Format("{0:C}", order.Amount)</td>
+                <td>@order.CountryOfTransaction</td>
+                <td>@order.ShippingAddress</td>
+                <td>@(order.Fraud == 1 ? "Yes" : "No")</td>
+                <td>
+                    <a href="@Url.Action("EditOrder", "Admin", new { id = order.TransactionId })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("DeleteOrderConfirmation", "Admin", new { id = order.TransactionId })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Order Pagination">
+    <ul class="pagination">
+        @if (Model.PaginationInfo.TotalPages > 0)
+        {
+            // Link to the first page
+            <li class="page-item @(Model.PaginationInfo.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = 1 })">First</a>
+            </li>
+
+            // Calculate the start and end range of the pagination
+            int currentPage = Model.PaginationInfo.CurrentPage;
+            int totalPages = Model.PaginationInfo.TotalPages;
+            int range = 3; // This will show three links before and after the current page
+            int startPage = currentPage - range;
+            int endPage = currentPage + range;
+
+            // Ensure we don't have a start page less than 1
+            if (startPage <= 0)
+            {
+                endPage -= (startPage - 1);
+                startPage = 1;
+            }
+
+            // Ensure we do not have an end page greater than the total pages
+            if (endPage > totalPages)
+            {
+                endPage = totalPages;
+                if (endPage > 2 * range)
+                {
+                    startPage = endPage - 2 * range;
+                }
+            }
+
+            // Link for the previous range if not starting from the first page
+            if (startPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = startPage - 1 })">...</a>
+                </li>
+            }
+
+            // Create the links for the "range" of pages around the current page
+            for (int i = startPage; i <= endPage; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = i })">@i</a>
+                </li>
+            }
+
+            // Link for the next range if not ending on the last page
+            if (endPage < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = endPage + 1 })">...</a>
+                </li>
+            }
+
+            // Link to the last page
+            <li class="page-item @(Model.PaginationInfo.CurrentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = totalPages })">Last</a>
+            </li>
+        }
+    </ul>
+</nav>
+
