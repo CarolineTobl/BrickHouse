@@ -191,10 +191,10 @@ namespace BrickHouse.Controllers
             // Send to order confirmation or fraud review confirmation
             if (model.Order.Fraud == 1)
             {
-                return RedirectToAction("CheckoutFraud");
+                return View("CheckoutFraud");
             }
 
-            return RedirectToAction("CheckoutConfirmed");
+            return View("CheckoutConfirmed");
         }
     }
 }
