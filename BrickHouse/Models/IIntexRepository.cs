@@ -6,5 +6,13 @@
 
         public IQueryable<Order> Orders { get; }
 
+        public IQueryable<Customer> Customers { get; }
+
+        // New method to add a Customer
+        public Task AddCustomerAsync(Customer customer);
+
+        public void AddLineItem(LineItem li);
+        public void AddOrder(Order o);
+
     }
 }

@@ -1,0 +1,95 @@
+﻿@model BrickHouse.Models.Order
+
+@{
+    ViewData["Title"] = "Edit Order";
+}
+
+<h2>Edit Order</h2>
+
+<form asp-action="EditOrder" method="post">
+    <input type="hidden" asp-for="TransactionId" />
+
+    <div class="form-group">
+        <label asp-for="CustomerId" class="control-label"></label>
+        <input asp-for="CustomerId" class="form-control" />
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Date" class="control-label"></label>
+        <input asp-for="Date" class="form-control" type="date" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DayOfWeek" class="control-label"></label>
+        <input asp-for="DayOfWeek" class="form-control" />
+        <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Time" class="control-label"></label>
+        <input asp-for="Time" class="form-control" />
+        <span asp-validation-for="Time" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EntryMode" class="control-label"></label>
+        <input asp-for="EntryMode" class="form-control" />
+        <span asp-validation-for="EntryMode" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Amount" class="control-label"></label>
+        <input asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TypeOfTransaction" class="control-label"></label>
+        <input asp-for="TypeOfTransaction" class="form-control" />
+        <span asp-validation-for="TypeOfTransaction" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CountryOfTransaction" class="control-label"></label>
+        <input asp-for="CountryOfTransaction" class="form-control" />
+        <span asp-validation-for="CountryOfTransaction" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ShippingAddress" class="control-label"></label>
+        <input asp-for="ShippingAddress" class="form-control" />
+        <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Bank" class="control-label"></label>
+        <input asp-for="Bank" class="form-control" />
+        <span asp-validation-for="Bank" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TypeOfCard" class="control-label"></label>
+        <input asp-for="TypeOfCard" class="form-control" />
+        <span asp-validation-for="TypeOfCard" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Fraud" class="control-label"></label>
+        <select asp-for="Fraud" class="form-control">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+        <span asp-validation-for="Fraud" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save changes</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
