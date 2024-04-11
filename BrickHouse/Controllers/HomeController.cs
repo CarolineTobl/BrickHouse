@@ -2,7 +2,9 @@ using BrickHouse.Models;
 using BrickHouse.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using BrickHouse.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 // INTEX II
 // Group 2-2
@@ -91,6 +93,7 @@ namespace BrickHouse.Controllers
         
         // Must be logged in to see this page; unauthenticated users redirected to login
         [Authorize]
+        [HttpGet]
         public IActionResult Checkout()
         {
             // Build view model
@@ -100,11 +103,59 @@ namespace BrickHouse.Controllers
                 UniqueCardTypes = _repo.Orders.Select(o => o.TypeOfCard).Distinct().ToList(),
                 UniqueCountriesOfTransaction = _repo.Orders.Select(o => o.CountryOfTransaction).Distinct().ToList(),
                 UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
+                
+                Order = new Order(),
+                Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart()
+                
             };
 
             return View(viewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Checkout(CheckoutViewModel model)
+        {
+            // Create new transaction ID
+            int newId = 0;
+            
+            if (_repo.Orders.Any()) // Check if there are any orders in the database
+            {
+                int maxId = await _repo.Orders.MaxAsync(o => o.TransactionId); // Get the max TransactionId
+                newId = maxId + 1; // Increment by one
+            }
+            else
+            {
+                newId = 100000; // Start from 100000 if there are no customers
+            }
 
+            // Set transaction ID
+            model.Order.TransactionId = newId;
+            // Add customer ID
+            
+            // Run fraud check
+            
+            foreach (var l in model.Cart.Lines)
+            {
+                // Create LineItem and fill with data
+                var li = new LineItem();
+                li.TransactionId = model.Order.TransactionId;
+                li.ProductId = l.Product.ProductId;
+                li.Qty = (byte)l.Quantity;
+                
+                // Add LineItem to database
+                _repo.AddLineItem(li);
+            }
+            
+            // Add Order to the database
+            _repo.AddOrder(model.Order);
+            
+            // Send to order confirmation or fraud review confirmation
+            if (model.Order.Fraud == 1)
+            {
+                return View("CheckoutFraud");
+            }
+
+            return View("CheckoutConfirmed");
+        }
     }
 }
