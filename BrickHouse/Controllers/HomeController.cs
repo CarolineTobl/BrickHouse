@@ -125,7 +125,7 @@ namespace BrickHouse.Controllers
             }
             else
             {
-                newId = 100000; // Start from 100000 if there are no customers
+                newId = 100000; // Start from 100000 if there are no orders
             }
 
             // Set transaction ID
@@ -133,6 +133,7 @@ namespace BrickHouse.Controllers
             // Add customer ID
             
             // Run fraud check
+            model.Order.Fraud = 0;
             
             foreach (var l in model.Cart.Lines)
             {
