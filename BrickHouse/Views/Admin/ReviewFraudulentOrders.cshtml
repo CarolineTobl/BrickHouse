@@ -1,13 +1,13 @@
 ﻿@model BrickHouse.Models.ViewModels.AdminOrdersViewModel
 
 @{
-    ViewData["Title"] = "Manage Orders";
+    ViewData["Title"] = "Review Fraudulent Orders";
 }
 
-<h1>Manage Orders</h1>
+<h1>Review Fraudulent Orders</h1>
 
 <div>
-    <a href="@Url.Action("ReviewFraudulentOrders", "Admin")" class="btn btn-info">Review Fraudulent Orders</a>
+    <a href="@Url.Action("CRUDOrders", "Admin")" class="btn btn-info">Back to All Orders</a>
 </div>
 
 <table class="table">
@@ -16,9 +16,15 @@
             <th>Transaction ID</th>
             <th>Customer ID</th>
             <th>Date</th>
+            <th>Day of Week</th>
+            <th>Time</th>
+            <th>Entry Mode</th>
             <th>Amount</th>
+            <th>Type of Transaction</th>
             <th>Country of Transaction</th>
             <th>Shipping Address</th>
+            <th>Bank</th>
+            <th>Type of Card</th>
             <th>Fraud?</th>
             <th>Actions</th>
         </tr>
@@ -30,9 +36,15 @@
                 <td>@order.TransactionId</td>
                 <td>@order.CustomerId</td>
                 <td>@order.Date</td>
+                <td>@order.DayOfWeek</td>
+                <td>@order.Time</td>
+                <td>@order.EntryMode</td>
                 <td>@String.Format("{0:C}", order.Amount)</td>
+                <td>@order.TypeOfTransaction</td>
                 <td>@order.CountryOfTransaction</td>
                 <td>@order.ShippingAddress</td>
+                <td>@order.Bank</td>
+                <td>@order.TypeOfCard</td>
                 <td>@(order.Fraud == 1 ? "Yes" : "No")</td>
                 <td>
                     <a href="@Url.Action("EditOrder", "Admin", new { id = order.TransactionId })" class="btn btn-primary">Edit</a>
@@ -49,7 +61,7 @@
         {
             // Link to the first page
             <li class="page-item @(Model.PaginationInfo.CurrentPage == 1 ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = 1 })">First</a>
+                <a class="page-link" href="@Url.Action("ReviewFraudulentOrders", new { pageNum = 1 })">First</a>
             </li>
 
             // Calculate the start and end range of the pagination
@@ -80,7 +92,7 @@
             if (startPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = startPage - 1 })">...</a>
+                    <a class="page-link" href="@Url.Action("ReviewFraudulentOrders", new { pageNum = startPage - 1 })">...</a>
                 </li>
             }
 
@@ -88,7 +100,7 @@
             for (int i = startPage; i <= endPage; i++)
             {
                 <li class="page-item @(i == currentPage ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = i })">@i</a>
+                    <a class="page-link" href="@Url.Action("ReviewFraudulentOrders", new { pageNum = i })">@i</a>
                 </li>
             }
 
@@ -96,15 +108,14 @@
             if (endPage < totalPages)
             {
                 <li class="page-item">
-                    <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = endPage + 1 })">...</a>
+                    <a class="page-link" href="@Url.Action("ReviewFraudulentOrders", new { pageNum = endPage + 1 })">...</a>
                 </li>
             }
 
             // Link to the last page
             <li class="page-item @(Model.PaginationInfo.CurrentPage == totalPages ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("CRUDOrders", new { pageNum = totalPages })">Last</a>
+                <a class="page-link" href="@Url.Action("ReviewFraudulentOrders", new { pageNum = totalPages })">Last</a>
             </li>
         }
     </ul>
 </nav>
-
