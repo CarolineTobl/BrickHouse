@@ -89,11 +89,11 @@ namespace BrickHouse
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
             // Enable third-party auth through Google
-            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+   /*         builder.Services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-            });
+            });*/
 
             var app = builder.Build();
 
