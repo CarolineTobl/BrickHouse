@@ -98,8 +98,10 @@ namespace BrickHouse
             // Enable third-party auth through Google
             builder.Services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+                googleOptions.ClientId = Environment.GetEnvironmentVariable("GOOGLE_PROVIDER_AUTHENTICATION_CLIENT_ID")
+                                         ?? builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_PROVIDER_AUTHENTICATION_SECRET") 
+                                             ?? builder.Configuration["Authentication:Google:ClientSecret"];
             });
 
             var app = builder.Build();
