@@ -9,7 +9,7 @@ public partial class Order
     [Key]
     public int TransactionId { get; set; }
 
-    public string CustomerId { get; set; } = null!;
+    public int CustomerId { get; set; }
 
     public DateOnly Date { get; set; }
 
