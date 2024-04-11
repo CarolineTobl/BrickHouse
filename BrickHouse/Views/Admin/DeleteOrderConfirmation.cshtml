@@ -1,0 +1,16 @@
+﻿@model BrickHouse.Models.Order
+
+@{
+    ViewData["Title"] = "Delete Order Confirmation";
+}
+
+<h1>Delete Order Confirmation</h1>
+
+<p>Are you sure you want to delete the order with Transaction ID: @Model.TransactionId?</p>
+
+<form asp-action="DeleteOrder" method="post">
+    <input type="hidden" asp-for="TransactionId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="CRUDOrders" class="btn btn-secondary">Cancel</a>
+</form>
+
