@@ -267,7 +267,36 @@ public class AdminController : Controller
         return RedirectToAction(nameof(CRUDProducts));
     }
 
-    // POST: Admin/DeleteProduct/5
+    // CRUD ORDERS
+    //
+    //
+    //
+    //
+
+    public async Task<IActionResult> CRUDOrders(int pageNum = 1, int pageSize = 40)
+    {
+        var ordersQuery = _context.Orders.AsNoTracking(); // Use AsNoTracking for read-only scenarios
+        var totalItems = await ordersQuery.CountAsync();
+
+        var orders = await ordersQuery
+                            .OrderByDescending(o => o.Date) // Assuming you want to sort by the date
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToListAsync();
+
+        var model = new AdminOrdersViewModel
+        {
+            Orders = orders,
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = pageNum,
+                ItemsPerPage = pageSize,
+                TotalItems = totalItems
+            }
+        };
+
+        return View(model);
+    }
 
 }
 
