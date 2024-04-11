@@ -381,6 +381,41 @@ public class AdminController : Controller
         return RedirectToAction(nameof(CRUDOrders));
     }
 
+    // GET: Admin/ReviewFraudulentOrders
+    public async Task<IActionResult> ReviewFraudulentOrders(int pageNum = 1, int pageSize = 20)
+    {
+        // We only want orders where Fraud is set to 1
+        var fraudulentOrdersQuery = _context.Orders
+                                            .Where(o => o.Fraud == 1)
+                                            .AsNoTracking();
+
+        // Count the total items for pagination
+        var totalItems = await fraudulentOrdersQuery.CountAsync();
+
+        // Retrieve the specific page of fraudulent orders
+        var orders = await fraudulentOrdersQuery
+                            .OrderByDescending(o => o.Date) // Assuming you want to sort by the date
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToListAsync();
+
+        var model = new AdminOrdersViewModel
+        {
+            Orders = orders,
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = pageNum,
+                ItemsPerPage = pageSize,
+                TotalItems = totalItems,
+            }
+        };
+
+        return View(model);
+    }
+
+
+
+
 
 }
 
