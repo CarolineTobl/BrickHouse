@@ -1,8 +1,10 @@
 ﻿namespace BrickHouse.Models.ViewModels
 {
-    public class ProductsListViewModel
+    public class WrapperViewModel
     {
         public IQueryable<Product> Products { get; set; }
+        public IEnumerable<string> ProductTypes { get; set; }
+        public IEnumerable<string> Colors { get; set; }
 
         public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo();
 

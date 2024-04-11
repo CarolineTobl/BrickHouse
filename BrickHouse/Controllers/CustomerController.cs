@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using BrickHouse.Models;
 using BrickHouse.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrickHouse.Controllers
 {
@@ -21,34 +22,46 @@ namespace BrickHouse.Controllers
         // GET: /AccountDetails
         public IActionResult AccountDetails()
         {
-            return View(new AccountDetailsModel());
+            return View(new AccountDetailsViewModel());
         }
 
         // POST: /AccountDetails
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AccountDetails(AccountDetailsModel model)
+        public async Task<IActionResult> AccountDetails(AccountDetailsViewModel model)
         {
-            if (ModelState.IsValid)
+            var userId = _userManager.GetUserId(User);
+
+            int newId;
+            if (_repo.Customers.Any()) // Check if there are any customers in the database
             {
-                var userId = _userManager.GetUserId(User);
-                // Create a new Customer object from the model
-                var customer = new Customer
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    BirthDate = model.BirthDate,
-                    Gender = model.Gender,
-                    CountryOfResidence = model.Country,
-                    AspNetUserId = userId // Link to the registered user
-                };
-
-                await _repo.AddCustomerAsync(customer); // Changed from _context to _repo
-
-                return RedirectToAction("ConfirmationPage");
+                int maxId = await _repo.Customers.MaxAsync(c => (int?)c.CustomerId) ?? 0; // Get the max CustomerId
+                newId = maxId + 1; // Increment by one
+            }
+            else
+            {
+                newId = 30000; // Start from 30000 if there are no customers
             }
 
-            return View(model);
+            // Create a new Customer object from the model
+            var customer = new Customer
+            {
+                CustomerId = newId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                BirthDate = model.BirthDate,
+                Gender = model.Gender,
+                CountryOfResidence = model.Country,
+                AspNetUserId = userId // Link to the registered user
+            };
+
+            await _repo.AddCustomerAsync(customer); // Add the new customer
+
+            return RedirectToAction("ConfirmationPage");
+        }
+
+        public IActionResult ConfirmationPage()
+        {
+            return View();
         }
     }
 }
