@@ -11,11 +11,13 @@ public partial class Customer
 
     public string LastName { get; set; } = null!;
 
-    public DateOnly BirthDate { get; set; }
+    public DateTime BirthDate { get; set; }
 
     public string CountryOfResidence { get; set; } = null!;
 
     public string Gender { get; set; } = null!;
 
     public double Age { get; set; }
+
+    public string AspNetUserId { get; set; }
 }
