@@ -16,8 +16,9 @@ namespace BrickHouse
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            // DELETE SECRET BEFORE SUBMITTING! This is an alternate connection to the database that has the real connection string
+            var connectionString = Environment.GetEnvironmentVariable("AzureSqlConnection")
+                                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
             
             // ASP.NET identity context
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -96,12 +97,18 @@ namespace BrickHouse
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
             // Enable third-party auth through Google
+            // builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+            // {
+            //     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+            //     googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            // });
+
             builder.Services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Environment.GetEnvironmentVariable("GOOGLE_PROVIDER_AUTHENTICATION_CLIENT_ID")
-                                         ?? builder.Configuration["Authentication:Google:ClientId"];
+                                        ?? builder.Configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_PROVIDER_AUTHENTICATION_SECRET") 
-                                             ?? builder.Configuration["Authentication:Google:ClientSecret"];
+                                        ?? builder.Configuration["Authentication:Google:ClientSecret"];
             });
 
             var app = builder.Build();
