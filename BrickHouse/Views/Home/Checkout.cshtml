@@ -16,31 +16,35 @@
             <h2 style="color: #ec5a53; font-weight: bold; font-family: 'Poppins', sans-serif;">
                 PAYMENT & SHIPPING
             </h2> <!-- Removed the misplaced style tag -->
-            <!-- Bank Dropdown -->
-            <select class="checkout-form-input" asp-for="SelectedBank" asp-items="@(new SelectList(Model.UniqueBanks))">
-                <option value="">Select Bank</option>
-            </select>
+            <form asp-action="Checkout" method="post">
+                <!-- Bank dropdown -->
+                <select class="checkout-form-input" asp-for="Order.Bank" asp-items="@(new SelectList(Model.UniqueBanks))">
+                    <option value="">Select Bank</option>
+                </select>
 
-            <!-- Type of Card Dropdown -->
-            <select class="checkout-form-input" asp-for="SelectedCardType" asp-items="@(new SelectList(Model.UniqueCardTypes))">
-                <option value="">Select Type of Card</option>
-            </select>
+                <!-- Type of Card Dropdown -->
+                <select class="checkout-form-input" asp-for="Order.TypeOfCard" asp-items="@(new SelectList(Model.UniqueCardTypes))">
+                    <option value="">Select Type of Card</option>
+                </select>
 
-            <!-- Country of Transaction Dropdown -->
-            <select class="checkout-form-input" asp-for="SelectedCountryOfTransaction" asp-items="@(new SelectList(Model.UniqueCountriesOfTransaction))">
-                <option value="">Country you are ordering from</option>
-            </select>
+                <!-- Country of Transaction Dropdown -->
+                <select class="checkout-form-input" asp-for="Order.CountryOfTransaction" asp-items="@(new SelectList(Model.UniqueCountriesOfTransaction))">
+                    <option value="">Country you are ordering from</option>
+                </select>
 
-            <!-- Shipping Address Dropdown -->
-            <select class="checkout-form-input" asp-for="SelectedShippingAddress" asp-items="@(new SelectList(Model.UniqueShippingAddresses))">
-                <option value="">Country you are shipping to</option>
-            </select>
+                <!-- Shipping Address Dropdown -->
+                <select class="checkout-form-input" asp-for="Order.ShippingAddress" asp-items="@(new SelectList(Model.UniqueShippingAddresses))">
+                    <option value="">Country you are shipping to</option>
+                </select>
 
-            <!-- Confirm Checkout Button -->
-            <div class="text-center mt-3">
-                <!-- Add margin-top for spacing and text-center to align the button -->
-                <a class="btn btn-oval me-2" role="button" asp-controller="Home" asp-action="CheckoutConfirmed">Confirm Checkout</a>
-            </div>
+                <!-- Confirm Checkout Button -->
+                <div class="text-center mt-3">
+                    <!-- Add margin-top for spacing and text-center to align the button -->
+                    <button type="submit" class="btn btn-oval me-2">Confirm Checkout</button>
+                </div>
+                <input type="hidden"/>
+            </form>
+            
 
         </div>
     </div>

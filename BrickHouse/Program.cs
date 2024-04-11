@@ -3,6 +3,7 @@ using BrickHouse.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.ML.OnnxRuntime;
 
 // INTEX II
 // Group 2-2
@@ -95,14 +96,11 @@ namespace BrickHouse
             // Add instance of session cart and necessary tools
             builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
-            // Enable third-party auth through Google
-            // builder.Services.AddAuthentication().AddGoogle(googleOptions =>
-            // {
-            //     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-            //     googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-            // });
 
+            builder.Services.AddSingleton<InferenceSession>(new InferenceSession("\final_decision_tree_model.onnx")
+);
+
+            // Enable third-party auth through Google
             builder.Services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Environment.GetEnvironmentVariable("GOOGLE_PROVIDER_AUTHENTICATION_CLIENT_ID")
