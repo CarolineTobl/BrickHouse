@@ -17,9 +17,14 @@
     </a>
     <br />
     <h6>$@Model.Price</h6>
+
+    <h5>Categories:</h5>
     <h6>@Model.PrimaryCategory</h6>
     <h6>@Model.SecondaryCategory</h6>
     <h6>@Model.TertiaryCategory</h6>
+    <h5>Colors:</h5>
+    <h6>@Model.PrimaryColor</h6>
+    <h6>@Model.SecondaryColor</h6>
 
     <form id=@Model.ProductId method="post" asp-page="/Cart">
         <input type="hidden" asp-for="ProductId" />

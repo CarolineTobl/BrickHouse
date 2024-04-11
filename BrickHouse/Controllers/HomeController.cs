@@ -28,38 +28,59 @@ namespace BrickHouse.Controllers
             return View();
         }
 
-        // "Shop" page for all products
-        public IActionResult ProductPage(int pageNum, string category)
+        public IActionResult ProductPage(int pageNum, string[] category, string[] color, int pageSize)
         {
-            // Set default page size
-            int pageSize = 5;
             int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
 
-            // Build correct view model
+            if (pageSize == 0)
+            {
+                pageSize = 5;
+            }
+
+            var selectedCategories = category ?? new string[] { };
+            var selectedColors = color ?? new string[] { };
+
+            var productsQuery = _repo.Products
+                .Where(x =>
+                    (selectedCategories.Length == 0 || selectedCategories.All(c =>
+                        x.PrimaryCategory == c || x.SecondaryCategory == c || x.TertiaryCategory == c))
+                    &&
+                    (selectedColors.Length == 0 || selectedColors.Any(col =>
+                        x.PrimaryColor == col || x.SecondaryColor == col)))
+                .OrderBy(x => x.Name);
+
+            // Count the total filtered products
+            int totalFilteredItems = productsQuery.Count();
+
+            var products = productsQuery
+                .Skip((adjustedPageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
             var productsViewModel = new ProductsListViewModel
             {
-                Products = _repo.Products
-                    .Where(x => string.IsNullOrEmpty(category) ||
-                                x.PrimaryCategory == category ||
-                                x.SecondaryCategory == category ||
-                                x.TertiaryCategory == category)
-                    .OrderBy(x => x.Name)
-                    .Skip((adjustedPageNum - 1) * pageSize)
-                    .Take(pageSize),
+                Products = products.AsQueryable(),
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    CurrentProductType = category,
-                    TotalItems = string.IsNullOrEmpty(category) ? _repo.Products.Count() :
-                                 _repo.Products.Where(x => x.PrimaryCategory == category || x.SecondaryCategory == category).Count()
+                    CurrentProductType = selectedCategories.Length > 0 ? string.Join(", ", selectedCategories) : null,
+                    CurrentColor = selectedColors.Length > 0 ? string.Join(", ", selectedColors) : null,
+                    TotalItems = totalFilteredItems // Update with total filtered products count
                 },
-                
+
+                ItemsPerPage = pageSize,
+                SelectedCategory = selectedCategories, // Store selected category
+                SelectedColor = selectedColors // Store selected color
             };
 
-            // Return the view and view model
+            ViewBag.SelectedCategories = selectedCategories.ToList();
+            ViewBag.SelectedColors = selectedColors.ToList();
             return View("ProductPage", productsViewModel);
         }
+
+
+
 
         public IActionResult Privacy()
         {
