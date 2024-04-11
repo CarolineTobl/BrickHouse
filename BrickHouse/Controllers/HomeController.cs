@@ -5,6 +5,8 @@ using System.Diagnostics;
 using BrickHouse.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML.OnnxRuntime.Tensors;
+using Microsoft.ML.OnnxRuntime;
 
 // INTEX II
 // Group 2-2

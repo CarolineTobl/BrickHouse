@@ -3,6 +3,7 @@ using BrickHouse.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.ML.OnnxRuntime;
 
 // INTEX II
 // Group 2-2
@@ -95,6 +96,9 @@ namespace BrickHouse
             // Add instance of session cart and necessary tools
             builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            builder.Services.AddSingleton<InferenceSession>(new InferenceSession("\final_decision_tree_model.onnx")
+);
 
             // Enable third-party auth through Google
             builder.Services.AddAuthentication().AddGoogle(googleOptions =>
