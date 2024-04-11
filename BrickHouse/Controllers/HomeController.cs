@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using BrickHouse.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 // INTEX II
@@ -16,11 +17,13 @@ namespace BrickHouse.Controllers
     {
         // Initialize private repository instance
         private IIntexRepository _repo;
+        private UserManager<IdentityUser> _userManager;
 
-        public HomeController(IIntexRepository temp)
+        public HomeController(IIntexRepository temp, UserManager<IdentityUser> userManager)
         {
             // Assign temporary public repo resource to private var
             _repo = temp;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -126,8 +129,7 @@ namespace BrickHouse.Controllers
                 UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
                 
                 Order = new Order(),
-                Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart()
-                
+                Cart = HttpContext.Session.GetJson<Cart>("Cart")
             };
 
             return View(viewModel);
@@ -138,6 +140,10 @@ namespace BrickHouse.Controllers
         {
             // Create new transaction ID
             int newId = 0;
+            
+            // Reset session cart
+            model.Cart = HttpContext.Session.GetJson<Cart>("Cart");
+            model.Order.Amount = (double)model.Cart.CalculateTotal();
             
             if (_repo.Orders.Any()) // Check if there are any orders in the database
             {
@@ -151,7 +157,16 @@ namespace BrickHouse.Controllers
 
             // Set transaction ID
             model.Order.TransactionId = newId;
-            // Add customer ID
+            
+            // Find Customer ID associated with session user
+            var userId = _userManager.GetUserId(User);
+            var custId = await _repo.Customers
+                .Where(c => c.AspNetUserId == userId)
+                .Select(c => c.CustomerId)
+                .FirstOrDefaultAsync();
+            
+            // Set custId attribute in order object
+            model.Order.CustomerId = custId;
             
             // Run fraud check
             model.Order.Fraud = 0;
