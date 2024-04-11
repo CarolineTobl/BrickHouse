@@ -12,24 +12,19 @@
 }
 
 
-<div class="dropdown">
-    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="colorDropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        @selectedColor
-    </button>
-    <div class="dropdown-menu" aria-labelledby="colorDropdownMenuButton">
-        <a class="dropdown-item" asp-controller="Home" asp-action="ProductPage" asp-route-ProductPage="" asp-route-pageNum="">Clear Filter</a>
-
-        @foreach (string color in Model ?? Enumerable.Empty<string>())
+<form asp-action="ProductPage" method="get">
+    <div class="form-group">
+        <label>Colors:</label><br />
+        @foreach (var color in Model)
         {
-            <a class="dropdown-item @(color == ViewBag.SelectedColor ? "active" : "")"
-               asp-controller="Home"
-               asp-action="ProductPage"
-               asp-route-Color="@color"
-               asp-route-PageNum="1">@color
-            </a>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="color" value="@color" @(ViewBag.SelectedColor != null && ViewBag.SelectedColor.Contains(color) ? "checked" : "") />
+                <label class="form-check-label">@color</label>
+            </div>
         }
-
     </div>
-</div>
+
+    <button type="submit" class="btn btn-primary">Apply Filters</button>
+</form>
 
 

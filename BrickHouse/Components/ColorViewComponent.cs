@@ -16,14 +16,22 @@ namespace BrickHouse.Components
 
         public IViewComponentResult Invoke()
         {
-            var colorTypes = _intexRepo.Products
-                .SelectMany(x => new List<string> { x.PrimaryColor, x.SecondaryColor })
-                .Where(x => !string.IsNullOrEmpty(x))
+            var primaryColors = _intexRepo.Products
+                .Select(x => x.PrimaryColor)
+                .Where(x => !string.IsNullOrEmpty(x));
+
+            var secondaryColors = _intexRepo.Products
+                .Select(x => x.SecondaryColor)
+                .Where(x => !string.IsNullOrEmpty(x));
+
+            var colorTypes = primaryColors
+                .Union(secondaryColors)
                 .Distinct()
                 .OrderBy(x => x)
-                .ToList(); // Materialize the query to execute it
+                .ToList();
 
             return View(colorTypes);
         }
+
     }
 }
