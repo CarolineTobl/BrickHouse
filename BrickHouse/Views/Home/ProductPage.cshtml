@@ -29,9 +29,13 @@
 </div>
 <div class="row">
     <div class="col-md-3">
+        <form asp-action="ProductPage" method="get">
 
         @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = Model.CurrentProductType })
-        @await Component.InvokeAsync("Color")
+        @await Component.InvokeAsync("Color", new { primaryColor = Model.CurrentColor, secondaryColor = Model.CurrentColor }))
+        
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </form>
     </div>
 
     <div class="col-md-9">

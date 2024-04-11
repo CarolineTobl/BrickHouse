@@ -26,54 +26,6 @@ namespace BrickHouse.Controllers
             return View();
         }
 
-
-        /*        public IActionResult ProductPage(int pageNum, string[] category, string[] color, int pageSize = 5)
-                {
-                    int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
-
-                    var selectedCategories = category ?? new string[] { };
-                    var selectedColors = color ?? new string[] { };
-
-                    var productsQuery = _repo.Products
-                        .Where(x =>
-                            (selectedCategories.Length == 0 || selectedCategories.All(c =>
-                                x.PrimaryCategory == c || x.SecondaryCategory == c || x.TertiaryCategory == c))
-                            &&
-                            (selectedColors.Length == 0 || selectedColors.Any(col =>
-                                x.PrimaryColor == col || x.SecondaryColor == col)))
-                        .OrderBy(x => x.Name)
-                        .Skip((adjustedPageNum - 1) * pageSize)
-                        .Take(pageSize);
-
-                    var products = productsQuery.ToList();
-
-                    var productsViewModel = new ProductsListViewModel
-                    {
-                        Products = products.AsQueryable(),
-                        PaginationInfo = new PaginationInfo
-                        {
-                            CurrentPage = pageNum,
-                            ItemsPerPage = pageSize,
-                            CurrentProductType = selectedCategories.Length > 0 ? string.Join(", ", selectedCategories) : "All",
-                            CurrentColor = selectedColors.Length > 0 ? string.Join(", ", selectedColors) : "All",
-                            TotalItems = _repo.Products.Count() // Update this to consider filters if needed
-                        },
-                        AvailableColors = products
-                            .SelectMany(x => new List<string> { x.PrimaryColor, x.SecondaryColor })
-                            .Where(x => !string.IsNullOrEmpty(x))
-                            .Distinct()
-                            .OrderBy(x => x)
-                            .ToList()
-                    };
-
-                    // Set ItemsPerPage to 5 explicitly
-                    productsViewModel.ItemsPerPage = pageSize;
-
-                    ViewBag.SelectedCategories = selectedCategories.ToList();
-                    ViewBag.SelectedColors = selectedColors.ToList();
-                    return View("ProductPage", productsViewModel); // Ensure you are passing the correct model here
-                }*/
-
         public IActionResult ProductPage(int pageNum, string[] category, string[] color, int pageSize )
         {
             int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
@@ -85,7 +37,6 @@ namespace BrickHouse.Controllers
 
             var selectedCategories = category ?? new string[] { };
             var selectedColors = color ?? new string[] { };
-            ViewBag.Colors = selectedColors;
 
             var productsQuery = _repo.Products
                 .Where(x =>
@@ -109,15 +60,10 @@ namespace BrickHouse.Controllers
                     ItemsPerPage = pageSize,
                     CurrentProductType = selectedCategories.Length > 0 ? string.Join(", ", selectedCategories) : null,
                     CurrentColor = selectedColors.Length > 0 ? string.Join(", ", selectedColors) : null,
-                    TotalItems = _repo.Products.Count() // Update this to consider filters if needed
+                    TotalItems = _repo.Products.Count()
                 },
-                AvailableColors = products
-                .SelectMany(x => new List<string> { x.PrimaryColor, x.SecondaryColor })
-                .Where(x => !string.IsNullOrEmpty(x))
-                .Distinct()
-                .OrderBy(x => x)
-                .ToList(),
-                ItemsPerPage = pageSize, // Set ItemsPerPage explicitly
+   
+                ItemsPerPage = pageSize, 
                 SelectedCategory = selectedCategories, // Store selected category
                 SelectedColor = selectedColors // Store selected color
             };

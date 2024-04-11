@@ -7,10 +7,8 @@
 
 @{
     string selectedCategory = ViewBag.SelectedProductType ?? "Select Category";
-    string selectedColor = ViewBag.SelectedColor ?? "Select Color";
 }
 
-<form asp-action="ProductPage" method="get">
     <div class="form-group">
         <label>Categories:</label><br />
         @foreach (string category in Model ?? Enumerable.Empty<string>())
@@ -22,8 +20,6 @@
         }
     </div>
 
-    <button type="submit" class="btn btn-primary">Apply Filters</button>
-</form>
 
 
 
