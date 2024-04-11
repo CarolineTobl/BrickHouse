@@ -44,6 +44,7 @@ namespace BrickHouse
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.ConsentCookieValue = "true";
             });
 
             // Configure HSTS
