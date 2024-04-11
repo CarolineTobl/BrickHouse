@@ -40,6 +40,13 @@ namespace BrickHouse
                 options.LoginPath = "/Identity/Account/Login"; // Set the login path to the desired URL
             });
 
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.ConsentCookieValue = "true";
+            });
+
             // Configure HSTS
             builder.Services.AddHsts(options =>
             {
@@ -114,6 +121,8 @@ namespace BrickHouse
             // Enables static files in wwwroot folder
             app.UseStaticFiles();
 
+            app.UseCookiePolicy();
+            
             // Activate services
             app.UseSession();
             app.UseRouting();
