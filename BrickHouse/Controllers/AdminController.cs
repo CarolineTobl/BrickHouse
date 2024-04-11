@@ -16,7 +16,7 @@ public class AdminController : Controller
         _context = context;
     }
 
-    private bool CustomerExists(string customerId)
+    private bool CustomerExists(int customerId)
     {
         return _context.Customers.Any(e => e.CustomerId == customerId);
     }
@@ -75,7 +75,7 @@ public class AdminController : Controller
     }
 
     // GET: Admin/EditUser/5
-    public async Task<IActionResult> EditUser(string customerId)
+    public async Task<IActionResult> EditUser(int customerId) // Changed parameter type to int
     {
         var customer = await _context.Customers.FindAsync(customerId);
         if (customer == null)
@@ -88,7 +88,7 @@ public class AdminController : Controller
     // POST: Admin/EditUser/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> EditUser(string customerId, Customer customer)
+    public async Task<IActionResult> EditUser(int customerId, Customer customer) // Changed parameter type to int
     {
         if (ModelState.IsValid)
         {
@@ -100,20 +100,14 @@ public class AdminController : Controller
     }
 
     // GET: Admin/DeleteUserConfirmation/5
-    public async Task<IActionResult> DeleteUserConfirmation(string customerId)
+    public async Task<IActionResult> DeleteUserConfirmation(int customerId) // Changed parameter type to int
     {
-        if (string.IsNullOrEmpty(customerId))
-        {
-            return NotFound();
-        }
-
         var customer = await _context.Customers
-            .FirstOrDefaultAsync(m => m.CustomerId == customerId);
+            .FirstOrDefaultAsync(m => m.CustomerId == customerId); // Changed == comparison to int
         if (customer == null)
         {
             return NotFound();
         }
-
         return View(customer);
     }
 
@@ -121,14 +115,13 @@ public class AdminController : Controller
     // POST: Admin/DeleteUser
     [HttpPost, ActionName("DeleteUser")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteUserConfirmed(string customerId)
+    public async Task<IActionResult> DeleteUserConfirmed(int customerId) // Changed parameter type to int
     {
         var customer = await _context.Customers.FindAsync(customerId);
         _context.Customers.Remove(customer);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(CRUDUsers));
     }
-
 
     // CRUDPRODUCTS
     //

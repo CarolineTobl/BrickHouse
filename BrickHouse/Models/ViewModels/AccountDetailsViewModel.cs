@@ -2,7 +2,7 @@
 
 namespace BrickHouse.Models.ViewModels;
 
-public class AccountDetailsModel
+public class AccountDetailsViewModel
 {
     [Required]
     public string FirstName { get; set; }
