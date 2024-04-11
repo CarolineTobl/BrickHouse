@@ -298,5 +298,89 @@ public class AdminController : Controller
         return View(model);
     }
 
+    // GET: Admin/EditOrder/5
+    public async Task<IActionResult> EditOrder(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var order = await _context.Orders.FindAsync(id);
+        if (order == null)
+        {
+            return NotFound();
+        }
+        return View(order);
+    }
+
+    // POST: Admin/EditOrder/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditOrder(int id, [Bind("TransactionId,CustomerId,Date,DayOfWeek,Time,EntryMode,Amount,TypeOfTransaction,CountryOfTransaction,ShippingAddress,Bank,TypeOfCard,Fraud")] Order order)
+    {
+        if (id != order.TransactionId)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                _context.Update(order);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(order.TransactionId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(CRUDOrders));
+        }
+        return View(order);
+    }
+
+    private bool OrderExists(int id)
+    {
+        return _context.Orders.Any(e => e.TransactionId == id);
+    }
+
+    // GET: Admin/DeleteOrderConfirmation/5
+    public async Task<IActionResult> DeleteOrderConfirmation(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var order = await _context.Orders
+            .FirstOrDefaultAsync(m => m.TransactionId == id);
+        if (order == null)
+        {
+            return NotFound();
+        }
+
+        return View(order);
+    }
+
+    // POST: Admin/DeleteOrder
+    [HttpPost, ActionName("DeleteOrder")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteOrderConfirmed(int id)
+    {
+        var order = await _context.Orders.FindAsync(id);
+        _context.Orders.Remove(order);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(CRUDOrders));
+    }
+
+
 }
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BrickHouse.Models;
 
 public partial class Order
 {
+    [Key]
     public int TransactionId { get; set; }
 
     public string CustomerId { get; set; } = null!;
