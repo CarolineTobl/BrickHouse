@@ -19,7 +19,7 @@
                 // Check if the ViewBag contains selected colors
                 bool isChecked = ViewBag.SelectedColors != null && ViewBag.SelectedColors.Contains(color);
             }
-            <input class="form-check-input" type="checkbox" name="color" value="@color" @(isChecked ? "checked" : "") />
+            <input class="form-check-input" type="checkbox" name="color" value="@color" @(isChecked ? "checked" : "") onclick="this.form.submit()" />
             <label class="form-check-label">@color</label>
         </div>
     }

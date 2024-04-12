@@ -1,215 +1,103 @@
-@{
-    Layout = null;
-}
+
 
 <style>
-
-    .banner {
-        position: relative; /* For absolute positioning of the gradient */
-        background: url('/images/castle5.jpg') no-repeat top center;
-        background-size: 100% auto; /* This will fit the image to the width */
-        width: 100%; /* Ensure the banner spans the full width */
-        height: auto; /* This will make the height adjust to the image */
-        min-height: 700px; /* Optional: You can set a minimum height */
+    .product-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Adjust the gap between cards */
     }
 
-        /* White gradient effect */
-        .banner::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 10%; /* This height will determine how much of the bottom part is covered by the gradient */
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-        }
-
-    .banner-gradient {
-        position: relative; /* For absolute positioning of the gradient */
-        background: url('/images/castle-gradient.png') no-repeat top center;
-        background-size: 100% auto; /* This will fit the image to the width */
-        width: 100%; /* Ensure the banner spans the full width */
-        height: auto; /* This will make the height adjust to the image */
-        min-height: 700px; /* Optional: You can set a minimum height */
-    }
-
-    body {
-        font-family: 'Montserrat', sans-serif; /* Update the body font to Montserrat for consistency */
-    }
-
-    /* Styles for the transparent navbar */
-    .navbar {
-        background-color: transparent;
-        transition: background-color 0.5s; /* Smooth transition for the background color */
-        border: none;
-        box-shadow: none;
-    }
-
-        .navbar.scrolled {
-            background-color: #ec5a53; /* Or any other color you prefer */
-        }
-
-        .navbar .navbar-brand {
-            color: white !important;
-            font-weight: 900;
-            font-size: 1.5em;
-            font-family: 'Pridi', serif; /* Change the font family to Pridi */
-        }
-
-        /* Navbar link text styles */
-        .navbar .nav-link {
-            color: white !important;
-            font-weight: 400;
-            font-size: 1em;
-            font-family: 'Pridi', serif; /* Change the font family to Pridi */
-        }
-
-            /* Hover effect for navbar links */
-            .navbar .nav-link:hover, .navbar .navbar-brand:hover {
-                color: #FFF !important; /* White color on hover */
-                background-color: transparent !important; /* Maintain transparent background on hover */
-            }
-
-    /* Adjusting the banner container padding if needed */
-    .banner .container {
-        padding-top: 100px; /* Padding to lower the text over the banner image */
-    }
-
-    /* Position the Login button to the right */
-    .navbar .btn-outline-success {
-        position: absolute;
-        right: 1rem; /* 1rem from the right edge of the navbar */
-        top: 50%;
-        transform: translateY(-50%); /* Center vertically in the navbar */
-        color: white; /* Set the text color to white */
-        border-color: white; /* Set the border color to white */
-        border-width: 2px; /* Slightly larger border */
-        font-family: 'Pridi', serif; /* Use the Pridi font */
-        font-size: 1em; /* Match the size of the other nav text */
-        background-color: transparent; /* Transparent background */
-        padding: 0.5rem 1rem; /* Adjust padding to match the size of nav text, modify as needed */
-    }
-
-        /* Change the color of the button text and border on hover and focus */
-        .navbar .btn-outline-success:hover,
-        .navbar .btn-outline-success:focus {
-            color: #FFF; /* Keep text white on hover/focus */
-            background-color: white; /* White background on hover/focus for visibility */
-            border-color: white; /* White border on hover/focus */
-        }
-
-    .bottom-gradient {
-        height: 100px; /* Or the height of your gradient */
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-    }
-
-    .bottom-gradient-large {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 70%;
-        z-index: -1; /* Ensure the gradient is behind other content */
-        background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-    }
-    /* Adjusted footer styles if needed */
-    footer {
-        background-color: #f8f9fa;
-        color: #333;
+    .product-card {
+        border: 3px solid #ec5a53; /* Pink border, adjust thickness as needed */
+        border-radius: 8px;
         padding: 10px;
+        width: 200px; /* Adjust the width of each card */
+        display: flex; /* Add this to make the card a flex container */
+        justify-content: center; /* Center the image horizontally */
+        align-items: center; /* Center the image vertically */
+        overflow: hidden; /* Hide the overflow content */
+        transition: transform 0.3s ease, border-color 0.3s ease; /* Smooth transition for hover effects */
+    }
+
+        .product-card:hover {
+            transform: scale(1.05); /* Slightly increase the size of the card */
+            border-color: #f88379; /* Change border color to a different shade of pink on hover */
+        }
+
+        .product-card img {
+            max-width: 100%; /* Ensure the image is contained within the card */
+            height: auto; /* Maintain the aspect ratio of the image */
+            display: block; /* Removes the bottom space under the image */
+        }
+
+        .product-card .price {
+            font-weight: bold;
+        }
+
+    .product-image-container {
+        width: 100%;
+        height: auto;
+        max-width: 150px;
+    }
+
+    .product-details {
+        margin: 10px; /* Add spacing between details */
+    }
+
+    .product-card-link {
+        text-decoration: none;
+    }
+
+    .products-card {
+        display: flex;
+        justify-content: center;
         text-align: center;
+        flex-wrap: wrap;
+        gap: 20px;
     }
 
-    .trending .col-md-3 {
-        padding: 1rem; /* Adds more space around each image */
-    }
-
-    .trending img {
-        height: 200px; /* Fixed height for all images */
-        border-radius: 15px; /* Rounded corners */
-        border: 5px solid #ec5a53; /* Red border */
-        object-fit: contain; /* Ensures the image fits within the element without stretching */
-        margin: 10px; /* Adds space around the images */
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow to the images for depth */
-        display: block; /* Ensure that images are block elements to allow for margin */
-        width: calc(100% - 30px); /* Adjust width to account for the border and margin */
-    }
-
-    .see-all-btn {
-        display: block; /* Make the button a block element to fill the column */
-        width: calc(100% - 30px); /* Full width of the column minus the padding */
-        height: 200px; /* Same height as images to align them */
-        margin-top: 10px; /* Match the top margin of the images */
-        margin-bottom: 10px; /* If you want to have a bottom margin as well */
-        border-radius: 15px; /* Match the border radius of the images if needed */
-        border: 5px solid #ec5a53; /* Match the border style of the images */
-        color: #ec5a53; /* Text color */
-        background-color: #fff; /* Background color for the button */
-        align-items: center; /* Center text vertically using flexbox */
-        justify-content: center; /* Center text horizontally using flexbox */
-        text-decoration: none; /* Remove underline from anchor if it's a link */
-        display: flex; /* Use flexbox to center content */
-    }
-
-    .trending .col-md-2-4 {
-        flex: 0 0 20%; /* Each column takes up 20% of the row */
-        max-width: 20%; /* Prevents the column from growing larger than 20% */
-    }
 
 
 </style>
 
-@if(ViewBag.signedIn == false){
+
+
+<div class="d-flex justify-content-center">
     <h1 style="color: #ec5a53; font-weight: 900;
-                font-size: 1.5em; font-family: 'Pridi', serif;">
+                font-size: 2.5em; font-family: 'Pridi', serif;">
         Trending Now
     </h1>
-    <br />
-    <div class="row">
+</div>
+<br />
+<div class="products-card">
+    @if (ViewBag.signedIn != null)
+    {
         @foreach (var product in ViewBag.Recommendations)
         {
-            <div class="col-md-2-4">
-                <!-- Changed to accommodate 5 items in a row -->
-                <img src="@product.ImgLink" alt="Trending Product">
+            <div class="product-card">
+                <a href="@Url.Action("ProductDetails", "Home", new { productId = product.ProductId })" class="product-card-link">
+                    <img src="@product.ImgLink" alt="@product.Name">
+                </a>
             </div>
         }
-    </div>
-    <br />
-    <div class="col-md-3">
-        <a class="btn btn-outline-secondary see-all-btn" asp-controller="Home" asp-action="ProductPage" role="button"
-           style="color: #ec5a53; font-weight: 900; font-size: 1.5em; font-family: 'Pridi', serif;">View all Products >></a>
-    </div>
-    <br />
-    <div class="d-flex justify-content-center">
-        <a class="btn btn-oval" role="button" asp-controller="Home" asp-action="ProductPage">Start Building</a>
-    </div>
+    }
+</div>
+<div class="products-card">
+    @if (ViewBag.signedIn == true)
+    {
+            @foreach (var product in ViewBag.Recommendations)
+            {
+                <div class="col-md-2-4">
+                    <!-- Changed to accommodate 5 items in a row -->
+                <a href="@Url.Action("ProductDetails", "Home", new { productId = product.ProductId })" class="product-card-link">
+                    <img src="@product.ImgLink" alt="@product.Name">
+                </a>
+                </div>
+            }
+    }
+</div>
 
-}
-@if (ViewBag.signedIn == true)
-{
-    <h1 style="color: #ec5a53; font-weight: 900;
-                font-size: 1.5em; font-family: 'Pridi', serif;">
-        Trending Now
-    </h1>
-    <br />
-    <div class="row">
-        @foreach (var product in ViewBag.Recommendations)
-        {
-            <div class="col-md-2-4">
-                <!-- Changed to accommodate 5 items in a row -->
-                <img src="@product.ImgLink" alt="Trending Product">
-            </div>
-        }
-    </div>
-    <br />
-    <div class="col-md-3">
-        <a class="btn btn-outline-secondary see-all-btn" asp-controller="Home" asp-action="ProductPage" role="button"
-           style="color: #ec5a53; font-weight: 900; font-size: 1.5em; font-family: 'Pridi', serif;">View all Products >></a>
-    </div>
-    <br />
-    <div class="d-flex justify-content-center">
-        <a class="btn btn-oval" role="button" asp-controller="Home" asp-action="ProductPage">Start Building</a>
-    </div>
-}
-
+<div class="d-flex justify-content-center">
+    <a class="btn btn-oval" role="button" asp-controller="Home" asp-action="ProductPage">Start Building</a>
+</div>
     

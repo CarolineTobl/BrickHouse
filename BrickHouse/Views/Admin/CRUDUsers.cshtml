@@ -3,39 +3,43 @@
     ViewData["Title"] = "Manage Users";
 }
 
-<h1>Users</h1>
+<br />
+<br />
 
-<a class="btn btn-primary" href="@Url.Action("AddUser", "Admin")">Add New User</a>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Birth Date</th>
-            <th>Country</th>
-            <th>Gender</th>
-            <th>Age</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var customer in Model.Customers)
-        {
+<div class="admin-container">
+    <h1 class="admin-header">Users</h1>
+    <a href="@Url.Action("AddUser", "Admin")" class="btn btn-site">Add New User</a>
+
+    <table class="table admin-table mt-3">
+        <thead>
             <tr>
-                <td>@customer.FirstName @customer.LastName</td>
-                <td>@customer.BirthDate.ToString("MM/dd/yyyy")</td>
-                <td>@customer.CountryOfResidence</td>
-                <td>@customer.Gender</td>
-                <td>@customer.Age</td>
-                <td>
-                    <a class="btn btn-info" href="@Url.Action("EditUser", "Admin", new { customerId = customer.CustomerId })">Edit</a>
-                    <a asp-action="DeleteUserConfirmation" asp-route-customerId="@customer.CustomerId" class="btn btn-danger">Delete</a>
-
-                </td>
+                <th>Name</th>
+                <th>Birth Date</th>
+                <th>Country</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model.Customers)
+            {
+                <tr>
+                    <td>@customer.FirstName @customer.LastName</td>
+                    <td>@customer.BirthDate.ToString("MM/dd/yyyy")</td>
+                    <td>@customer.CountryOfResidence</td>
+                    <td>@customer.Gender</td>
+                    <td>@customer.Age</td>
+                    <td>
+                        <a href="@Url.Action("EditUser", "Admin", new { customerId = customer.CustomerId })" class="btn btn-edit">Edit</a>
+                        <a href="@Url.Action("DeleteUserConfirmation", "Admin", new { customerId = customer.CustomerId })" class="btn btn-delete">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <!-- Pagination -->
 <nav aria-label="User Pagination">

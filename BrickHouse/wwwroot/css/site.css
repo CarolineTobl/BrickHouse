@@ -315,7 +315,7 @@ body {
 
 .product-image {
     max-width: 100%;  /* Image can be as wide as its container */
-    max-height: 200px; /* Maximum height for the image */
+    max-height: 400px; /* Maximum height for the image */
     width: auto; /* Maintain the aspect ratio */
     display: block; /* Removes extra space around the image */
     margin: 0 auto; /* Centers the image within the container */
@@ -393,7 +393,7 @@ body {
 
 /* Add padding to the filter container */
 .filter-container {
-    padding-left: 8rem; /* Adjust as needed */
+    padding-left: 2rem; /* Adjust as needed */
 }
 
 /* Set font for the filter categories */
@@ -507,3 +507,75 @@ body {
         background-color: #da473a;
         border-color: #da473a;
     }
+
+.admin-container {
+    max-width: 1300px; /* Adjust size to preference */
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.admin-header {
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    color: white; /* Use a contrasting color if your site header is dark */
+    margin-bottom: 2rem;
+}
+
+.admin-controls {
+    margin-bottom: 2rem;
+}
+
+.btn-site {
+    background-color: #ec5a53;
+    border-color: #ec5a53;
+    color: white;
+}
+
+    .btn-site:hover {
+        background-color: darken(#ec5a53, 10%);
+        border-color: darken(#ec5a53, 10%);
+    }
+
+.btn-edit {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+    color: white;
+}
+
+    .btn-edit:hover {
+        background-color: darken(#f0ad4e, 10%);
+        border-color: darken(#eea236, 10%);
+    }
+
+.btn-delete {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    color: white;
+}
+
+    .btn-delete:hover {
+        background-color: darken(#d9534f, 10%);
+        border-color: darken(#d43f3a, 10%);
+    }
+
+.admin-table-container {
+    overflow-x: auto; /* For responsive table scrolling */
+}
+
+.admin-table {
+    width: 100%;
+    margin-bottom: 2rem;
+    /* Additional styling for table */
+}
+
+    .admin-table thead {
+        background-color: #ec5a53;
+        color: white;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+

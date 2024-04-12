@@ -3,23 +3,75 @@
 *@
 @{
 }
-@model IEnumerable<string>
 
-@{
-    string selectedCategory = ViewBag.SelectedProductType ?? "Select Category";
-}
+<style>
+    .product-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Adjust the gap between cards */
+    }
 
-    <div class="form-group">
-        <label>Categories:</label><br />
-        @foreach (string category in Model ?? Enumerable.Empty<string>())
+    .product-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        width: 200px; /* Adjust the width of each card */
+    }
+
+    .product-card h4 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    .product-card .price {
+        font-weight: bold;
+    }
+
+    .product-image-container {
+        max-width: 150px;
+    }
+
+    .products-card {
+        display: flex;
+        flex-wrap: wrap; /* Allows cards to wrap to the next line if needed */
+    }
+
+    .product-details {
+        margin: 10px; /* Add spacing between cards */
+    }
+
+    .product-card-link {
+        text-decoration: none;
+    }
+
+    .products-card {
+        display: flex;
+        justify-content: center;
+        text-align: center; 
+        margin: 10px;
+    }
+
+    .product-image-container {
+        width: 100%; 
+        height: auto; 
+    }
+
+
+</style>
+
+
+<h4>Related Items:</h4>
+<div class="row justify-content-center">
+    <div class="products-card d-flex flex-wrap justify-content-center">
+        @foreach (var productInfo in Model.ProductInfos)
         {
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="category" value="@category" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(category) ? "checked" : "") />
-                <label class="form-check-label">@category</label>
-            </div>
+            <a href="https://brickhouse.azurewebsites.net/Home/ProductDetails?productId=@productInfo.ProductId" class="product-card-link">
+                <div class="product-details">
+                    <h4 class="product-name">@productInfo.Name</h4>
+                    <img class="product-image-container" src="@productInfo.ImgLink" alt="Product Image" />
+                    <div class="product-price">$@productInfo.Price</div>
+                </div>
+            </a>
         }
     </div>
-
-
-
-
+</div>

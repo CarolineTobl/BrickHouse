@@ -122,7 +122,7 @@ namespace BrickHouse.Controllers
         {
             // Find clicked product by productID
             var product = _repo.Products.FirstOrDefault(p => p.ProductId == productId);
-            
+
             // Just in case product doesn't exist
             if (product == null)
             {
@@ -130,95 +130,95 @@ namespace BrickHouse.Controllers
             }
             return View(product);
         }
-        
-        // Must be logged in to see this page; unauthenticated users redirected to login
-        [Authorize]
-        [HttpGet]
-        public IActionResult Checkout()
-        {
-            // Build view model
-            var viewModel = new CheckoutViewModel
-            {
-                UniqueBanks = _repo.Orders.Select(o => o.Bank).Distinct().ToList(),
-                UniqueCardTypes = _repo.Orders.Select(o => o.TypeOfCard).Distinct().ToList(),
-                UniqueCountriesOfTransaction = _repo.Orders.Select(o => o.CountryOfTransaction).Distinct().ToList(),
-                UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
-                
-                Order = new Order(),
-                Cart = HttpContext.Session.GetJson<Cart>("Cart") // Get the session cart
-            };
 
-            return View(viewModel);
-        }
+        // Must be logged in to see this page; unauthenticated users redirected to login
+         [Authorize]
+         [HttpGet]
+         public IActionResult Checkout()
+         {
+             // Build view model
+             var viewModel = new CheckoutViewModel
+             {
+                 UniqueBanks = _repo.Orders.Select(o => o.Bank).Distinct().ToList(),
+                 UniqueCardTypes = _repo.Orders.Select(o => o.TypeOfCard).Distinct().ToList(),
+                 UniqueCountriesOfTransaction = _repo.Orders.Select(o => o.CountryOfTransaction).Distinct().ToList(),
+                 UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
+
+                 Order = new Order(),
+                 Cart = HttpContext.Session.GetJson<Cart>("Cart") // Get the session cart
+             };
+
+             return View(viewModel);
+         }
 
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutViewModel model)
-        {
-            // Create new transaction ID
-            int newId = 0;
-            
-            // Reset session cart
-            model.Cart = HttpContext.Session.GetJson<Cart>("Cart"); // Get the session cart
-            model.Order.Amount = (double)model.Cart.CalculateTotal();
-            
-            if (_repo.Orders.Any()) // Check if there are any orders in the database
-            {
-                int maxId = await _repo.Orders.MaxAsync(o => o.TransactionId); // Get the max TransactionId
-                newId = maxId + 1; // Increment by one
-            }
-            else
-            {
-                newId = 100000; // Start from 100000 if there are no orders
-            }
+         {
+             // Create new transaction ID
+             int newId = 0;
+             
+             // Reset session cart
+             model.Cart = HttpContext.Session.GetJson<Cart>("Cart"); // Get the session cart
+             model.Order.Amount = (double)model.Cart.CalculateTotal();
+             
+             if (_repo.Orders.Any()) // Check if there are any orders in the database
+             {
+                 int maxId = await _repo.Orders.MaxAsync(o => o.TransactionId); // Get the max TransactionId
+                 newId = maxId + 1; // Increment by one
+             }
+             else
+             {
+                 newId = 100000; // Start from 100000 if there are no orders
+             }
 
-            // Set transaction ID
-            model.Order.TransactionId = newId;
-            
-            // Find Customer ID associated with session user
-            var userId = _userManager.GetUserId(User);
-            var custId = await _repo.Customers
-                .Where(c => c.AspNetUserId == userId)
-                .Select(c => c.CustomerId)
-                .FirstOrDefaultAsync();
-            
-            // Set custId attribute in order object
-            model.Order.CustomerId = custId;
+             // Set transaction ID
+             model.Order.TransactionId = newId;
+             
+             // Find Customer ID associated with session user
+             var userId = _userManager.GetUserId(User);
+             var custId = await _repo.Customers
+                 .Where(c => c.AspNetUserId == userId)
+                 .Select(c => c.CustomerId)
+                 .FirstOrDefaultAsync();
+             
+             // Set custId attribute in order object
+             model.Order.CustomerId = custId;
 
-            //get customer object
-            var customer = await _repo.Customers.Where(c => c.CustomerId==custId).FirstOrDefaultAsync();
+             //get customer object
+             var customer = await _repo.Customers.Where(c => c.CustomerId==custId).FirstOrDefaultAsync();
 
-            // Run fraud check
-            model.Order.Fraud = _predictionService.Predict(model.Order,customer);
+             // Run fraud check
+             model.Order.Fraud = _predictionService.Predict(model.Order,customer);
 
-            foreach (var l in model.Cart.Lines)
-            {
-                // Create LineItem and fill with data
-                var li = new LineItem();
-                li.TransactionId = model.Order.TransactionId;
-                li.ProductId = l.Product.ProductId;
-                li.Qty = (byte)l.Quantity;
-                
-                // Add LineItem to database
-                _repo.AddLineItem(li);
-            }
-            
-            // Add Order to the database
-            _repo.AddOrder(model.Order);
-            
-            // Reset the session cart
-            HttpContext.Session.Remove("Cart");
-            var newCart = new Cart();
-            string cartJson = JsonConvert.SerializeObject(newCart);
-            HttpContext.Session.SetString("Cart", cartJson);
-            
-            // Send to order confirmation or fraud review confirmation
-            if (model.Order.Fraud == 1)
-            {
-                return View("CheckoutFraud");
-            }
+             foreach (var l in model.Cart.Lines)
+             {
+                 // Create LineItem and fill with data
+                 var li = new LineItem();
+                 li.TransactionId = model.Order.TransactionId;
+                 li.ProductId = l.Product.ProductId;
+                 li.Qty = (byte)l.Quantity;
+                 
+                 // Add LineItem to database
+                 _repo.AddLineItem(li);
+             }
+             
+             // Add Order to the database
+             _repo.AddOrder(model.Order);
+             
+             // Reset the session cart
+             HttpContext.Session.Remove("Cart");
+             var newCart = new Cart();
+             string cartJson = JsonConvert.SerializeObject(newCart);
+             HttpContext.Session.SetString("Cart", cartJson);
+             
+             // Send to order confirmation or fraud review confirmation
+             if (model.Order.Fraud == 1)
+             {
+                 return View("CheckoutFraud");
+             }
 
-            return View("CheckoutConfirmed");
-        }
+             return View("CheckoutConfirmed");
+         }
         
     }
 }

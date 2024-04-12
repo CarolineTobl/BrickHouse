@@ -1,5 +1,6 @@
 ﻿@using BrickHouse.Models.ViewModels
 @{
+    ViewData["Title"] = "Products Page";
     Layout = "~/Views/Shared/_NewLayout.cshtml";
 }
 
@@ -8,59 +9,32 @@
 <br />
 <br />
 <br />
-<br />
+
 <h1 class="page-title">Shop our Products</h1>
-@* <form asp-action="ProductPage" method="get">
-    <div class="row">
-        <div class="col-md-offset-1 col-md-11">
-            <div class="float-right">
-                Items per page:
-                <select id="itemsPerPageDropdown" name="pageSize" class="form-control" onchange="this.form.submit()">
-                    <option value="" selected disabled>Currently Displaying @Model.ItemsPerPage Items per Page</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</form> *@
-<form asp-action="ProductPage" method="get">
-    <div class="row">
-        <div class="col-md-offset-1 col-md-11">
-            <div class="float-right">
-                Items per page:
-                <select id="itemsPerPageDropdown" name="pageSize" class="form-control" onchange="this.form.submit()">
-                    <option value="" selected disabled>Currently Displaying @Model.ItemsPerPage Items per Page</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option name="category" value="">1: @Model.CurrentColor</option>
-                    <option name="category" value="">2: @Model.CurrentColor</option>
-
-                </select>
-
-            </div>
-        </div>
-    </div>
-</form>
 
 <div class="row">
-    <div class="col-md-3 filter-container">
+    <h3>Filters:</h3>
+    <div class="col-md-2 filter-container">
         <form asp-action="ProductPage" method="get">
             <div class="category-filter">
                 @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = Model.CurrentProductType })
-                <br> <!-- Break between category and color filters -->
             </div>
             <div class="color-filter">
                 @await Component.InvokeAsync("Color", new { primaryColor = Model.CurrentColor, secondaryColor = Model.CurrentColor })
-                <br> <!-- Break between color filters and the apply filters button -->
             </div>
-            <button type="submit" class="btn apply-filters-btn">Apply Filters</button>
+            <br />
+            <div class="items-per-page-filter">
+                <select id="itemsPerPageDropdown" name="pageSize" class="form-control" onchange="this.form.submit()">
+                    <option value="" selected disabled>@Model.ItemsPerPage Items per Page</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
         </form>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-10">
         <div class="products-grid">
             @if (Model.CurrentProductType == null)
             {
@@ -80,20 +54,27 @@
     </div>
 </div>
 
-<div class="pagination-container" style="text-align: center;">
-    <div page-model="Model.PaginationInfo"
-         page-action="ProductPage"
-         current-product-type="@Model.CurrentProductType"
-         current-color="@Model.CurrentColor"
-         items-per-page="@Model.ItemsPerPage"
-         current-page="@Model.PaginationInfo.CurrentPage"
-         total-pages="@Model.PaginationInfo.TotalPages"
-         page-classes-enabled="true"
-         page-class="btn"
-         page-class-normal="btn-outline-dark"
-         page-class-selected="btn-primary"
-         class="btn-grp">
+
+
+
+<div class="row">
+    <div class="col-md-8 offset-md-2"> <!-- Center the pagination by using offset -->
+        <div class="pagination-container" style="text-align: center;">
+            <div page-model="Model.PaginationInfo"
+                 page-action="ProductPage"
+                 current-product-type="@Model.CurrentProductType"
+                 current-color="@Model.CurrentColor"
+                 items-per-page="@Model.ItemsPerPage"
+                 current-page="@Model.PaginationInfo.CurrentPage"
+                 total-pages="@Model.PaginationInfo.TotalPages"
+                 page-classes-enabled="true"
+                 page-class="btn"
+                 page-class-normal="btn-outline-dark"
+                 page-class-selected="btn-primary"
+                 class="btn-grp">
+            </div>
+        </div>
     </div>
+
+
 </div>
-
-
