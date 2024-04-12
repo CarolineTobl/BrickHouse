@@ -21,16 +21,29 @@ namespace BrickHouse.Controllers
         // Initialize private repository instance
         private IIntexRepository _repo;
         private UserManager<IdentityUser> _userManager;
+        private PredictionService _predictionService;
 
-        public HomeController(IIntexRepository temp, UserManager<IdentityUser> userManager)
+        public HomeController(IIntexRepository repo, UserManager<IdentityUser> userManager, PredictionService predictionService)
         {
             // Assign temporary public repo resource to private var
-            _repo = temp;
+            _repo = repo;
             _userManager = userManager;
+            _predictionService = predictionService;
         }
 
         public IActionResult Index()
         {
+            // Get the top 5 rated products
+            var topProducts = _repo.ProdRecs
+                                   .OrderByDescending(p => p.MeanRating)
+                                   .Take(5)
+                                   .ToList();
+
+            // Select the details from the Products table based on the product_ID
+            var topProductDetails = topProducts.Select(p => _repo.Products.FirstOrDefault(prod => prod.ProductId == p.ProductId)).ToList();
+
+            ViewBag.Products = topProductDetails;
+
             return View();
         }
 
@@ -170,10 +183,13 @@ namespace BrickHouse.Controllers
             
             // Set custId attribute in order object
             model.Order.CustomerId = custId;
-            
+
+            //get customer object
+            var customer = await _repo.Customers.Where(c => c.CustomerId==custId).FirstOrDefaultAsync();
+
             // Run fraud check
-            model.Order.Fraud = 1;
-            
+            model.Order.Fraud = _predictionService.Predict(model.Order,customer);
+
             foreach (var l in model.Cart.Lines)
             {
                 // Create LineItem and fill with data

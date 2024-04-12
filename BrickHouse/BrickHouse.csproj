@@ -34,6 +34,9 @@
 
   <ItemGroup>
     <Content Include="final_decision_tree_model.onnx" />
+    <Content Include="Models\final_decision_tree_model.onnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
