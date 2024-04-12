@@ -147,17 +147,17 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
         });
         modelBuilder.Entity<ProductRecommendation>(entity =>
         {
-            entity.Property(e => e.ProductId).HasColumnName("customer_ID");
-            entity.Property(e => e.Rec1).HasColumnName("rec_1");
-            entity.Property(e => e.Rec2).HasColumnName("rec_2");
-            entity.Property(e => e.Rec3).HasColumnName("rec_3");
-            entity.Property(e => e.Rec4).HasColumnName("rec_4");
-            entity.Property(e => e.Rec5).HasColumnName("rec_5");
-            entity.Property(e => e.Rec6).HasColumnName("rec_6");
-            entity.Property(e => e.Rec7).HasColumnName("rec_7");
-            entity.Property(e => e.Rec8).HasColumnName("rec_8");
-            entity.Property(e => e.Rec9).HasColumnName("rec_9");
-            entity.Property(e => e.Rec10).HasColumnName("rec_10");
+            entity.Property(e => e.ProductId).HasColumnName("product_ID");
+            entity.Property(e => e.Rec1).HasColumnName("Rec1");
+            entity.Property(e => e.Rec2).HasColumnName("Rec2");
+            entity.Property(e => e.Rec3).HasColumnName("Rec3");
+            entity.Property(e => e.Rec4).HasColumnName("Rec4");
+            entity.Property(e => e.Rec5).HasColumnName("Rec5");
+            entity.Property(e => e.Rec6).HasColumnName("Rec6");
+            entity.Property(e => e.Rec7).HasColumnName("Rec7");
+            entity.Property(e => e.Rec8).HasColumnName("Rec8");
+            entity.Property(e => e.Rec9).HasColumnName("Rec9");
+            entity.Property(e => e.Rec10).HasColumnName("Rec10");
         });
     }
 
