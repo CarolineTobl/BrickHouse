@@ -315,7 +315,7 @@ body {
 
 .product-image {
     max-width: 100%;  /* Image can be as wide as its container */
-    max-height: 200px; /* Maximum height for the image */
+    max-height: 400px; /* Maximum height for the image */
     width: auto; /* Maintain the aspect ratio */
     display: block; /* Removes extra space around the image */
     margin: 0 auto; /* Centers the image within the container */
@@ -393,7 +393,7 @@ body {
 
 /* Add padding to the filter container */
 .filter-container {
-    padding-left: 8rem; /* Adjust as needed */
+    padding-left: 2rem; /* Adjust as needed */
 }
 
 /* Set font for the filter categories */

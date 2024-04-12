@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "About Us Page";
+    ViewData["Title"] = "Product Details Page";
     Layout = "~/Views/Shared/_Layout.cshtml"; // This sets the layout for this view
 }
 @model Product
@@ -9,13 +9,11 @@
 <br />
 <br />
 
-@await Component.InvokeAsync("ProductRecommendation", new { productId = Model.ProductId })
-
 
 <h1 class="about-title" style="text-align: center; font-weight: bold; font-family: 'Poppins', sans-serif;">@Model.Name</h1>
 <span class="title-underline"></span>
 <br /><br />
-<div class="product-details">
+<div class="row product-details">
     <div class="row">
         <div class="col-md-6">
             <img src="@Model.ImgLink" alt="@Model.Name" class="img-fluid product-image" />
@@ -31,3 +29,5 @@
         </div>
     </div>
 </div>
+
+@await Component.InvokeAsync("ProductRecommendation", new { productId = Model.ProductId })
