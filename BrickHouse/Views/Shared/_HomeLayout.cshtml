@@ -186,8 +186,8 @@
     </header>
     <!-- The RenderBody method renders the content of the view that uses this layout -->
     <main role="main" class="pb-3">
+        <partial name="_CookieConsentPartial" class="alert alert-info alert-dismissible fade show"/>
         @RenderBody()
-        <partial name="_CookieConsentPartial" />
     </main>
 
     <footer class="border-top footer text-muted">
