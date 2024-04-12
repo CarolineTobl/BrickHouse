@@ -24,12 +24,14 @@ namespace BrickHouse.Models
             var tensor = new DenseTensor<float>(inputData, new[] { 1, inputData.Length });
             var inputs = new List<NamedOnnxValue>
             {
-                NamedOnnxValue.CreateFromTensor("input_tensor", tensor)
+                NamedOnnxValue.CreateFromTensor("float_input", tensor)
             };
 
             using var results = _session.Run(inputs);
-            var output = results.First().AsTensor<float>().ToArray();
-            return output[0] > 0.5 ? 1 : 0;
+            // Directly cast the result to int, assuming the output is a single int64 tensor with one element.
+            var outputTensor = results.First().AsTensor<Int64>();
+            int predictedClass = (int)outputTensor[0];
+            return predictedClass;
         }
 
         private float[] PrepareInputData(Order order, Customer customer)
