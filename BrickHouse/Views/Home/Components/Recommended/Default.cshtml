@@ -1,0 +1,43 @@
+@{
+    Layout = null;
+}
+
+@if(ViewBag.signedIn == false){
+    <h1 style="color: #ec5a53; font-weight: 900;
+                font-size: 1.5em; font-family: 'Pridi', serif;">
+        Trending Now
+    </h1>
+    <div class="row">
+        @foreach (Product product in ViewBag.Recommendations)
+        {
+        <div class="col-md-3">
+            <img src="@product.ImgLink" alt="Trending Product">
+        </div>
+        }
+    </div>
+    <div class="col-md-3">
+        <a class="btn btn-outline-secondary see-all-btn" asp-controller="Home" asp-action="ProductPage" role="button"
+           style="color: #ec5a53; font-weight: 900; font-size: 1.5em; font-family: 'Pridi', serif;">View all Products >></a>
+    </div>
+}
+@if (ViewBag.signedIn == true)
+{
+    <h1 style="color: #ec5a53; font-weight: 900;
+                font-size: 1.5em; font-family: 'Pridi', serif;">
+        Recommended for You
+    </h1>
+    <div class="row">
+        @foreach (Product product in ViewBag.Recommendations)
+        {
+            <div class="col-md-3">
+                <img src="@product.ImgLink" alt="Trending Product">
+            </div>
+        }
+    </div>
+    <div class="col-md-3">
+        <a class="btn btn-outline-secondary see-all-btn" asp-controller="Home" asp-action="ProductPage" role="button"
+           style="color: #ec5a53; font-weight: 900; font-size: 1.5em; font-family: 'Pridi', serif;">View all Products >></a>
+    </div>
+}
+
+    
