@@ -21,6 +21,8 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<CustomerRecommendations> CustomerRecommendations { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -129,9 +131,19 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.Year).HasColumnName("year");
         });
 
-        OnModelCreatingPartial(modelBuilder);
+        modelBuilder.Entity<CustomerRecommendations>(entity =>
+        {
+            entity.Property(e => e.CustomerId)
+                .HasMaxLength(50)
+                .HasColumnName("customer_ID");
+            entity.Property(e => e.Recommendation).HasColumnName("recommendation");
+            entity.Property(e => e.RecommendationCount).HasColumnName("recommendation_Count");
+            entity.Property(e => e.BecauseYouLiked).HasColumnName("because_You_Liked");
+        });
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
 }
+
+
+    

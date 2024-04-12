@@ -9,7 +9,7 @@
 <br />
 <br />
 <br />
-<form asp-action="ProductPage" method="get">
+@* <form asp-action="ProductPage" method="get">
     <div class="row">
         <div class="col-md-offset-1 col-md-11">
             <div class="float-right">
@@ -23,19 +23,37 @@
             </div>
         </div>
     </div>
+</form> *@
+<form asp-action="ProductPage" method="get">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-11">
+            <div class="float-right">
+                Items per page:
+                <select id="itemsPerPageDropdown" name="pageSize" class="form-control" onchange="this.form.submit()">
+                    <option value="" selected disabled>Currently Displaying @Model.ItemsPerPage Items per Page</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option name="category" value="">1: @Model.CurrentColor</option>
+                    <option name="category" value="">2: @Model.CurrentColor</option>
+
+                </select>
+
+            </div>
+        </div>
+    </div>
 </form>
 
 
-    </div>
-</div>
 <div class="row">
     <div class="col-md-3">
         <form asp-action="ProductPage" method="get">
 
         @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = Model.CurrentProductType })
         @await Component.InvokeAsync("Color", new { primaryColor = Model.CurrentColor, secondaryColor = Model.CurrentColor })
-        
-        <button type="submit" class="btn btn-primary">Apply Filters</button>
+
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+            <input type="hidden" name="pageSize" value="@Model.ItemsPerPage" />
         </form>
     </div>
 
@@ -72,5 +90,3 @@
      page-class-selected="btn-primary"
      class="btn-grp pull-right m-1">
 </div>
-
-
