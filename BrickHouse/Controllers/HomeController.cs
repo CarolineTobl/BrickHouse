@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using Microsoft.ML.OnnxRuntime;
+using Newtonsoft.Json;
 
 // INTEX II
 // Group 2-2
@@ -20,12 +21,14 @@ namespace BrickHouse.Controllers
         // Initialize private repository instance
         private IIntexRepository _repo;
         private UserManager<IdentityUser> _userManager;
+        private PredictionService _predictionService;
 
-        public HomeController(IIntexRepository temp, UserManager<IdentityUser> userManager)
+        public HomeController(IIntexRepository repo, UserManager<IdentityUser> userManager, PredictionService predictionService)
         {
             // Assign temporary public repo resource to private var
-            _repo = temp;
+            _repo = repo;
             _userManager = userManager;
+            _predictionService = predictionService;
         }
 
         public IActionResult Index()
@@ -142,7 +145,7 @@ namespace BrickHouse.Controllers
                 UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
                 
                 Order = new Order(),
-                Cart = HttpContext.Session.GetJson<Cart>("Cart")
+                Cart = HttpContext.Session.GetJson<Cart>("Cart") // Get the session cart
             };
 
             return View(viewModel);
@@ -155,7 +158,7 @@ namespace BrickHouse.Controllers
             int newId = 0;
             
             // Reset session cart
-            model.Cart = HttpContext.Session.GetJson<Cart>("Cart");
+            model.Cart = HttpContext.Session.GetJson<Cart>("Cart"); // Get the session cart
             model.Order.Amount = (double)model.Cart.CalculateTotal();
             
             if (_repo.Orders.Any()) // Check if there are any orders in the database
@@ -180,10 +183,13 @@ namespace BrickHouse.Controllers
             
             // Set custId attribute in order object
             model.Order.CustomerId = custId;
-            
+
+            //get customer object
+            var customer = await _repo.Customers.Where(c => c.CustomerId==custId).FirstOrDefaultAsync();
+
             // Run fraud check
-            model.Order.Fraud = 0;
-            
+            model.Order.Fraud = _predictionService.Predict(model.Order,customer);
+
             foreach (var l in model.Cart.Lines)
             {
                 // Create LineItem and fill with data
@@ -199,6 +205,12 @@ namespace BrickHouse.Controllers
             // Add Order to the database
             _repo.AddOrder(model.Order);
             
+            // Reset the session cart
+            HttpContext.Session.Remove("Cart");
+            var newCart = new Cart();
+            string cartJson = JsonConvert.SerializeObject(newCart);
+            HttpContext.Session.SetString("Cart", cartJson);
+            
             // Send to order confirmation or fraud review confirmation
             if (model.Order.Fraud == 1)
             {
@@ -207,5 +219,6 @@ namespace BrickHouse.Controllers
 
             return View("CheckoutConfirmed");
         }
+        
     }
 }

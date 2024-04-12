@@ -41,9 +41,13 @@ namespace BrickHouse.Pages
 
         public IActionResult OnPostRemove (int ProductId, string returnUrl)
         {
-            Cart.RemoveLine(Cart.Lines.First(x => x.Product.ProductId == ProductId).Product);
+            var lineToRemove = Cart.Lines.FirstOrDefault(x => x.Product.ProductId == ProductId);
+            if (lineToRemove != null)
+            {
+                Cart.RemoveLine(lineToRemove.Product);
+            }
 
-            return RedirectToPage(new {returnUrl = returnUrl});
+            return RedirectToPage(new { returnUrl = returnUrl });
         }
     }
 }
