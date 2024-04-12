@@ -17,8 +17,6 @@
                 PAYMENT & SHIPPING
             </h2> <!-- Removed the misplaced style tag -->
             <form asp-action="Checkout" method="post">
-                <!-- Hidden inputs -->
-                <input type="hidden" asp-for="Order.Amount" value="@Model.Cart.CalculateTotal"/>
                 <!-- Bank dropdown -->
                 <select class="checkout-form-input" asp-for="Order.Bank" asp-items="@(new SelectList(Model.UniqueBanks))">
                     <option value="">Select Bank</option>

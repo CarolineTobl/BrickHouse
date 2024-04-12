@@ -4,7 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using BrickHouse.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML.OnnxRuntime.Tensors;
+using Microsoft.ML.OnnxRuntime;
+using Newtonsoft.Json;
 
 // INTEX II
 // Group 2-2
@@ -16,15 +20,30 @@ namespace BrickHouse.Controllers
     {
         // Initialize private repository instance
         private IIntexRepository _repo;
+        private UserManager<IdentityUser> _userManager;
+        private PredictionService _predictionService;
 
-        public HomeController(IIntexRepository temp)
+        public HomeController(IIntexRepository repo, UserManager<IdentityUser> userManager, PredictionService predictionService)
         {
             // Assign temporary public repo resource to private var
-            _repo = temp;
+            _repo = repo;
+            _userManager = userManager;
+            _predictionService = predictionService;
         }
 
         public IActionResult Index()
         {
+            // Get the top 5 rated products
+            var topProducts = _repo.ProdRecs
+                                   .OrderByDescending(p => p.MeanRating)
+                                   .Take(5)
+                                   .ToList();
+
+            // Select the details from the Products table based on the product_ID
+            var topProductDetails = topProducts.Select(p => _repo.Products.FirstOrDefault(prod => prod.ProductId == p.ProductId)).ToList();
+
+            ViewBag.Products = topProductDetails;
+
             return View();
         }
 
@@ -126,8 +145,7 @@ namespace BrickHouse.Controllers
                 UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
                 
                 Order = new Order(),
-                Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart()
-                
+                Cart = HttpContext.Session.GetJson<Cart>("Cart") // Get the session cart
             };
 
             return View(viewModel);
@@ -139,6 +157,10 @@ namespace BrickHouse.Controllers
             // Create new transaction ID
             int newId = 0;
             
+            // Reset session cart
+            model.Cart = HttpContext.Session.GetJson<Cart>("Cart"); // Get the session cart
+            model.Order.Amount = (double)model.Cart.CalculateTotal();
+            
             if (_repo.Orders.Any()) // Check if there are any orders in the database
             {
                 int maxId = await _repo.Orders.MaxAsync(o => o.TransactionId); // Get the max TransactionId
@@ -146,15 +168,28 @@ namespace BrickHouse.Controllers
             }
             else
             {
-                newId = 100000; // Start from 100000 if there are no customers
+                newId = 100000; // Start from 100000 if there are no orders
             }
 
             // Set transaction ID
             model.Order.TransactionId = newId;
-            // Add customer ID
             
+            // Find Customer ID associated with session user
+            var userId = _userManager.GetUserId(User);
+            var custId = await _repo.Customers
+                .Where(c => c.AspNetUserId == userId)
+                .Select(c => c.CustomerId)
+                .FirstOrDefaultAsync();
+            
+            // Set custId attribute in order object
+            model.Order.CustomerId = custId;
+
+            //get customer object
+            var customer = await _repo.Customers.Where(c => c.CustomerId==custId).FirstOrDefaultAsync();
+
             // Run fraud check
-            
+            model.Order.Fraud = _predictionService.Predict(model.Order,customer);
+
             foreach (var l in model.Cart.Lines)
             {
                 // Create LineItem and fill with data
@@ -170,6 +205,12 @@ namespace BrickHouse.Controllers
             // Add Order to the database
             _repo.AddOrder(model.Order);
             
+            // Reset the session cart
+            HttpContext.Session.Remove("Cart");
+            var newCart = new Cart();
+            string cartJson = JsonConvert.SerializeObject(newCart);
+            HttpContext.Session.SetString("Cart", cartJson);
+            
             // Send to order confirmation or fraud review confirmation
             if (model.Order.Fraud == 1)
             {
@@ -178,5 +219,6 @@ namespace BrickHouse.Controllers
 
             return View("CheckoutConfirmed");
         }
+        
     }
 }

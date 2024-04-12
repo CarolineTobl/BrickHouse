@@ -32,4 +32,15 @@
     <_ContentIncludedByDefault Remove="Views\Account\Login.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="final_decision_tree_model.onnx" />
+    <Content Include="Models\final_decision_tree_model.onnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\onnx\" />
+  </ItemGroup>
+
 </Project>

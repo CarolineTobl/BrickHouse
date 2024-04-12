@@ -8,6 +8,8 @@
 
         public IQueryable<Customer> Customers { get; }
 
+        public IQueryable<ProdRec> ProdRecs { get; }
+
         // New method to add a Customer
         public Task AddCustomerAsync(Customer customer);
 

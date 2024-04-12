@@ -25,6 +25,9 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
 
     public virtual DbSet<ProductRecommendation> ProductRecommendations { get; set; }
 
+    public DbSet<ProdRec> ProdRecs { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -43,8 +46,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.Property(e => e.CustomerId)
-                .HasMaxLength(50)
-                .HasColumnName("customer_ID");
+        .HasColumnName("customer_ID");
             entity.Property(e => e.Age).HasColumnName("age");
             entity.Property(e => e.BirthDate).HasColumnName("birth_date");
             entity.Property(e => e.CountryOfResidence)
@@ -59,7 +61,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .HasColumnName("last_name");
-
+            entity.Property(e => e.AspNetUserId).HasColumnName("aspnet_user_ID");
         });
 
         modelBuilder.Entity<LineItem>(entity =>
@@ -84,8 +86,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
                 .HasMaxLength(50)
                 .HasColumnName("country_of_transaction");
             entity.Property(e => e.CustomerId)
-                .HasMaxLength(50)
-                .HasColumnName("customer_ID");
+        .HasColumnName("customer_ID");
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.DayOfWeek)
                 .HasMaxLength(50)

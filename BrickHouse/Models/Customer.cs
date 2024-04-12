@@ -5,7 +5,7 @@ namespace BrickHouse.Models;
 
 public partial class Customer
 {
-    public string CustomerId { get; set; } = null!;
+    public int CustomerId { get; set; }
 
     public string FirstName { get; set; } = null!;
 
@@ -19,5 +19,5 @@ public partial class Customer
 
     public double Age { get; set; }
 
-    public string AspNetUserId { get; set; }
+    public string ?AspNetUserId { get; set; }
 }
