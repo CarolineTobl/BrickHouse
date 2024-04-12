@@ -1,8 +1,8 @@
 ﻿namespace BrickHouse.Models.ViewModels
 {
-    public class WrapperViewModel
+    public class ProductRecommendationViewModel
     {
-        public IQueryable<Product> Products { get; set; }
+/*        public IQueryable<Product> Products { get; set; }
         public IEnumerable<string> ProductTypes { get; set; }
         public IEnumerable<string> Colors { get; set; }
 
@@ -20,6 +20,6 @@
         public string[] SelectedCategory { get; set; }
 
         // Property to store selected color
-        public string[] SelectedColor { get; set; }
+        public string[] SelectedColor { get; set; }*/
     }
 }
