@@ -23,6 +23,17 @@ namespace BrickHouse.Controllers
 
         public IActionResult Index()
         {
+            // Get the top 5 rated products
+            var topProducts = _repo.ProdRecs
+                                   .OrderByDescending(p => p.MeanRating)
+                                   .Take(5)
+                                   .ToList();
+
+            // Select the details from the Products table based on the product_ID
+            var topProductDetails = topProducts.Select(p => _repo.Products.FirstOrDefault(prod => prod.ProductId == p.ProductId)).ToList();
+
+            ViewBag.Products = topProductDetails;
+
             return View();
         }
 

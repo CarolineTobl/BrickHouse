@@ -22,17 +22,13 @@
     </h1>
 
     <div class="row">
-        <div class="col-md-3">
-            <img src="/images/zooLego.jpg" alt="Trending Product 1">
-        </div>
-        @* <div class="col-md-3">
-            <img src="/images/batman.jpg" alt="Trending Product 2">
-        </div> *@
-        <div class="col-md-3">
-            <img src="/images/spider.webp" alt="Trending Product 3">
-        </div>
-        <div class="col-md-3">
-            <img src="/images/peacock.webp" alt="Trending Product 4">
+        <div class="row">
+            @foreach (var product in ViewBag.Products)
+            {
+                <div class="col-md-3">
+                    <img src="@product.ImgLink" alt="Trending Product">
+                </div>
+            }
         </div>
         <div class="col-md-3">
             <a class="btn btn-outline-secondary see-all-btn" asp-controller="Home" asp-action="ProductPage" role="button" style="color: #ec5a53; font-weight: 900;
