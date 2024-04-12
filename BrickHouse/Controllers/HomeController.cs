@@ -132,7 +132,7 @@ namespace BrickHouse.Controllers
                 UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
                 
                 Order = new Order(),
-                Cart = HttpContext.Session.GetJson<Cart>("Cart")
+                Cart = HttpContext.Session.GetJson<Cart>("Cart") // Get the session cart
             };
 
             return View(viewModel);
@@ -145,7 +145,7 @@ namespace BrickHouse.Controllers
             int newId = 0;
             
             // Reset session cart
-            model.Cart = HttpContext.Session.GetJson<Cart>("Cart");
+            model.Cart = HttpContext.Session.GetJson<Cart>("Cart"); // Get the session cart
             model.Order.Amount = (double)model.Cart.CalculateTotal();
             
             if (_repo.Orders.Any()) // Check if there are any orders in the database
