@@ -9,9 +9,11 @@ namespace BrickHouse.Models
         [Key]
         public string Recommendation { get; set; }
         public int RecommendationCount { get; set; }
-        public double Mean_Rating { get; set; }
+        
         public string BecauseYouLiked { get; set; }
         [Key]
         public int CustomerId { get; set; }
+
+        public double RankMean { get; set; }
     }
 }

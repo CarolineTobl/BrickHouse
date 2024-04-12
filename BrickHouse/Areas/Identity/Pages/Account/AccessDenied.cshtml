@@ -1,10 +1,32 @@
 ﻿@page
 @model AccessDeniedModel
-@{
-    ViewData["Title"] = "Access denied";
-}
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+@{
+    ViewData["Title"] = "Access Denied";
+    Layout = "/Views/Shared/_HomeLayout.cshtml";
+}
+<style>
+    .white-box {
+        background-color: #ffffff; /* White background color */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Small shadow offset */
+        padding: 20px; /* Padding inside the box */
+        width: 550px; /* Width of the box */
+        margin: 20px auto; /* Center the box horizontally */
+        z-index: 2;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translateX(-50%); /* Center the box horizontally */
+    }
+</style>
+<div class="banner-gradient">
+    <div class="white-box text-center">
+        <h1 style="color: #ec5a53; font-weight: 900;
+                font-size: 1.5em; font-family: 'Pridi', serif;">Access Denied</h1>
+        <p>Sorry, you do not have access to this resource.</p>
+        <br/>
+        <a class="btn btn-oval me-2" role="button" asp-controller="Home" asp-action="Index">Home</a>
+    </div>
+</div>
+

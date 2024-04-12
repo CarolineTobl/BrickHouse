@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-//[Authorize(Roles = "Admin")] // Ensure only users in the "Admin" role can access this controller
+[Authorize(Roles = "admin")] // Ensure only users in the "Admin" role can access this controller
 public class AdminController : Controller
 {
     private readonly ScaffoldedDbContext _context;

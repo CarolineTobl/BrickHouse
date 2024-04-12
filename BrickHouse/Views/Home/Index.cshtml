@@ -9,35 +9,13 @@
 
 <div class="banner">
     <div class="container">
-        <h2 style="color: white; font-weight: bold; font-family: 'Poppins', sans-serif;">Unlock Creativity<br>Brick by Brick</h2>
+        <h2 style="color: white; font-weight: bold; font-family: 'Poppins', sans-serif;">Unlock Your Creativity,<br>Brick by Brick</h2>
         <p><a class="btn btn-oval" role="button" asp-controller="Home" asp-action="ProductPage">Start Building</a></p>
     </div>
 </div>
 <div class="bottom-gradient"></div>
 
-<div class="trending container">
-    <h1 style="color: #ec5a53; font-weight: 900;
-                font-size: 1.5em; font-family: 'Pridi', serif;">
-        Trending Now
-    </h1>
-
-    <div class="row">
-        <div class="row">
-            @foreach (var product in ViewBag.Products)
-            {
-                <div class="col-md-3">
-                    <img src="@product.ImgLink" alt="Trending Product">
-                </div>
-            }
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-outline-secondary see-all-btn" asp-controller="Home" asp-action="ProductPage" role="button" style="color: #ec5a53; font-weight: 900;
-                font-size: 1.5em; font-family: 'Pridi', serif;">View all Products >></a>
-
-
-        </div>
-    </div>
-</div>
+    @await Component.InvokeAsync("Recommended")
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
