@@ -174,6 +174,18 @@
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="AboutUs">About</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="ProductPage">Browse</a></li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            // Check if session user is an admin
+                            var sessionUser = await UserManager.GetUserAsync(User);
+                            var isAnAdmin = await UserManager.IsInRoleAsync(sessionUser, "admin");
+                            @if (isAnAdmin)
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="CRUDProducts">Manage Products</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="CRUDOrders">Manage Orders</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="CRUDUsers">Manage Users</a></li>
+                            }
+                        }
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <partial name="_LoginPartial" />
