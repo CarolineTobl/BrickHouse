@@ -12,6 +12,27 @@
         object-fit: cover; /* This property ensures that the image covers the entire container while maintaining aspect ratio */
     }
 
+    .product-card {
+        display: flex;
+        flex-direction: column; /* Arrange children vertically */
+        height: 100%; /* Make the card container occupy the full height */
+    }
+
+    .product-image-container {
+        flex: 1; /* Allow the image container to grow to occupy available space */
+    }
+
+    .product-details {
+        padding: 1rem; /* Add padding to the product details section */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Align items vertically with space between */
+        height: 100%; /* Make the product details container occupy the full height */
+    }
+
+    .add-to-cart-button {
+        margin-top: auto; /* Push the button to the bottom */
+    }
 </style>
 
 
@@ -20,15 +41,15 @@
         <div class="product-image-container">
             <img src="@Model.ImgLink" alt="@Model.Name" class="product-image" />
         </div>
-        <div class="product-details">
-            <h4 class="product-name">@Model.Name</h4>
-            <span class="badge pieces-badge">@Model.NumParts Pieces</span>
-            <div class="product-price">$@Model.Price</div>
-            <form class="add-to-cart-form" method="post" asp-page="/Cart">
-                <input type="hidden" asp-for="ProductId" />
-                <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                <button type="submit" class="btn btn-outline-success btn-sm add-to-cart-button">Add to Cart</button>
-            </form>
-        </div>
     </a>
+    <div class="product-details">
+        <h4 class="product-name">@Model.Name</h4>
+        <span class="badge pieces-badge">@Model.NumParts Pieces</span>
+        <div class="product-price">$@Model.Price</div>
+        <form class="add-to-cart-form" method="post" asp-page="/Cart">
+            <input type="hidden" asp-for="ProductId" />
+            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+            <button type="submit" class="btn btn-outline-success btn-sm add-to-cart-button">Add to Cart</button>
+        </form>
+    </div>
 </div>

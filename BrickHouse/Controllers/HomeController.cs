@@ -49,16 +49,21 @@ namespace BrickHouse.Controllers
 
         public IActionResult ProductPage(int pageNum, string[] category, string[] color, int pageSize)
         {
+            // Makes sure pagenum is always at least 1 so it doesn't break
             int adjustedPageNum = pageNum <= 0 ? 1 : pageNum;
 
+            // defaults the page size to 5
             if (pageSize == 0)
             {
                 pageSize = 5;
             }
 
+            // vars to be able to access which category and color is selected
             var selectedCategories = category ?? new string[] { };
             var selectedColors = color ?? new string[] { };
 
+            // query that filters products if one of the categories/colors is selected
+            // this query checks if primary/secondary/tertiary categories are the selected category
             var productsQuery = _repo.Products
                 .Where(x =>
                     (selectedCategories.Length == 0 || selectedCategories.All(c =>
@@ -76,6 +81,7 @@ namespace BrickHouse.Controllers
                 .Take(pageSize)
                 .ToList();
 
+            // passes the data into the view model so that it gets all of the necessary items
             var productsViewModel = new ProductsListViewModel
             {
                 Products = products.AsQueryable(),
@@ -88,13 +94,17 @@ namespace BrickHouse.Controllers
                     TotalItems = totalFilteredItems // Update with total filtered products count
                 },
 
+                // passes the selected vars and the pagesize
                 ItemsPerPage = pageSize,
                 SelectedCategory = selectedCategories, // Store selected category
                 SelectedColor = selectedColors // Store selected color
             };
 
+            // passes the view bags to be accessed in the view
             ViewBag.SelectedCategories = selectedCategories.ToList();
             ViewBag.SelectedColors = selectedColors.ToList();
+
+            // returns th eview with all the necessary built data in the productsViewModel
             return View("ProductPage", productsViewModel);
         }
 
