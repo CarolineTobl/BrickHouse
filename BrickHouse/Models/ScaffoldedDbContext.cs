@@ -57,6 +57,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .HasColumnName("last_name");
+
         });
 
         modelBuilder.Entity<LineItem>(entity =>
@@ -71,7 +72,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => e.TransactionId); // Add this line to define the key
 
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Bank)

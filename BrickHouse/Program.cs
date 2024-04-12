@@ -16,8 +16,9 @@ namespace BrickHouse
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            // DELETE SECRET BEFORE SUBMITTING! This is an alternate connection to the database that has the real connection string
+            var connectionString = Environment.GetEnvironmentVariable("AzureSqlConnection")
+                                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
             
             // ASP.NET identity context
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -38,6 +39,13 @@ namespace BrickHouse
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Identity/Account/Login"; // Set the login path to the desired URL
+            });
+
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.ConsentCookieValue = "true";
             });
 
             // Configure HSTS
@@ -89,11 +97,13 @@ namespace BrickHouse
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Enable third-party auth through Google
-/*            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-            });*/
+                googleOptions.ClientId = Environment.GetEnvironmentVariable("GOOGLE_PROVIDER_AUTHENTICATION_CLIENT_ID")
+                                        ?? builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_PROVIDER_AUTHENTICATION_SECRET") 
+                                        ?? builder.Configuration["Authentication:Google:ClientSecret"];
+            });
 
             var app = builder.Build();
 
@@ -110,10 +120,32 @@ namespace BrickHouse
 
             // Redirect from HTTP
             app.UseHttpsRedirection();
-            
+
+            //Add Content Security Policy
+            app.Use(async (context, next) =>
+            {
+                var csp = "default-src 'self'; " +
+                          "style-src 'self' 'https://fonts.googleapis.com' 'unsafe-inline'; " + // Allow styles from self, Google Fonts, and unsafe-inline for inline styles
+                          "font-src 'self' 'https://fonts.gstatic.com'; " + // Allow font files from self and Google Fonts
+                          "script-src 'self' " +
+                                     "'https://code.jquery.com' " + // jQuery CDN
+                                     "'https://cdnjs.cloudflare.com' " + // Cloudflare CDN (for Popper.js, etc.)
+                                     "'https://stackpath.bootstrapcdn.com' " + // Bootstrap CDN
+                                     "'unsafe-inline'; " + // unsafe-inline for inline scripts
+                          "connect-src 'self' ws: wss:; " + // Allow connections from self and WebSocket connections
+                                                            // ... any other directives you have
+                          "";
+
+                context.Response.Headers.Add("Content-Security-Policy", csp);
+                await next();
+            });
+
+
             // Enables static files in wwwroot folder
             app.UseStaticFiles();
 
+            app.UseCookiePolicy();
+            
             // Activate services
             app.UseSession();
             app.UseRouting();
