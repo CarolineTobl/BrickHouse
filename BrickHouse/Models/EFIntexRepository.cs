@@ -14,6 +14,12 @@
         
         public IQueryable<Customer> Customers => _context.Customers;
 
+        public IQueryable<ProdRec> ProdRecs => _context.ProdRecs;
+
+        public IQueryable<ProductRecommendation> ProductRecommendations => _context.ProductRecommendations;
+
+        public IQueryable<CustomerRecommendation> CustomerRecommendations => _context.CustomerRecommendations;
+
         public async Task AddCustomerAsync(Customer customer)
         {
             _context.Customers.Add(customer);

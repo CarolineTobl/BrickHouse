@@ -29,7 +29,7 @@
                 <td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
                 <td class="text-center">
                     <form asp-page-handler="Remove" method="post">
-                        <input type="hidden" name="ProjectId" value="@l.Product.ProductId" />
+                        <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
                         <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
                         <button class="btn btn-sm btn-danger">
                             Remove from Cart

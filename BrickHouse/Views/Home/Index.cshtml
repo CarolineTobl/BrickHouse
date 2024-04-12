@@ -15,33 +15,7 @@
 </div>
 <div class="bottom-gradient"></div>
 
-<div class="trending container">
-    <h1 style="color: #ec5a53; font-weight: 900;
-                font-size: 1.5em; font-family: 'Pridi', serif;">
-        Trending Now
-    </h1>
-
-    <div class="row">
-        <div class="col-md-3">
-            <img src="/images/zooLego.jpg" alt="Trending Product 1">
-        </div>
-        @* <div class="col-md-3">
-            <img src="/images/batman.jpg" alt="Trending Product 2">
-        </div> *@
-        <div class="col-md-3">
-            <img src="/images/spider.webp" alt="Trending Product 3">
-        </div>
-        <div class="col-md-3">
-            <img src="/images/peacock.webp" alt="Trending Product 4">
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-outline-secondary see-all-btn" asp-controller="Home" asp-action="ProductPage" role="button" style="color: #ec5a53; font-weight: 900;
-                font-size: 1.5em; font-family: 'Pridi', serif;">View all Products >></a>
-
-
-        </div>
-    </div>
-</div>
+    @await Component.InvokeAsync("Recommended")
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

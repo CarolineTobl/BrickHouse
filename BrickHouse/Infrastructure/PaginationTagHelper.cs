@@ -155,9 +155,6 @@ namespace BrickHouse.Infrastructure
         }
 
         // Helper method to append or replace query string parameter in a URL
-        // Helper method to append or replace query string parameter in a URL
-        // Helper method to append or replace query string parameter in a URL
-        // Helper method to append or replace query string parameter in a URL
         private string AppendOrReplaceQueryStringParameter(string url, string key, string value)
         {
             try

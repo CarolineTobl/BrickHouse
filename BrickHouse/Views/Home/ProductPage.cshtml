@@ -8,21 +8,41 @@
 <br />
 <br />
 <br />
+<br />
+@* <form asp-action="ProductPage" method="get">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-11">
+            <div class="float-right">
+                Items per page:
+                <select id="itemsPerPageDropdown" name="pageSize" class="form-control" onchange="this.form.submit()">
+                    <option value="" selected disabled>Currently Displaying @Model.ItemsPerPage Items per Page</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form> *@
+<form asp-action="ProductPage" method="get">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-11">
+            <div class="float-right">
+                Items per page:
+                <select id="itemsPerPageDropdown" name="pageSize" class="form-control" onchange="this.form.submit()">
+                    <option value="" selected disabled>Currently Displaying @Model.ItemsPerPage Items per Page</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option name="category" value="">1: @Model.CurrentColor</option>
+                    <option name="category" value="">2: @Model.CurrentColor</option>
 
+                </select>
 
-<h1 class="page-title">Shop our Products</h1>
-
-<div class="product-page-controls">
-    <form asp-action="ProductPage" method="get" class="items-per-page-form">
-        <label for="itemsPerPageDropdown">Items per page:</label>
-        <select id="itemsPerPageDropdown" name="pageSize" class="form-control" onchange="this.form.submit()">
-            <option value="" selected disabled>Currently Displaying @Model.ItemsPerPage Items per Page</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-        </select>
-    </form>
-</div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <div class="row">
     <div class="col-md-3 filter-container">
