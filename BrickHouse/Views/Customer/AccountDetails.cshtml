@@ -21,16 +21,24 @@
         <input asp-for="LastName" class="form-control checkout-select" placeholder="Last Name" />
         <span asp-validation-for="LastName" class="text-danger"></span>
 
-        <select asp-for="Gender" class="form-control checkout-select">
-            <!-- Options omitted for brevity -->
+        <select asp-for="Gender" class="form-control">
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
         </select>
         <span asp-validation-for="Gender" class="text-danger"></span>
 
         <input asp-for="BirthDate" type="date" class="form-control checkout-select" placeholder="Birthday" />
         <span asp-validation-for="BirthDate" class="text-danger"></span>
 
-        <select asp-for="Country" class="form-control checkout-select">
-            <!-- Options omitted for brevity -->
+        <select asp-for="Country" class="form-control">
+            <option value="">Select a country</option>
+            <option value="United States">United States</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="Russia">Russia</option>
+            <option value="China">China</option>
+            <option value="India">India</option>
         </select>
         <span asp-validation-for="Country" class="text-danger"></span>
 
