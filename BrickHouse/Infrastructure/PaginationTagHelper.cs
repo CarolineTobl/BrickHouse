@@ -160,7 +160,7 @@ namespace BrickHouse.Infrastructure
             try
             {
                 // Get the base URL for localhost
-                var baseUrl = "https://localhost:7002";
+                var baseUrl = "https://brickhouse.azurewebsites.net";
 
                 // Combine the base URL with the relative URL path
                 var absoluteUrl = new Uri(new Uri(baseUrl), url).AbsoluteUri;
