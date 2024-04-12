@@ -13,7 +13,6 @@ public class RecommendedViewComponent : ViewComponent
     private IIntexRepository _repo;
     private UserManager<IdentityUser> _userManager;
     private SignInManager<IdentityUser> _signInManager;
-    public int custId = 0;
 
     public RecommendedViewComponent(IIntexRepository temp, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
     {
@@ -27,6 +26,7 @@ public class RecommendedViewComponent : ViewComponent
     public IViewComponentResult Invoke()
     {
         List<Product> Products = null;
+        int custId = 0;
         
         if (_signInManager.IsSignedIn((ClaimsPrincipal)User))
         {
@@ -37,11 +37,20 @@ public class RecommendedViewComponent : ViewComponent
             var customer= _repo.Customers
                 .Where(c => c.AspNetUserId == userId)
                 .FirstOrDefault();
-            this.custId = customer.CustomerId;
+
+            if (customer != null)
+            {
+               custId = customer.CustomerId; 
+            }
+            else
+            {
+                ViewBag.signedIn = false;
+            }
+            
             
             // Pass five recommendations based on customer previous purchases
             var Recommendations = _repo.CustomerRecommendations
-                .Where(cr => cr.CustomerId == this.custId)
+                .Where(cr => cr.CustomerId == custId)
                 .Take(5).ToList();
 
             foreach (CustomerRecommendation cr in Recommendations)
