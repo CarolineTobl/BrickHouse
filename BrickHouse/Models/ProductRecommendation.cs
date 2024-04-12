@@ -1,7 +1,10 @@
-﻿namespace BrickHouse.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BrickHouse.Models
 {
     public class ProductRecommendation
     {
+        [Key]
         public int ProductId { get; set; }
         public int Rec1 { get; set; }
         public int Rec2 { get; set;}
