@@ -3,22 +3,46 @@
 *@
 @{
 }
-@model IEnumerable<string>
 
-@{
-    string selectedCategory = ViewBag.SelectedProductType ?? "Select Category";
+@* @model BrickHouse.Models.ViewModels.ProductRecommendationViewModel
+
+<h2>Product Recommendations</h2>
+
+@foreach (var recommendation in Model.ProductRecommendations)
+{
+    <div>
+        <ul>
+            <li>Recommendation ID: @recommendation.ProductId</li>
+            <li>Rec1: @Model.ProductNames.ElementAtOrDefault(0)</li>
+            <li>Rec2: @Model.ProductNames.ElementAtOrDefault(1)</li>
+            <li>Rec3: @Model.ProductNames.ElementAtOrDefault(2)</li>
+            <li>Rec4: @Model.ProductNames.ElementAtOrDefault(3)</li>
+            <li>Rec5: @Model.ProductNames.ElementAtOrDefault(4)</li>
+        </ul>
+    </div>
+} *@
+
+
+@model BrickHouse.Models.ViewModels.ProductRecommendationViewModel
+
+<h2>Product Recommendations</h2>
+
+@foreach (var recommendationIndex in Enumerable.Range(0, Model.ProductRecommendations.Count()))
+{
+    var recommendation = Model.ProductRecommendations.ElementAtOrDefault(recommendationIndex);
+    var productNames = Model.ProductNames.ElementAtOrDefault(recommendationIndex) ?? new List<string>();
+
+    <div>
+        <ul>
+            <li>Recommendation ID: @recommendation.ProductId</li>
+            @for (int i = 0; i < productNames.Count(); i++)
+            {
+                <li>Rec@(i + 1): @productNames.ElementAtOrDefault(i)</li>
+            }
+        </ul>
+    </div>
 }
 
-    <div class="form-group">
-        <label>Categories:</label><br />
-        @foreach (string category in Model ?? Enumerable.Empty<string>())
-        {
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="category" value="@category" @(ViewBag.SelectedCategories != null && ViewBag.SelectedCategories.Contains(category) ? "checked" : "") />
-                <label class="form-check-label">@category</label>
-            </div>
-        }
-    </div>
 
 
 
