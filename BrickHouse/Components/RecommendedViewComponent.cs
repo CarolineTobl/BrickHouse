@@ -52,7 +52,7 @@ public class RecommendedViewComponent : ViewComponent
             }
             
             // If Products is null, that means user has no rating history and should be given default products
-            if (Products == null || !_signInManager.IsSignedIn((ClaimsPrincipal)User))
+            if (Products == null)
             {
                 ViewBag.signedIn = false;
             }
@@ -62,7 +62,7 @@ public class RecommendedViewComponent : ViewComponent
             }
         }
         
-        if (ViewBag.signedIn == false)
+        if (ViewBag.signedIn == false || !_signInManager.IsSignedIn((ClaimsPrincipal)User))
         {
             Products = [];
             
@@ -78,6 +78,8 @@ public class RecommendedViewComponent : ViewComponent
                     .Where(p => p.ProductId == pr.ProductId)
                     .FirstOrDefault());
             }
+
+            ViewBag.signedIn = false;
             ViewBag.Recommendations = Products;
         }
         return View();

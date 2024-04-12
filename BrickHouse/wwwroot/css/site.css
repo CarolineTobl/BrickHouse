@@ -279,3 +279,131 @@ body {
 .btn-oval-checkout:hover {
     background-color: #9fd4a3; /* Darker teal color for hover effect */
 }
+
+/*PRODUCT BROWSE PAGE*/
+
+.product-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: 0.25rem;
+    position: relative; /* For absolute positioning of the badge */
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    gap: 1rem; /* Space between the items */
+    padding: 1rem; /* Padding around the grid */
+}
+
+.product-link {
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Ensures link color inherits from the parent */
+}
+
+.product-image-container {
+    width: 100%; /* Full width of the card */
+    overflow: hidden; /* Ensures the image does not overflow the container */
+}
+
+.product-image {
+    max-width: 100%; /* Image can be as wide as its container */
+    max-height: 200px; /* Maximum height for the image */
+    height: auto; /* Maintain the aspect ratio */
+    display: block; /* Removes extra space around the image */
+    margin: 0 auto; /* Centers the image within the container */
+}
+
+.product-info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensures children align with the width */
+}
+
+.product-name {
+    font-weight: bold; /* Makes product name bold */
+    color: #333;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem; /* Space between name and badge */
+}
+
+.pieces-badge {
+    background-color: #ec5a53;
+    color: white;
+    border-radius: 10px; /* Rounds the corners of the badge */
+    position: absolute; /* Positions the badge absolutely within card */
+    top: 10px; /* Positions the badge from the top */
+    right: 10px; /* Positions the badge from the right */
+}
+
+.product-price {
+    font-size: 1.5rem; /* Adjusted for a larger size */
+    font-weight: bold;
+    color: #333;
+    margin: 0.5rem 0; /* Adds margin above and below the price */
+}
+
+.add-to-cart-form {
+    width: 100%; /* Makes the form take the full width */
+}
+
+.add-to-cart-button {
+    background-color: #ec5a53;
+    border-color: #ec5a53;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    width: 100%; /* Makes the button take the full width */
+    border-radius: 20px; /* Rounds the corners of the button */
+}
+
+    .add-to-cart-button:hover {
+        background-color: #da473a;
+        border-color: #da473a;
+    }
+
+.apply-filters-btn {
+    background-color: #ec5a53; /* The desired background color */
+    color: #ffffff; /* White text color for better readability */
+    border: 1px solid transparent; /* No border, set to 'transparent' */
+}
+
+.price-parts-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.page-title {
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    margin-top: 1rem; /* Adjust as needed for spacing */
+}
+
+/* Add padding to the filter container */
+.filter-container {
+    padding-left: 8rem; /* Adjust as needed */
+}
+
+/* Set font for the filter categories */
+.category-filter,
+.color-filter {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+    /* Apply to individual filter labels if needed */
+    .category-filter label,
+    .color-filter label {
+        font-family: 'Segoe UI', sans-serif;
+    }
