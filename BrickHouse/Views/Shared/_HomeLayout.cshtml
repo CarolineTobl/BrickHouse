@@ -170,26 +170,24 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-between">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="AboutUs">About</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="ProductPage">Browse</a></li>
                     </ul>
-                    <partial  name="_LoginPartial" />
-                    <div class="col-6 navbar-text text-end">
-                        <vc:cart-summary />
-                    </div>
-                    
-                    @* <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button> *@
+                    <ul class="navbar-nav ms-auto">
+                        <partial name="_LoginPartial" />
+                        <li class="nav-item"><a class="nav-link" asp-controller="Cart" asp-action="Index">Cart</a></li>
+                    </ul>
                 </div>
-
             </div>
         </nav>
+
     </header>
     <!-- The RenderBody method renders the content of the view that uses this layout -->
     <main role="main" class="pb-3">
+        <partial name="_CookieConsentPartial" class="alert alert-info alert-dismissible fade show"/>
         @RenderBody()
-        <partial name="_CookieConsentPartial" />
     </main>
 
     <footer class="border-top footer text-muted">
