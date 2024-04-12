@@ -8,8 +8,8 @@ var cookieString = consentFeature?.CreateConsentCookie();
 
 @if (showBanner)
 {
-<div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-    Use this space to summarize your privacy and cookie use policy. <a asp-page="/Privacy">Learn More</a>.
+<div id="cookieConsent" style="position: absolute; left: 0; right: 0; top: 625px; z-index: 2" class="alert alert-info alert-dismissible fade show" role="alert">
+    We use cookies to help you keep building. (Yum!) <a asp-controller="Home" asp-action="Privacy">Learn More</a>.
     <button type="button" class="accept-policy close btn btn-outline-primary" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
         <span aria-hidden="true">Accept</span>
     </button>
@@ -19,6 +19,12 @@ var cookieString = consentFeature?.CreateConsentCookie();
         var button = document.querySelector("#cookieConsent button[data-cookie-string]");
         button.addEventListener("click", function (event) {
             document.cookie = button.dataset.cookieString;
+            // Add the 'fade' class to trigger the fade out animation
+            document.getElementById("cookieConsent").classList.add("fade");
+            // After the animation completes, remove the notification from the DOM
+            setTimeout(function () {
+                document.getElementById("cookieConsent").remove();
+            }, 1000); // Adjust the timeout value according to the duration of your fade animation
         }, false);
     })();
 </script>
