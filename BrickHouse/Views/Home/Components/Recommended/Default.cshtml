@@ -189,8 +189,9 @@
 {
     <h1 style="color: #ec5a53; font-weight: 900;
                 font-size: 1.5em; font-family: 'Pridi', serif;">
-        Recommended for You
+        Trending Now
     </h1>
+    <br />
     <div class="row">
         @foreach (var product in ViewBag.Products)
         {
@@ -200,9 +201,14 @@
             </div>
         }
     </div>
+    <br />
     <div class="col-md-3">
         <a class="btn btn-outline-secondary see-all-btn" asp-controller="Home" asp-action="ProductPage" role="button"
            style="color: #ec5a53; font-weight: 900; font-size: 1.5em; font-family: 'Pridi', serif;">View all Products >></a>
+    </div>
+    <br />
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-oval" role="button" asp-controller="Home" asp-action="ProductPage">Start Building</a>
     </div>
 }
 

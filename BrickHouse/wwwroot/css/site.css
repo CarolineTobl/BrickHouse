@@ -314,9 +314,9 @@ body {
 }
 
 .product-image {
-    max-width: 100%; /* Image can be as wide as its container */
+    max-width: 100%;  /* Image can be as wide as its container */
     max-height: 200px; /* Maximum height for the image */
-    height: auto; /* Maintain the aspect ratio */
+    width: auto; /* Maintain the aspect ratio */
     display: block; /* Removes extra space around the image */
     margin: 0 auto; /* Centers the image within the container */
 }
@@ -406,4 +406,104 @@ body {
     .category-filter label,
     .color-filter label {
         font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* CART */
+
+.cart-container {
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.cart-header {
+    color: #ec5a53; /* Customize the color */
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 36px;
+}
+
+.cart-table {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-btn-continue {
+    border-color: #ec5a53;
+    color: #ec5a53;
+}
+
+    .cart-btn-continue:hover {
+        background-color: #ec5a53;
+        color: white;
+    }
+
+.cart-btn-checkout {
+    background-color: #ec5a53;
+    color: white;
+    border-color: #ec5a53;
+}
+
+    .cart-btn-checkout:hover {
+        background-color: darken(#ec5a53, 10%);
+        border-color: darken(#ec5a53, 10%);
+    }
+
+.cart-btn-remove {
+    color: white;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+    .cart-btn-remove:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+.cart-total-row {
+    font-weight: bold;
+}
+
+/* Reusing cart page styles for consistency */
+.checkout-container {
+    max-width: 600px; /* Set a max-width for the container */
+    margin: 2rem auto; /* Center the container with automatic margins */
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-radius: 0.5rem;
+}
+
+.checkout-header {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    margin-bottom: 1.5rem;
+    background-color: #ec5a53;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-control.checkout-select {
+    margin-bottom: 0.5rem; /* Spacing between form elements */
+}
+
+.btn.btn-confirm-checkout {
+    background-color: #ec5a53;
+    border-color: #ec5a53;
+    color: white;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    border-radius: 0.25rem;
+}
+
+    .btn.btn-confirm-checkout:hover {
+        background-color: #da473a;
+        border-color: #da473a;
     }
