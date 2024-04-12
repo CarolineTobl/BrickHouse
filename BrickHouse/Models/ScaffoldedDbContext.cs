@@ -41,6 +41,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins").HasKey(p => new { p.LoginProvider, p.ProviderKey });
         modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims");
         modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens").HasKey(p => new { p.UserId, p.LoginProvider, p.Name });
+        modelBuilder.Entity<CustomerRecommendation>().HasKey(cr => new { cr.CustomerId, cr.Recommendation});
 
 
         modelBuilder.Entity<Customer>(entity =>
