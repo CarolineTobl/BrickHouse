@@ -21,6 +21,8 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public DbSet<ProdRec> ProdRecs { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
