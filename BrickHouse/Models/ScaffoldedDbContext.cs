@@ -21,7 +21,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<CustomerRecommendations> CustomerRecommendations { get; set; }
+    public virtual DbSet<CustomerRecommendation> CustomerRecommendations { get; set; }
 
     public virtual DbSet<ProductRecommendation> ProductRecommendations { get; set; }
 
@@ -41,6 +41,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins").HasKey(p => new { p.LoginProvider, p.ProviderKey });
         modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims");
         modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens").HasKey(p => new { p.UserId, p.LoginProvider, p.Name });
+        modelBuilder.Entity<CustomerRecommendation>().HasKey(cr => new { cr.CustomerId, cr.Recommendation});
 
 
         modelBuilder.Entity<Customer>(entity =>
@@ -135,7 +136,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.Year).HasColumnName("year");
         });
 
-        modelBuilder.Entity<CustomerRecommendations>(entity =>
+        modelBuilder.Entity<CustomerRecommendation>(entity =>
         {
             entity.Property(e => e.CustomerId)
                 .HasMaxLength(50)
