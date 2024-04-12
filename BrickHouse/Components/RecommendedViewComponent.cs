@@ -52,7 +52,7 @@ public class RecommendedViewComponent : ViewComponent
             }
             
             // If Products is null, that means user has no rating history and should be given default products
-            if (Products == null)
+            if (Products == null || !_signInManager.IsSignedIn((ClaimsPrincipal)User))
             {
                 ViewBag.signedIn = false;
             }
