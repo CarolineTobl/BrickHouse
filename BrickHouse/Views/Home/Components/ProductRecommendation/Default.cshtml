@@ -4,46 +4,43 @@
 @{
 }
 
-@* @model BrickHouse.Models.ViewModels.ProductRecommendationViewModel
+<style>
+    .product-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Adjust the gap between cards */
+    }
 
-<h2>Product Recommendations</h2>
+    .product-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        width: 200px; /* Adjust the width of each card */
+    }
 
-@foreach (var recommendation in Model.ProductRecommendations)
-{
-    <div>
-        <ul>
-            <li>Recommendation ID: @recommendation.ProductId</li>
-            <li>Rec1: @Model.ProductNames.ElementAtOrDefault(0)</li>
-            <li>Rec2: @Model.ProductNames.ElementAtOrDefault(1)</li>
-            <li>Rec3: @Model.ProductNames.ElementAtOrDefault(2)</li>
-            <li>Rec4: @Model.ProductNames.ElementAtOrDefault(3)</li>
-            <li>Rec5: @Model.ProductNames.ElementAtOrDefault(4)</li>
-        </ul>
-    </div>
-} *@
+    .product-card h4 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
 
-
-@model BrickHouse.Models.ViewModels.ProductRecommendationViewModel
-
-<h2>Product Recommendations</h2>
-
-@foreach (var recommendationIndex in Enumerable.Range(0, Model.ProductRecommendations.Count()))
-{
-    var recommendation = Model.ProductRecommendations.ElementAtOrDefault(recommendationIndex);
-    var productNames = Model.ProductNames.ElementAtOrDefault(recommendationIndex) ?? new List<string>();
-
-    <div>
-        <ul>
-            <li>Recommendation ID: @recommendation.ProductId</li>
-            @for (int i = 0; i < productNames.Count(); i++)
-            {
-                <li>Rec@(i + 1): @productNames.ElementAtOrDefault(i)</li>
-            }
-        </ul>
-    </div>
-}
+    .product-card .price {
+        font-weight: bold;
+    }
+</style>
 
 
+<div class="product-cards">
+    @foreach (var productInfo in Model.ProductInfos)
+    {
+        <a href="https://brickhouse.azurewebsites.net/Home/ProductDetails?productId=@productInfo.ProductId" class="product-card-link">
+            <div class="product-card">
+                <h4>@productInfo.Name</h4>
+                <img src="@productInfo.ImgLink" alt="Product Image" />
+                <p class="price">$@productInfo.Price</p>
+            </div>
+        </a>
+    }
+</div>
 
 
 

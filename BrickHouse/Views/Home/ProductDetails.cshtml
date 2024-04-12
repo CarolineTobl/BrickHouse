@@ -9,8 +9,6 @@
 <br />
 <br />
 
-@await Component.InvokeAsync("ProductRecommendation", new { productId = Model.ProductId })
-
 
 <h1 class="about-title" style="text-align: center; font-weight: bold; font-family: 'Poppins', sans-serif;">@Model.Name</h1>
 <span class="title-underline"></span>
@@ -31,3 +29,4 @@
         </div>
     </div>
 </div>
+@await Component.InvokeAsync("ProductRecommendation", new { productId = Model.ProductId })
