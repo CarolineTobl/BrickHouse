@@ -2,46 +2,53 @@
 
 @{
     ViewData["Title"] = "Manage Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Manage Orders</h1>
+<br />
+<br />
 
-<div>
-    <a href="@Url.Action("ReviewFraudulentOrders", "Admin")" class="btn btn-info">Review Fraudulent Orders</a>
-</div>
+<div class="admin-container">
+    <h1 class="admin-header">Manage Orders</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Transaction ID</th>
-            <th>Customer ID</th>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Country of Transaction</th>
-            <th>Shipping Address</th>
-            <th>Fraud?</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model.Orders)
-        {
-            <tr>
-                <td>@order.TransactionId</td>
-                <td>@order.CustomerId</td>
-                <td>@order.Date</td>
-                <td>@String.Format("{0:C}", order.Amount)</td>
-                <td>@order.CountryOfTransaction</td>
-                <td>@order.ShippingAddress</td>
-                <td>@(order.Fraud == 1 ? "Yes" : "No")</td>
-                <td>
-                    <a href="@Url.Action("EditOrder", "Admin", new { id = order.TransactionId })" class="btn btn-primary">Edit</a>
-                    <a href="@Url.Action("DeleteOrderConfirmation", "Admin", new { id = order.TransactionId })" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="admin-controls">
+        <a href="@Url.Action("ReviewFraudulentOrders", "Admin")" class="btn btn-site">Review Fraudulent Orders</a>
+    </div>
+
+    <div class="admin-table-container">
+        <table class="table admin-table">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Customer ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Country of Transaction</th>
+                    <th>Shipping Address</th>
+                    <th>Fraud?</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.Orders)
+                {
+                    <tr>
+                        <td>@order.TransactionId</td>
+                        <td>@order.CustomerId</td>
+                        <td>@order.Date</td>
+                        <td>@String.Format("{0:C}", order.Amount)</td>
+                        <td>@order.CountryOfTransaction</td>
+                        <td>@order.ShippingAddress</td>
+                        <td>@(order.Fraud == 1 ? "Yes" : "No")</td>
+                        <td>
+                            <a href="@Url.Action("EditOrder", "Admin", new { id = order.TransactionId })" class="btn btn-edit">Edit</a>
+                            <a href="@Url.Action("DeleteOrderConfirmation", "Admin", new { id = order.TransactionId })" class="btn btn-delete">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
 <nav aria-label="Order Pagination">
     <ul class="pagination">
