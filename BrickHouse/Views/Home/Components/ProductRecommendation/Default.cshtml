@@ -26,21 +26,52 @@
     .product-card .price {
         font-weight: bold;
     }
+
+    .product-image-container {
+        max-width: 150px;
+    }
+
+    .products-card {
+        display: flex;
+        flex-wrap: wrap; /* Allows cards to wrap to the next line if needed */
+    }
+
+    .product-details {
+        margin: 10px; /* Add spacing between cards */
+    }
+
+    .product-card-link {
+        text-decoration: none;
+    }
+
+    .products-card {
+        display: flex;
+        justify-content: center;
+        text-align: center; 
+        margin: 10px;
+    }
+
+    .product-image-container {
+        width: 100%; 
+        height: auto; 
+    }
+
+
 </style>
 
 
-<div class="product-cards">
-    @foreach (var productInfo in Model.ProductInfos)
-    {
-        <a href="https://brickhouse.azurewebsites.net/Home/ProductDetails?productId=@productInfo.ProductId" class="product-card-link">
-            <div class="product-card">
-                <h4>@productInfo.Name</h4>
-                <img src="@productInfo.ImgLink" alt="Product Image" />
-                <p class="price">$@productInfo.Price</p>
-            </div>
-        </a>
-    }
+<h4>Related Items:</h4>
+<div class="row justify-content-center">
+    <div class="products-card d-flex flex-wrap justify-content-center">
+        @foreach (var productInfo in Model.ProductInfos)
+        {
+            <a href="https://brickhouse.azurewebsites.net/Home/ProductDetails?productId=@productInfo.ProductId" class="product-card-link">
+                <div class="product-details">
+                    <h4 class="product-name">@productInfo.Name</h4>
+                    <img class="product-image-container" src="@productInfo.ImgLink" alt="Product Image" />
+                    <div class="product-price">$@productInfo.Price</div>
+                </div>
+            </a>
+        }
+    </div>
 </div>
-
-
-
