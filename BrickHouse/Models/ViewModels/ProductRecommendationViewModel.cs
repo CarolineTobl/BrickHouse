@@ -1,25 +1,21 @@
-﻿namespace BrickHouse.Models.ViewModels
+﻿/*namespace BrickHouse.Models.ViewModels
 {
     public class ProductRecommendationViewModel
     {
-/*        public IQueryable<Product> Products { get; set; }
-        public IEnumerable<string> ProductTypes { get; set; }
-        public IEnumerable<string> Colors { get; set; }
+        public IQueryable<ProductRecommendation> ProductRecommendations { get; set; }
+        public List<string> ProductNames { get; set; } // Change to a list of strings to store multiple product names
+    }
+}*/
 
-        public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo();
+using BrickHouse.Models;
 
-        public string? CurrentProductType { get; set; }
+namespace BrickHouse.Models.ViewModels
+{
 
-        public string[]? CurrentColor { get; set; }
-
-        public List<string> AvailableColors { get; set; }
-
-        public int ItemsPerPage { get; set; }
-
-        // Property to store selected category
-        public string[] SelectedCategory { get; set; }
-
-        // Property to store selected color
-        public string[] SelectedColor { get; set; }*/
+    public class ProductRecommendationViewModel
+    {
+        public IQueryable<ProductRecommendation> ProductRecommendations { get; set; }
+        public List<List<string>> ProductNames { get; set; } // Change to List<List<string>>
     }
 }
+
