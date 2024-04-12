@@ -53,12 +53,17 @@ public class RecommendedViewComponent : ViewComponent
                 .Where(cr => cr.CustomerId == custId)
                 .Take(5).ToList();
 
-            foreach (CustomerRecommendation cr in Recommendations)
+            if (Recommendations != null)
             {
-                Products.Add(_repo.Products
-                    .Where(p => p.Name == cr.Recommendation)
-                    .FirstOrDefault());
+                Products = [];
+                foreach (CustomerRecommendation cr in Recommendations)
+                    {
+                        Products.Add(_repo.Products
+                            .Where(p => p.Name == cr.Recommendation)
+                            .FirstOrDefault());
+                    }
             }
+            
             
             // If Products is null, that means user has no rating history and should be given default products
             if (Products == null)
