@@ -21,7 +21,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<CustomerRecommendations> CustomerRecommendations { get; set; }
+    public virtual DbSet<CustomerRecommendation> CustomerRecommendations { get; set; }
 
     public virtual DbSet<ProductRecommendation> ProductRecommendations { get; set; }
 
@@ -135,7 +135,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.Year).HasColumnName("year");
         });
 
-        modelBuilder.Entity<CustomerRecommendations>(entity =>
+        modelBuilder.Entity<CustomerRecommendation>(entity =>
         {
             entity.Property(e => e.CustomerId)
                 .HasMaxLength(50)
