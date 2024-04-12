@@ -4,4 +4,27 @@
 @{
     Layout = "/Views/Shared/_HomeLayout.cshtml";
 }
-<div class="banner-gradient"></div>
+<style>
+    .white-box {
+        background-color: #ffffff; /* White background color */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Small shadow offset */
+        padding: 20px; /* Padding inside the box */
+        width: 550px; /* Width of the box */
+        margin: 20px auto; /* Center the box horizontally */
+        z-index: 2;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translateX(-50%); /* Center the box horizontally */
+    }
+</style>
+<div class="banner-gradient">
+    <div class="white-box text-center">
+        <h1 style="color: #ec5a53; font-weight: 900;
+                font-size: 1.5em; font-family: 'Pridi', serif;">Order confirmed!</h1>
+        <p>Your order has been placed and will be fulfilled immediately. Thanks for choosing BrickHouse, and as always, happy building!</p>
+        <br/>
+        <a class="btn btn-oval me-2" role="button" asp-controller="Home" asp-action="ProductPage">Place Another Order</a>
+    </div>
+</div>
