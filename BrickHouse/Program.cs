@@ -17,7 +17,6 @@ namespace BrickHouse
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // DELETE SECRET BEFORE SUBMITTING! This is an alternate connection to the database that has the real connection string
             var connectionString = Environment.GetEnvironmentVariable("AzureSqlConnection")
                                         ?? builder.Configuration.GetConnectionString("DefaultConnection");
             
