@@ -2,35 +2,32 @@
 
 @{
     ViewData["Title"] = "Delete Product Confirmation";
+    Layout = "/Views/Shared/_HomeLayout.cshtml";
 }
-
-<h2>Delete Product Confirmation</h2>
-
-<div class="alert alert-danger" role="alert">
-    Are you sure you want to delete the product: @Model.Name?
+<style>
+    .white-box {
+        background-color: #ffffff; /* White background color */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Small shadow offset */
+        padding: 20px; /* Padding inside the box */
+        width: 550px; /* Width of the box */
+        margin: 20px auto; /* Center the box horizontally */
+        z-index: 2;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translateX(-50%); /* Center the box horizontally */
+    }
+</style>
+<div class="banner-gradient">
+    <div class="white-box text-center">
+        <h1 style="color: #ec5a53; font-weight: 900;
+                font-size: 1.5em; font-family: 'Pridi', serif;">Confirm Delete</h1>
+        <p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
+        <br/>
+        <form asp-action="DeleteProduct" asp-route-productId="@Model.ProductId" method="post">
+            <button type="submit" value="Delete" class="btn btn-oval me-2" style="background-color: #ec5a53" role="button">Yes, Delete</button>
+            <a class="btn btn-oval me-2" role="button" href="@Url.Action("CRUDProducts", "Admin")">Cancel</a>
+        </form>
+    </div>
 </div>
-
-<div>
-    <h4>Product Details</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Product ID
-        </dt>
-        <dd class="col-sm-10">
-            @Model.ProductId
-        </dd>
-        <dt class="col-sm-2">
-            Name
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Name
-        </dd>
-        <!-- Add more details if needed -->
-    </dl>
-</div>
-
-<form asp-action="DeleteProduct" asp-route-productId="@Model.ProductId" method="post">
-    <input type="submit" value="Delete" class="btn btn-danger" /> |
-    <a href="@Url.Action("CRUDProducts", "Admin")" class="btn btn-secondary">Cancel</a>
-</form>
