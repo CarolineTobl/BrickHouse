@@ -122,7 +122,7 @@ namespace BrickHouse.Controllers
         {
             // Find clicked product by productID
             var product = _repo.Products.FirstOrDefault(p => p.ProductId == productId);
-            
+
             // Just in case product doesn't exist
             if (product == null)
             {
@@ -130,29 +130,29 @@ namespace BrickHouse.Controllers
             }
             return View(product);
         }
-        
+
         // Must be logged in to see this page; unauthenticated users redirected to login
-        [Authorize]
-        [HttpGet]
-        public IActionResult Checkout()
-        {
-            // Build view model
-            var viewModel = new CheckoutViewModel
-            {
-                UniqueBanks = _repo.Orders.Select(o => o.Bank).Distinct().ToList(),
-                UniqueCardTypes = _repo.Orders.Select(o => o.TypeOfCard).Distinct().ToList(),
-                UniqueCountriesOfTransaction = _repo.Orders.Select(o => o.CountryOfTransaction).Distinct().ToList(),
-                UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
-                
-                Order = new Order(),
-                Cart = HttpContext.Session.GetJson<Cart>("Cart") // Get the session cart
-            };
+        /*[Authorize]
+        [HttpGet]*/
+        /*        public IActionResult Checkout()
+                {
+                    // Build view model
+                    var viewModel = new CheckoutViewModel
+                    {
+                        UniqueBanks = _repo.Orders.Select(o => o.Bank).Distinct().ToList(),
+                        UniqueCardTypes = _repo.Orders.Select(o => o.TypeOfCard).Distinct().ToList(),
+                        UniqueCountriesOfTransaction = _repo.Orders.Select(o => o.CountryOfTransaction).Distinct().ToList(),
+                        UniqueShippingAddresses = _repo.Orders.Select(o => o.ShippingAddress).Distinct().ToList(),
 
-            return View(viewModel);
-        }
+                        Order = new Order(),
+                        Cart = HttpContext.Session.GetJson<Cart>("Cart") // Get the session cart
+                    };
 
-        [HttpPost]
-        public async Task<IActionResult> Checkout(CheckoutViewModel model)
+                    return View(viewModel);
+                }*/
+
+       /* [HttpPost]*/
+        /*public async Task<IActionResult> Checkout(CheckoutViewModel model)
         {
             // Create new transaction ID
             int newId = 0;
@@ -218,7 +218,7 @@ namespace BrickHouse.Controllers
             }
 
             return View("CheckoutConfirmed");
-        }
-        
+        }*/
+
     }
 }
