@@ -93,12 +93,13 @@ namespace BrickHouse
             // Creates an instance of the repository pattern for the session
             builder.Services.AddScoped<IIntexRepository, EFIntexRepository>();
 
+            //for our fraud predictor
+            builder.Services.AddScoped<PredictionService>();
+
             // Add instance of session cart and necessary tools
             builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            builder.Services.AddSingleton<InferenceSession>(new InferenceSession("\final_decision_tree_model.onnx")
-);
 
             // Enable third-party auth through Google
             builder.Services.AddAuthentication().AddGoogle(googleOptions =>
