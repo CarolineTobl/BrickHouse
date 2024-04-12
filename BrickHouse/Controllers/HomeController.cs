@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using Microsoft.ML.OnnxRuntime;
+using Newtonsoft.Json;
 
 // INTEX II
 // Group 2-2
@@ -171,7 +172,7 @@ namespace BrickHouse.Controllers
             model.Order.CustomerId = custId;
             
             // Run fraud check
-            model.Order.Fraud = 0;
+            model.Order.Fraud = 1;
             
             foreach (var l in model.Cart.Lines)
             {
@@ -188,6 +189,12 @@ namespace BrickHouse.Controllers
             // Add Order to the database
             _repo.AddOrder(model.Order);
             
+            // Reset the session cart
+            HttpContext.Session.Remove("Cart");
+            var newCart = new Cart();
+            string cartJson = JsonConvert.SerializeObject(newCart);
+            HttpContext.Session.SetString("Cart", cartJson);
+            
             // Send to order confirmation or fraud review confirmation
             if (model.Order.Fraud == 1)
             {
@@ -196,5 +203,6 @@ namespace BrickHouse.Controllers
 
             return View("CheckoutConfirmed");
         }
+        
     }
 }
