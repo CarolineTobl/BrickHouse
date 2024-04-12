@@ -144,6 +144,7 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.Recommendation).HasColumnName("recommendation");
             entity.Property(e => e.RecommendationCount).HasColumnName("recommendation_Count");
             entity.Property(e => e.BecauseYouLiked).HasColumnName("because_You_Liked");
+            entity.Property(e => e.RankMean).HasColumnName("rank_mean");
         });
         modelBuilder.Entity<ProductRecommendation>(entity =>
         {

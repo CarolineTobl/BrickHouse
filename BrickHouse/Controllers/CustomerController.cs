@@ -56,7 +56,7 @@ namespace BrickHouse.Controllers
 
             await _repo.AddCustomerAsync(customer); // Add the new customer
 
-            return RedirectToAction("ConfirmationPage");
+            return RedirectToAction("ProductPage", "Home");
         }
 
         public IActionResult ConfirmationPage()

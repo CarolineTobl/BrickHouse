@@ -2,16 +2,33 @@
 
 @{
     ViewData["Title"] = "Delete User Confirmation";
+    Layout = "/Views/Shared/_HomeLayout.cshtml";
 }
-
-<h2>Delete User Confirmation</h2>
-
-<p>Are you sure you want to delete user: <strong>@Model.FirstName @Model.LastName</strong>?</p>
-
-<!-- Form to submit the deletion -->
-<form asp-action="DeleteUser" method="post">
-    <input type="hidden" asp-for="CustomerId" />
-    <button type="submit" class="btn btn-danger">Confirm Delete</button>
-    <a asp-action="CRUDUsers" class="btn btn-secondary">Cancel</a>
-</form>
-
+<style>
+    .white-box {
+        background-color: #ffffff; /* White background color */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Small shadow offset */
+        padding: 20px; /* Padding inside the box */
+        width: 550px; /* Width of the box */
+        margin: 20px auto; /* Center the box horizontally */
+        z-index: 2;
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translateX(-50%); /* Center the box horizontally */
+    }
+</style>
+<div class="banner-gradient">
+    <div class="white-box text-center">
+        <h1 style="color: #ec5a53; font-weight: 900;
+                font-size: 1.5em; font-family: 'Pridi', serif;">Confirm Delete</h1>
+        <p>Are you sure you want to delete <strong>@Model.FirstName @Model.LastName</strong>'s account?</p>
+        <br/>
+        <form asp-action="DeleteUser" method="post">
+            <input type="hidden" asp-for="CustomerId" />
+            <button type="submit" class="btn btn-oval me-2" style="background-color: #ec5a53" role="button">Yes, Delete</button>
+            <a class="btn btn-oval me-2" role="button" asp-controller="Admin" asp-action="CRUDUsers">Cancel</a>
+        </form>
+    </div>
+</div>
