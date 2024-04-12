@@ -1,17 +1,16 @@
-﻿using BrickHouse.Models;
+﻿using System.Text.Json.Serialization;
+using BrickHouse.Infrastructure;
+using BrickHouse.Models;
 
 public class CheckoutViewModel
-{
-    public string SelectedBank { get; set; }
+{ 
+    // Values for dropdown lists
     public IEnumerable<string> UniqueBanks { get; set; }
-
-    public string SelectedCardType { get; set; }
     public IEnumerable<string> UniqueCardTypes { get; set; }
-
-    public string SelectedCountryOfTransaction { get; set; }
     public IEnumerable<string> UniqueCountriesOfTransaction { get; set; }
-
-    public string SelectedShippingAddress { get; set; }
     public IEnumerable<string> UniqueShippingAddresses { get; set; }
-
+    
+    // Empty objects for submission
+    public Order Order { get; set; }
+    public Cart Cart { get; set; }
 }

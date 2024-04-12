@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BrickHouse.Models;
+using BrickHouse.Models.ViewModels;
 
 namespace BrickHouse.Components
 {
@@ -13,9 +14,14 @@ namespace BrickHouse.Components
             _intexRepo = temp;
         }
 
-        public IViewComponentResult Invoke(string primaryCategory, string secondaryCategory)
+        public IViewComponentResult Invoke(string primaryCategory, string secondaryCategory, string primaryColor, int pageSize)
         {
             ViewBag.SelectedProductType = primaryCategory;
+            ViewBag.SelectedColor = primaryColor;
+
+            pageSize = pageSize;
+
+
 
             var productTypes = _intexRepo.Products
                 .Select(x => x.PrimaryCategory)
@@ -24,6 +30,10 @@ namespace BrickHouse.Components
 
             return View(productTypes);
         }
+
+
+
+
 
     }
 }

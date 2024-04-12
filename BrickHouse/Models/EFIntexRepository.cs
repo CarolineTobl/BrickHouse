@@ -11,7 +11,7 @@
         public IQueryable<Product> Products => _context.Products;
 
         public IQueryable<Order> Orders => _context.Orders;
-
+        
         public IQueryable<Customer> Customers => _context.Customers;
 
         public IQueryable<ProdRec> ProdRecs => _context.ProdRecs;
@@ -21,5 +21,17 @@
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
         }
+        public void AddLineItem(LineItem li)
+        {
+            _context.LineItems.Add(li);
+            _context.SaveChanges();
+        }
+        
+        public void AddOrder(Order o)
+        {
+            _context.Orders.Add(o);
+            _context.SaveChanges();
+        }
+
     }
 }
