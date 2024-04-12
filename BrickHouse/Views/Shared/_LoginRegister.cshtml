@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BrickHouse</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+
+        .banner {
+            position: relative; /* For absolute positioning of the gradient */
+            background: url('/images/castle5.jpg') no-repeat top center;
+            background-size: 100% auto; /* This will fit the image to the width */
+            width: 100%; /* Ensure the banner spans the full width */
+            height: auto; /* This will make the height adjust to the image */
+            min-height: 700px; /* Optional: You can set a minimum height */
+        }
+
+            /* White gradient effect */
+            .banner::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 10%; /* This height will determine how much of the bottom part is covered by the gradient */
+                background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+            }
+
+        .banner-gradient {
+            position: relative; /* For absolute positioning of the gradient */
+            background: url('/images/castle-gradient.png') no-repeat top center;
+            background-size: 100% auto; /* This will fit the image to the width */
+            width: 100%; /* Ensure the banner spans the full width */
+            height: auto; /* This will make the height adjust to the image */
+            min-height: 700px; /* Optional: You can set a minimum height */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif; /* Update the body font to Montserrat for consistency */
+        }
+
+        /* Styles for the pink navbar */
+        .navbar {
+            background-color: #ec5a53; /* Pink color for the navbar */
+            border: none;
+            box-shadow: none;
+        }
+
+
+        .navbar-toggler {
+            color: white;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+            .navbar.scrolled {
+                background-color: #ec5a53; /* Or any other color you prefer */
+            }
+
+            .navbar .navbar-brand {
+                color: white !important;
+                font-weight: 900;
+                font-size: 1.5em;
+                font-family: 'Pridi', serif; /* Change the font family to Pridi */
+            }
+
+            /* Navbar link text styles */
+            .navbar .nav-link {
+                color: white !important;
+                font-weight: 400;
+                font-size: 1em;
+                font-family: 'Pridi', serif; /* Change the font family to Pridi */
+            }
+
+                /* Hover effect for navbar links */
+                .navbar .nav-link:hover, .navbar .navbar-brand:hover {
+                    color: #FFF !important; /* White color on hover */
+                    background-color: transparent !important; /* Maintain transparent background on hover */
+                }
+
+        /* Adjusting the banner container padding if needed */
+        .banner .container {
+            padding-top: 100px; /* Padding to lower the text over the banner image */
+        }
+
+        /* Position the Login button to the right */
+        .navbar .btn-outline-success {
+            position: absolute;
+            right: 1rem; /* 1rem from the right edge of the navbar */
+            top: 50%;
+            transform: translateY(-50%); /* Center vertically in the navbar */
+            color: white; /* Set the text color to white */
+            border-color: white; /* Set the border color to white */
+            border-width: 2px; /* Slightly larger border */
+            font-family: 'Pridi', serif; /* Use the Pridi font */
+            font-size: 1em; /* Match the size of the other nav text */
+            background-color: transparent; /* Transparent background */
+            padding: 0.5rem 1rem; /* Adjust padding to match the size of nav text, modify as needed */
+        }
+
+            /* Change the color of the button text and border on hover and focus */
+            .navbar .btn-outline-success:hover,
+            .navbar .btn-outline-success:focus {
+                color: #FFF; /* Keep text white on hover/focus */
+                background-color: white; /* White background on hover/focus for visibility */
+                border-color: white; /* White border on hover/focus */
+            }
+
+        .bottom-gradient {
+            height: 100px; /* Or the height of your gradient */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+        }
+
+        .bottom-gradient-large {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            z-index: -1; /* Ensure the gradient is behind other content */
+            background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+        }
+        /* Adjusted footer styles if needed */
+        footer {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .trending .col-md-3 {
+            padding: 1rem; /* Adds more space around each image */
+        }
+
+        .trending img {
+            height: 200px; /* Fixed height for all images */
+            border-radius: 15px; /* Rounded corners */
+            border: 5px solid #ec5a53; /* Red border */
+            object-fit: contain; /* Ensures the image fits within the element without stretching */
+            margin: 10px; /* Adds space around the images */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow to the images for depth */
+            display: block; /* Ensure that images are block elements to allow for margin */
+            width: calc(100% - 30px); /* Adjust width to account for the border and margin */
+        }
+
+        .see-all-btn {
+            display: block; /* Make the button a block element to fill the column */
+            width: calc(100% - 30px); /* Full width of the column minus the padding */
+            height: 200px; /* Same height as images to align them */
+            margin-top: 10px; /* Match the top margin of the images */
+            margin-bottom: 10px; /* If you want to have a bottom margin as well */
+            border-radius: 15px; /* Match the border radius of the images if needed */
+            border: 5px solid #ec5a53; /* Match the border style of the images */
+            color: #ec5a53; /* Text color */
+            background-color: #fff; /* Background color for the button */
+            align-items: center; /* Center text vertically using flexbox */
+            justify-content: center; /* Center text horizontally using flexbox */
+            text-decoration: none; /* Remove underline from anchor if it's a link */
+            display: flex; /* Use flexbox to center content */
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BrickHouse</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="AboutUs">About</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="ProductPage">Browse</a></li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <partial name="_LoginPartial" />
+                        <li class="nav-item"><a class="nav-link" asp-controller="Cart" asp-action="Index">Cart</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <!-- The RenderBody method renders the content of the view that uses this layout -->
+    <main role="main" class="pb-3">
+        @RenderBody()
+        <partial name="_CookieConsentPartial" />
+    </main>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - BrickHouse - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <!-- Scripts necessary for Bootstrap components to function -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+    <!-- This section is for additional scripts to be rendered. -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
