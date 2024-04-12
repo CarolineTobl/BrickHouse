@@ -219,6 +219,6 @@ namespace BrickHouse.Controllers
 
              return View("CheckoutConfirmed");
          }
-
+        
     }
 }

@@ -5,6 +5,16 @@
 
 @model Product
 
+<style>
+    .product-image {
+        width: 300px; /* Adjust the width as needed */
+        height: 300px; /* Adjust the height as needed */
+        object-fit: cover; /* This property ensures that the image covers the entire container while maintaining aspect ratio */
+    }
+
+</style>
+
+
 <div class="product-card">
     <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@Model.ProductId" class="product-link">
         <div class="product-image-container">

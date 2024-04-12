@@ -13,28 +13,24 @@
 <h1 class="page-title">Shop our Products</h1>
 
 <div class="row">
+    <h3>Filters:</h3>
     <div class="col-md-2 filter-container">
         <form asp-action="ProductPage" method="get">
             <div class="category-filter">
                 @await Component.InvokeAsync("ProductTypes", new { primaryCategory = Model.CurrentProductType, secondaryCategory = Model.CurrentProductType })
-                <br> <!-- Break between category and color filters -->
             </div>
             <div class="color-filter">
                 @await Component.InvokeAsync("Color", new { primaryColor = Model.CurrentColor, secondaryColor = Model.CurrentColor })
-                <br> <!-- Break between color filters and the apply filters button -->
             </div>
+            <br />
             <div class="items-per-page-filter">
-                <label for="itemsPerPageDropdown">Items per Page:</label>
                 <select id="itemsPerPageDropdown" name="pageSize" class="form-control" onchange="this.form.submit()">
                     <option value="" selected disabled>@Model.ItemsPerPage Items per Page</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
-                    <!-- Add other options as needed -->
                 </select>
             </div>
-            <br> <!-- Add a line break before the "Apply Filters" button -->
-            <button type="submit" class="btn apply-filters-btn">Apply Filters</button>
         </form>
     </div>
 
