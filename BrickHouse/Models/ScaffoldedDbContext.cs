@@ -23,6 +23,8 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
 
     public virtual DbSet<CustomerRecommendations> CustomerRecommendations { get; set; }
 
+    public virtual DbSet<ProductRecommendation> ProductRecommendations { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -140,6 +142,20 @@ public partial class ScaffoldedDbContext : IdentityDbContext<IdentityUser>
             entity.Property(e => e.Recommendation).HasColumnName("recommendation");
             entity.Property(e => e.RecommendationCount).HasColumnName("recommendation_Count");
             entity.Property(e => e.BecauseYouLiked).HasColumnName("because_You_Liked");
+        });
+        modelBuilder.Entity<ProductRecommendation>(entity =>
+        {
+            entity.Property(e => e.ProductId).HasColumnName("customer_ID");
+            entity.Property(e => e.Rec1).HasColumnName("rec_1");
+            entity.Property(e => e.Rec2).HasColumnName("rec_2");
+            entity.Property(e => e.Rec3).HasColumnName("rec_3");
+            entity.Property(e => e.Rec4).HasColumnName("rec_4");
+            entity.Property(e => e.Rec5).HasColumnName("rec_5");
+            entity.Property(e => e.Rec6).HasColumnName("rec_6");
+            entity.Property(e => e.Rec7).HasColumnName("rec_7");
+            entity.Property(e => e.Rec8).HasColumnName("rec_8");
+            entity.Property(e => e.Rec9).HasColumnName("rec_9");
+            entity.Property(e => e.Rec10).HasColumnName("rec_10");
         });
     }
 
